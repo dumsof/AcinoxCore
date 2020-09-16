@@ -34,7 +34,7 @@ namespace Acinox
                 {
                     _logger.LogInformation($" Codigo={societie.Cod} Razón Social={societie.Razons}", DateTimeOffset.Now);
                 }
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(60000 * 5, stoppingToken);
             }
         }
     }
