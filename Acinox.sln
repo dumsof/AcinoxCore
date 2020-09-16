@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acinox", "Acinox\Acinox.csproj", "{241A7821-614A-4003-A86A-D14C4FD7777D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acinox", "Acinox\Acinox.csproj", "{241A7821-614A-4003-A86A-D14C4FD7777D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Aplication", "1.Aplication", "{6A5ABA79-916B-49A5-B125-2591F329755D}"
 EndProject
@@ -16,13 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.CrossCutting", "4.CrossCu
 		Ayuda.txt = Ayuda.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File.Entities", "File.Entities\File.Entities.csproj", "{D706E2AA-902D-4F5B-B7F4-710446CB81DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "File.Entities", "File.Entities\File.Entities.csproj", "{D706E2AA-902D-4F5B-B7F4-710446CB81DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{9A331407-A3BF-4E75-85D4-E071714237ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{9A331407-A3BF-4E75-85D4-E071714237ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File.Repositorie", "File.Repositorie\File.Repositorie.csproj", "{2AB08E05-F46E-4AF5-A140-821137F8D41C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "File.Repositorie", "File.Repositorie\File.Repositorie.csproj", "{2AB08E05-F46E-4AF5-A140-821137F8D41C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File.Business", "File.Business\File.Business.csproj", "{AA78B164-2323-4A0D-8219-5298C1DE125F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "File.Business", "File.Business\File.Business.csproj", "{AA78B164-2323-4A0D-8219-5298C1DE125F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File.Utility", "File.Utility\File.Utility.csproj", "{7C0C3BB3-494B-4A49-B6A0-0A3C6D0283AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{AA78B164-2323-4A0D-8219-5298C1DE125F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA78B164-2323-4A0D-8219-5298C1DE125F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA78B164-2323-4A0D-8219-5298C1DE125F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0C3BB3-494B-4A49-B6A0-0A3C6D0283AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0C3BB3-494B-4A49-B6A0-0A3C6D0283AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0C3BB3-494B-4A49-B6A0-0A3C6D0283AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0C3BB3-494B-4A49-B6A0-0A3C6D0283AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{9A331407-A3BF-4E75-85D4-E071714237ED} = {80B3AC05-896C-4C1A-8D45-9B3CC769D798}
 		{2AB08E05-F46E-4AF5-A140-821137F8D41C} = {3D4BD8DF-49DA-420D-B340-D5FB8844B590}
 		{AA78B164-2323-4A0D-8219-5298C1DE125F} = {4944A9FD-DF30-49F4-85F9-EEB2E645224F}
+		{7C0C3BB3-494B-4A49-B6A0-0A3C6D0283AF} = {80B3AC05-896C-4C1A-8D45-9B3CC769D798}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64856DE1-26D0-4514-9CE4-893C2A6A639D}
