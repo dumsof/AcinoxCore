@@ -26,13 +26,13 @@ namespace Acinox
             while (!stoppingToken.IsCancellationRequested)
             {
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("LA TAREA INICIO EL PROCESO A LAS: {time}", DateTimeOffset.Now);
 
                 var societies = this.societieBusiness.GetSocieties();
 
                 foreach (var societie in societies)
                 {
-                    _logger.LogInformation($" Codigo={societie.Cod} Razón Social={societie.Razons}", DateTimeOffset.Now);
+                    _logger.LogInformation($"Código={societie.Cod} Razón Social={societie.Razons} NIt={societie.Nif} Moneda={societie.CodMoneda}", DateTimeOffset.Now);
                 }
                 await Task.Delay(60000 * 5, stoppingToken);
             }
