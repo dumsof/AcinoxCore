@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business\" />
-    <Folder Include="IBusiness\" />
+    <ProjectReference Include="..\File.Entities\File.Entities.csproj" />
+    <ProjectReference Include="..\File.Repositorie\File.Repositorie.csproj" />
+    <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>
 
 </Project>

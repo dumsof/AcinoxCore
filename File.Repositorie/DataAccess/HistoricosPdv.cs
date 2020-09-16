@@ -1,0 +1,104 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace File.Repositorie.DataAccess
+{
+    public partial class HistoricosPdv
+    {
+        public string FechaSys { get; set; }
+        public string HoraSys { get; set; }
+        public string OrdenNro { get; set; }
+        public string ComandaNro { get; set; }
+        public string IdOpcion { get; set; }
+        public string CodUsuario { get; set; }
+        public string NtdCaja { get; set; }
+        public string IdItem { get; set; }
+        public string IdExtitm { get; set; }
+        public string IdLocal { get; set; }
+        public string IdGenerico { get; set; }
+        public string IdMaquila { get; set; }
+        public string DescGen { get; set; }
+        public string IdUnimed { get; set; }
+        public decimal? IdFactor { get; set; }
+        public decimal? Cant1 { get; set; }
+        public decimal? Cant2 { get; set; }
+        public decimal? CantTalla1 { get; set; }
+        public decimal? CantTalla2 { get; set; }
+        public decimal? CantTalla3 { get; set; }
+        public decimal? CantTalla4 { get; set; }
+        public decimal? CantTalla5 { get; set; }
+        public decimal? CantTalla6 { get; set; }
+        public decimal? CantTalla7 { get; set; }
+        public decimal? CantTalla8 { get; set; }
+        public decimal? CantTalla9 { get; set; }
+        public decimal? CantTalla10 { get; set; }
+        public string IdUbica { get; set; }
+        public string IdLote { get; set; }
+        public string FechaFifo { get; set; }
+        public string FechaVctoLote { get; set; }
+        public string IdCpto { get; set; }
+        public string IdLipre { get; set; }
+        public string IdLides { get; set; }
+        public string IdUnidad { get; set; }
+        public decimal? PrecioUni { get; set; }
+        public decimal? VlrtotBru { get; set; }
+        public decimal? Dscto1 { get; set; }
+        public decimal? VlrdesUni1 { get; set; }
+        public decimal? VlrdesLinea1 { get; set; }
+        public decimal? Dscto2 { get; set; }
+        public decimal? VlrdesUni2 { get; set; }
+        public decimal? VlrdesLinea2 { get; set; }
+        public decimal? DsctoGlobal1 { get; set; }
+        public decimal? VlrdesGlobal1 { get; set; }
+        public decimal? DsctoGlobal2 { get; set; }
+        public decimal? VlrdesGlobal2 { get; set; }
+        public decimal? TasaIva { get; set; }
+        public decimal? VlrivaUni { get; set; }
+        public decimal? Vlriva { get; set; }
+        public decimal? Impocon1Uni { get; set; }
+        public decimal? Vlrimpcon1 { get; set; }
+        public decimal? Impocon2Uni { get; set; }
+        public decimal? Vlrimpcon2 { get; set; }
+        public decimal? Vlrnet { get; set; }
+        public string IdIncluido { get; set; }
+        public string IdImp { get; set; }
+        public string IdPrecioMod { get; set; }
+        public string IndimpComanda { get; set; }
+        public string IdTerc { get; set; }
+        public string IdSuc { get; set; }
+        public decimal? Vlrcopago { get; set; }
+        public string UserAutorizo { get; set; }
+        public string UserIng { get; set; }
+        public string FechaIng { get; set; }
+        public string HoraIng { get; set; }
+        public string UserMod { get; set; }
+        public string FechaMod { get; set; }
+        public string HoraMod { get; set; }
+        public decimal? Vlrobsequio { get; set; }
+        public decimal? Vlrpuntos { get; set; }
+        public decimal? PrecioExc { get; set; }
+        public string IdMotivo { get; set; }
+        public string DescGenerico1 { get; set; }
+        public string IdCum { get; set; }
+        public string DescGenerico2 { get; set; }
+        public string RefPdvte1 { get; set; }
+        public string OrdenPdvte1 { get; set; }
+        public string VendPdvte1 { get; set; }
+        public string CoPdvte1 { get; set; }
+        public string CajaPdvte1 { get; set; }
+        public string NtdCajaPdvte1 { get; set; }
+        public string EmpFc { get; set; }
+        public string CoFc { get; set; }
+        public string TipoDocFc { get; set; }
+        public string NroDocFc { get; set; }
+        public string IdTercPdvte1 { get; set; }
+        public string IdSucPdvte1 { get; set; }
+        public string IdNomcli { get; set; }
+        public string IdNitcli { get; set; }
+        public string IdLiprePdvte1 { get; set; }
+        public string IdLidesPdvte1 { get; set; }
+        public string IdTurno { get; set; }
+        public string FechaCaja { get; set; }
+        public string FechaGen { get; set; }
+    }
+}
