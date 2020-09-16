@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "Acinox": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

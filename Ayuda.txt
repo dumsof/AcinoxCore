@@ -1,0 +1,3 @@
+#como crear los objetos de la base de datos.
+
+Scaffold-DbContext "server=localhost;port=3306;user=admin;password=Dar11802Dum.;database=bd_biable01" MySql.Data.EntityFrameworkCore -OutputDir DataAccess -f
