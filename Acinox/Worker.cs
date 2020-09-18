@@ -52,6 +52,6 @@
             await base.StopAsync(cancellationToken);
         }
 
-        private bool EsHoraProceso() => this.configHoraProceso.Value.Hora24 >= DateTime.Now.Hour && this.configHoraProceso.Value.Minuto60 >= DateTime.Now.Minute;
+        private bool EsHoraProceso() => this.configHoraProceso.Value.Hora24 == DateTime.Now.Hour && this.configHoraProceso.Value.Minuto60 == DateTime.Now.Minute;
     }
 }
