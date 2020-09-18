@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using File.Business.Business;
+﻿using File.Business.Business;
 using File.Business.IBusiness;
 using File.Repositorie.IRepositorie;
 using File.Repositorie.Repositorie;
+using File.Utility;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NLog;
+using Serilog;
+using Serilog.Events;
+using System;
 
 namespace Acinox
 {
@@ -19,8 +17,21 @@ namespace Acinox
         //Url:https://geeks.ms/jorge/2020/03/02/creando-un-servicio-windows-con-net-core-3-1/
         public static void Main(string[] args)
         {
-            NlogConfig();
-            CreateHostBuilder(args).Build().Run();
+            ConfiguracionSeriLog();
+
+            try
+            {
+                Log.Information("Starting up the service");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "There was a problem starting the service");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -31,14 +42,17 @@ namespace Acinox
                     services.AddSingleton<ISocietieRepositorie, SocietieRepositorie>();
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddHostedService<Worker>();
-                    
-                });
+                })
+                .UseSerilog(); //Dum: cuando se habilita no se presentan los mensaje en la cosola se guardan en el archivo de Log
 
-        public static void NlogConfig()
+        private static void ConfiguracionSeriLog()
         {
-            //se utiliza nlog para crear un archivo de log, Install-Package NLog -Version 4.6.7.
-            //linea que permite optener la configuracion para nlog, por ejemplo ruta archivo nombre archivo.
-            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.File($"{Utility.PathAplication}\\{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}-LogAplication.txt")
+                .CreateLogger();
         }
     }
 }

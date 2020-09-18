@@ -3,7 +3,6 @@
     using File.Business.Business;
     using File.Business.IBusiness;
     using File.Utility;
-    using LoggerService;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using System;
@@ -17,21 +16,17 @@
         private readonly ILogger<Worker> _logger;
         private readonly ISocietieBusiness societieBusiness;
         private readonly IManagementFile managementFile;
-        private readonly ILoggerManager loggerNlog;
 
         public Worker(ILogger<Worker> logger, ISocietieBusiness societieBusiness)
         {
             _logger = logger;
-            _logger.LogInformation("Constructor servicio");
-            this.societieBusiness = societieBusiness; 
+            this.societieBusiness = societieBusiness;
             this.managementFile = new ManagementFile();
-            this.loggerNlog = new LoggerManager();
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             //DUM: se inicia las variables
-            _logger.LogInformation("Inicia servicio");
             await base.StartAsync(cancellationToken);
         }
 
@@ -39,17 +34,9 @@
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                try
-                {
-                    this.loggerNlog.LogInfo($"INICIO EL PROCESO A LAS: {DateTimeOffset.Now}");
-                    GenerarFileSociedades();
-                    this.loggerNlog.LogInfo($"FINALIZO EL PROCESO CON EXITO: {DateTimeOffset.Now}");
-                }
-                catch (Exception ex)
-                {
-                    this.loggerNlog.LogError($"ERROR MENSAJE : {ex.Message}");
-                    this.loggerNlog.LogError($"ERROR DETALLE  : {ex.StackTrace} {ex.InnerException}");
-                }
+                _logger.LogInformation($"INICIO EL PROCESO A LAS: {DateTimeOffset.Now}");
+                GenerarFileSociedades();
+                _logger.LogInformation($"FINALIZO EL PROCESO CON EXITO: {DateTimeOffset.Now}");
 
                 await Task.Delay(60000 * 5, stoppingToken);
             }
@@ -63,13 +50,10 @@
 
         private void GenerarFileSociedades()
         {
-            _logger.LogInformation("LA TAREA INICIO EL PROCESO A LAS: {time}", DateTimeOffset.Now);
-           
             var societies = this.societieBusiness.GetSocieties();
 
             if (societies != null)
             {
-
                 this.CrearRuta();
                 XmlWriterSettings setting = new XmlWriterSettings() { Indent = true };
                 setting.ConformanceLevel = ConformanceLevel.Auto;
@@ -115,7 +99,6 @@
             if (File.Exists($"{rutaArchivoProcesado}\\{nombreArchivo}"))
             {
                 File.Delete($"{rutaArchivoProcesado}\\{nombreArchivo}");
-
             }
             File.Move($"{rutaArchivoGenerado}\\{nombreArchivo}", $"{rutaArchivoProcesado}\\{nombreArchivo}");
         }
