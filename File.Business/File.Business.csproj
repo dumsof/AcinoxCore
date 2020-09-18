@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="15.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\File.Entities\File.Entities.csproj" />
     <ProjectReference Include="..\File.Repositorie\File.Repositorie.csproj" />
     <ProjectReference Include="..\File.Utility\File.Utility.csproj" />

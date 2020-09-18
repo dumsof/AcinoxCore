@@ -41,6 +41,7 @@ namespace Acinox
                 {
                     services.AddSingleton<ISocietieRepositorie, SocietieRepositorie>();
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
+                    services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddHostedService<Worker>();
                 })
                 .UseSerilog(); //Dum: cuando se habilita no se presentan los mensaje en la cosola se guardan en el archivo de Log

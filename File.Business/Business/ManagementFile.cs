@@ -1,18 +1,34 @@
-﻿
-
-namespace File.Business.Business
+﻿namespace File.Business.Business
 {
+    using CsvHelper;
     using File.Business.IBusiness;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
     using File.Utility;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
     using System.Text;
-    using System.Linq;
     using System.Xml;
 
     public class ManagementFile : IManagementFile
     {
+        public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas)
+        {
+            var path = $"{Utility.PathFileGenerated}\\{nameFile}.csv";
+            using (StreamWriter sw = new StreamWriter(path, false, new UTF8Encoding(true)))
+            using (CsvWriter cw = new CsvWriter(sw, CultureInfo.CurrentCulture))
+            {
+                cw.WriteHeader<T>();
+                cw.NextRecord();
+                foreach (var data in datas)
+                {
+                    cw.WriteRecord<T>(data);
+                    cw.NextRecord();
+                }
+            }
+
+            return true;
+        }
+
         public bool SaveFile(string nameFolder, string nameFile, XmlDocument dataFileXml)
         {
             //FileStream fileStream = new FileStream("file.xml", FileMode.Create);
@@ -24,6 +40,29 @@ namespace File.Business.Business
             return true;
         }
 
+        public void CreatedPathFile()
+        {
+            if (!Directory.Exists(Utility.PathFileGenerated))
+            {
+                Directory.CreateDirectory(Utility.PathFileGenerated);
+            }
+            if (!Directory.Exists(Utility.PathFileProcessed))
+            {
+                Directory.CreateDirectory(Utility.PathFileProcessed);
+            }
+        }
+
+        public void MoveFileUpLoadFtp(string nameFileWithExtension)
+        {
+            string pathFileGenerated = Utility.PathFileGenerated ;
+            string pathFileProcessed = Utility.PathFileProcessed;
+            if (File.Exists($"{pathFileProcessed}\\{nameFileWithExtension}"))
+            {
+                File.Delete($"{pathFileProcessed}\\{nameFileWithExtension}");
+            }
+            File.Move($"{pathFileGenerated}\\{nameFileWithExtension}", $"{pathFileProcessed}\\{nameFileWithExtension}");
+        }
+
         public bool UnloadFileFtp(string nameFolder)
         {
             DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathAplication}\\{nameFolder}");
@@ -31,11 +70,6 @@ namespace File.Business.Business
             string nombreFolderArchivoProcesado = "ArchivoProcesado";
             foreach (var file in files)
             {
-
-
-
-
-
                 Directory.Move($"{Utility.PathAplication}\\{nameFolder}\\{file.Name}", $"{Utility.PathAplication}\\{nombreFolderArchivoProcesado}\\{file.Name}");
             }
 

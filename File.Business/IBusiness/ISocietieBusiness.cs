@@ -5,6 +5,6 @@
 
     public interface ISocietieBusiness
     {
-        public IEnumerable<SocietieEntitie> GetSocieties();
+        public void ProcessSocietie();
     }
 }

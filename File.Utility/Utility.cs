@@ -1,7 +1,6 @@
 ﻿namespace File.Utility
 {
     using System;
-   
 
     public static class Utility
     {
@@ -13,6 +12,21 @@
                  AppDomain.CurrentDomain.BaseDirectory : AppDomain.CurrentDomain.RelativeSearchPath;
             }
         }
-       
+
+        public static string PathFileGenerated
+        {
+            get
+            {
+                return $"{PathAplication}\\ArchivosGenerados";
+            }
+        }
+
+        public static string PathFileProcessed
+        {
+            get
+            {
+                return $"{PathAplication}\\ArchivoProcesado";
+            }
+        }
     }
 }

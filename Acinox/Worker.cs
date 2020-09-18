@@ -1,15 +1,11 @@
 ﻿namespace Acinox
 {
-    using File.Business.Business;
     using File.Business.IBusiness;
-    using File.Utility;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using System;
-    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Xml;
 
     public class Worker : BackgroundService
     {
@@ -17,16 +13,17 @@
         private readonly ISocietieBusiness societieBusiness;
         private readonly IManagementFile managementFile;
 
-        public Worker(ILogger<Worker> logger, ISocietieBusiness societieBusiness)
+        public Worker(ILogger<Worker> logger, ISocietieBusiness societieBusiness, IManagementFile managementFile)
         {
             _logger = logger;
             this.societieBusiness = societieBusiness;
-            this.managementFile = new ManagementFile();
+            this.managementFile = managementFile;
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             //DUM: se inicia las variables
+            this.managementFile.CreatedPathFile();
             await base.StartAsync(cancellationToken);
         }
 
@@ -34,9 +31,9 @@
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation($"INICIO EL PROCESO A LAS: {DateTimeOffset.Now}");
-                GenerarFileSociedades();
-                _logger.LogInformation($"FINALIZO EL PROCESO CON EXITO: {DateTimeOffset.Now}");
+                _logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
+                this.societieBusiness.ProcessSocietie();
+                _logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
 
                 await Task.Delay(60000 * 5, stoppingToken);
             }
@@ -46,61 +43,6 @@
         {
             _logger.LogInformation("Proces stops");
             await base.StopAsync(cancellationToken);
-        }
-
-        private void GenerarFileSociedades()
-        {
-            var societies = this.societieBusiness.GetSocieties();
-
-            if (societies != null)
-            {
-                this.CrearRuta();
-                XmlWriterSettings setting = new XmlWriterSettings() { Indent = true };
-                setting.ConformanceLevel = ConformanceLevel.Auto;
-                string path = $"{Utility.PathAplication}\\ArchivosGenerados";
-
-                using (XmlWriter writer = XmlWriter.Create($"{path}\\sociedades.xml", setting))
-                {
-                    writer.WriteStartElement("sociedades");
-                    foreach (var s in societies)
-                    {
-                        writer.WriteStartElement("sociedad");
-                        writer.WriteElementString("cod", s.Cod);
-                        writer.WriteElementString("razons", s.Razons);
-                        writer.WriteElementString("nit", s.Nif);
-                        writer.WriteElementString("codmoneda", s.CodMoneda);
-                        writer.WriteEndElement();
-                    }
-                    writer.WriteEndElement();
-                    writer.Flush();
-                }
-
-                this.MoverArchivo("sociedades.xml");
-            }
-        }
-
-        private void CrearRuta()
-        {
-            string rutaArchivoGenerado = Utility.PathAplication + "\\ArchivosGenerados";
-            if (!Directory.Exists(rutaArchivoGenerado))
-            {
-                Directory.CreateDirectory(rutaArchivoGenerado);
-            }
-        }
-
-        private void MoverArchivo(string nombreArchivo)
-        {
-            string rutaArchivoGenerado = Utility.PathAplication + "\\ArchivosGenerados";
-            string rutaArchivoProcesado = Utility.PathAplication + "\\ArchivoProcesado";
-            if (!Directory.Exists(rutaArchivoProcesado))
-            {
-                Directory.CreateDirectory(rutaArchivoProcesado);
-            }
-            if (File.Exists($"{rutaArchivoProcesado}\\{nombreArchivo}"))
-            {
-                File.Delete($"{rutaArchivoProcesado}\\{nombreArchivo}");
-            }
-            File.Move($"{rutaArchivoGenerado}\\{nombreArchivo}", $"{rutaArchivoProcesado}\\{nombreArchivo}");
         }
     }
 }
