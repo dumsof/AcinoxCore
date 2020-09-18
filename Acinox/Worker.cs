@@ -22,9 +22,17 @@
         public Worker(ILogger<Worker> logger, ISocietieBusiness societieBusiness)
         {
             _logger = logger;
-            this.societieBusiness = societieBusiness; //new SocietieBusiness();
+            _logger.LogInformation("Constructor servicio");
+            this.societieBusiness = societieBusiness; 
             this.managementFile = new ManagementFile();
             this.loggerNlog = new LoggerManager();
+        }
+
+        public override async Task StartAsync(CancellationToken cancellationToken)
+        {
+            //DUM: se inicia las variables
+            _logger.LogInformation("Inicia servicio");
+            await base.StartAsync(cancellationToken);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
