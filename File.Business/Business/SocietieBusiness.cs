@@ -23,7 +23,7 @@
         public void ProcessSocietie()
         {
             var societies = this.GetSocieties();
-            if (societies != null)
+            if (societies == null)
             {
                 this.logger.LogInformation("No existe información de las sociedades");
                 return;
