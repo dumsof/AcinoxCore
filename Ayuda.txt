@@ -2,6 +2,22 @@
 
 Scaffold-DbContext "server=localhost;port=3306;user=admin;password=Dar11802Dum.;database=bd_biable01" MySql.Data.EntityFrameworkCore -OutputDir DataAccess -f
 
-#crear el servicio en la ventana de comando
+--INSTALACIÓN SERVICIO
+#1.crear el servicio en la ventana de comando
 sc create ServiceAcinoxUploadFileFtp binPath=E:\DUMSOFT\AXESOR\ServicioAcinox\Acinox.exe start= auto 
+
+#2. despues de crear se puede agregar la descripción de lo que hace el servicio.
+sc description ServiceAcinoxUploadFileFtp "Servicio que permite crear archivos en formato .csv y subirlos a un FTP para que sirvan de insumo para otro sistema de información."
+
+#3. hace que el servicio inicie la ejecución
+sc start ServiceAcinoxUploadFileFtp
+
+#Borrar servicio
+#1. se para el servicio
+sc stop ServiceAcinoxUploadFileFtp
+#2. se borra el servicio
 sc delete ServiceAcinoxUploadFileFtp binPath=E:\DUMSOFT\AXESOR\ServicioAcinox\Acinox.exe
+--FIN INSTALACIÓN
+
+
+

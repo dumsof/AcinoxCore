@@ -16,7 +16,7 @@
             }
         }
 
-        public static string PathFileGenerated
+        public static string PathFolderGenerated
         {
             get
             {
@@ -25,12 +25,21 @@
             }
         }
 
-        public static string PathFileProcessed
+        public static string PathFolderProcessed
         {
             get
             {
                 CofigurationJson();
                 return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoProcesado").Value}";
+            }
+        }
+
+        public static string PathFolderLogs
+        {
+            get
+            {
+                CofigurationJson();
+                return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaLog").Value}";
             }
         }
 

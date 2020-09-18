@@ -9,9 +9,7 @@ namespace File.Business.IBusiness
 
         public void CreatedPathFile();
 
-        public void MoveFileUpLoadFtp(string nameFileWithExtension);
-
-        public bool SaveFile(string nameFolder, string nameFile, XmlDocument dataFileXml);
+        public void MoveFileUpLoadFtp(string nameFileWithExtension);        
 
         public bool UnloadFileFtp(string nameFolder);
     }

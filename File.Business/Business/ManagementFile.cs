@@ -7,13 +7,12 @@
     using System.Globalization;
     using System.IO;
     using System.Text;
-    using System.Xml;
 
     public class ManagementFile : IManagementFile
     {
         public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas)
         {
-            var path = $"{Utility.PathFileGenerated}\\{nameFile}.csv";
+            var path = $"{Utility.PathFolderGenerated}\\{nameFile}.csv";
             using (StreamWriter sw = new StreamWriter(path, false, new UTF8Encoding(true)))
             using (CsvWriter cw = new CsvWriter(sw, CultureInfo.CurrentCulture))
             {
@@ -29,33 +28,26 @@
             return true;
         }
 
-        public bool SaveFile(string nameFolder, string nameFile, XmlDocument dataFileXml)
-        {
-            //FileStream fileStream = new FileStream("file.xml", FileMode.Create);
-            //XmlWriterSettings settings = new XmlWriterSettings() { Indent = true };
-            //XmlWriter writer = XmlWriter.Create(fileStream, settings);
-
-            dataFileXml.Save($"{Utility.PathAplication}\\{nameFolder}\\{nameFile}");
-
-            return true;
-        }
-
         public void CreatedPathFile()
         {
-            if (!Directory.Exists(Utility.PathFileGenerated))
+            if (!Directory.Exists(Utility.PathFolderGenerated))
             {
-                Directory.CreateDirectory(Utility.PathFileGenerated);
+                Directory.CreateDirectory(Utility.PathFolderGenerated);
             }
-            if (!Directory.Exists(Utility.PathFileProcessed))
+            if (!Directory.Exists(Utility.PathFolderProcessed))
             {
-                Directory.CreateDirectory(Utility.PathFileProcessed);
+                Directory.CreateDirectory(Utility.PathFolderProcessed);
+            }
+            if (!Directory.Exists(Utility.PathFolderLogs))
+            {
+                Directory.CreateDirectory(Utility.PathFolderLogs);
             }
         }
 
         public void MoveFileUpLoadFtp(string nameFileWithExtension)
         {
-            string pathFileGenerated = Utility.PathFileGenerated ;
-            string pathFileProcessed = Utility.PathFileProcessed;
+            string pathFileGenerated = Utility.PathFolderGenerated;
+            string pathFileProcessed = Utility.PathFolderProcessed;
             if (File.Exists($"{pathFileProcessed}\\{nameFileWithExtension}"))
             {
                 File.Delete($"{pathFileProcessed}\\{nameFileWithExtension}");

@@ -59,7 +59,7 @@
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-                .WriteTo.File($"{Utility.PathAplication}\\{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}-LogAplication.txt")
+                .WriteTo.File($"{Utility.PathFolderLogs}\\{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}-LogAplication.txt")
                 .CreateLogger();
         }
 
