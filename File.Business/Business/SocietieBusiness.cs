@@ -3,7 +3,6 @@
     using File.Business.IBusiness;
     using File.Entities;
     using File.Repositorie.IRepositorie;
-    using File.Repositorie.Repositorie;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -11,9 +10,9 @@
     {
         private readonly ISocietieRepositorie societieRepositorie;
 
-        public SocietieBusiness()
+        public SocietieBusiness(ISocietieRepositorie societieRepositorie)
         {
-            this.societieRepositorie = new SocietieRepositorie();
+            this.societieRepositorie = societieRepositorie; 
         }
 
         public IEnumerable<SocietieEntitie> GetSocieties()
