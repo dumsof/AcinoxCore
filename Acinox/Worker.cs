@@ -2,6 +2,7 @@
 {
     using File.Business.IBusiness;
     using File.Entities;
+    using File.Utility;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -35,14 +36,14 @@
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (this.EsHoraProceso())
+                if (Utility.IsHourProced() || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
                     _logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
                     this.societieBusiness.ProcessSocietie();
                     _logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
                 }
 
-                await Task.Delay(60000 * 1, stoppingToken);
+                await Task.Delay(60000 * this.configHoraProceso.Value.ProcesarCadaMinuto, stoppingToken);
             }
         }
 
@@ -51,7 +52,5 @@
             _logger.LogInformation("Proces stops");
             await base.StopAsync(cancellationToken);
         }
-
-        private bool EsHoraProceso() => this.configHoraProceso.Value.Hora24 == DateTime.Now.Hour && this.configHoraProceso.Value.Minuto60 == DateTime.Now.Minute;
     }
 }

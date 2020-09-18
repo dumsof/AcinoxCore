@@ -1,9 +1,12 @@
 ﻿namespace File.Utility
 {
+    using Microsoft.Extensions.Configuration;
     using System;
 
     public static class Utility
     {
+        private static IConfigurationRoot Configuration { get; set; }
+
         public static string PathAplication
         {
             get
@@ -17,7 +20,8 @@
         {
             get
             {
-                return $"{PathAplication}\\ArchivosGenerados";
+                CofigurationJson();
+                return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoGenerado").Value}";
             }
         }
 
@@ -25,8 +29,35 @@
         {
             get
             {
-                return $"{PathAplication}\\ArchivoProcesado";
+                CofigurationJson();
+                return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoProcesado").Value}";
             }
+        }
+
+        public static int HourFormat24
+        {
+            get
+            {
+                TimeSpan timeOfDay = DateTime.Now.TimeOfDay;
+                return timeOfDay.Hours;
+            }
+        }
+
+        public static bool IsHourProced()
+        {
+            CofigurationJson();
+            var hour24 = int.Parse(Configuration.GetSection("ConfiguracionHoraEjecucionProceso:Hora24").Value);
+            var minute60 = int.Parse(Configuration.GetSection("ConfiguracionHoraEjecucionProceso:Minuto60").Value);
+
+            return hour24 == HourFormat24 && minute60 == DateTime.Now.Minute;
+        }
+
+        private static void CofigurationJson()
+        {
+            var builder = new ConfigurationBuilder()
+           .SetBasePath(PathAplication)
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            Configuration = builder.Build();
         }
     }
 }
