@@ -48,7 +48,9 @@
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.Configure<ConfiguracionHoraEjecucionProceso>(Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
                     services.AddHostedService<Worker>();
+
                 })
+            
                 .UseSerilog(); //Dum: cuando se habilita no se presentan los mensaje en la cosola se guardan en el archivo de Log
 
         private static void ConfiguracionSeriLog()
