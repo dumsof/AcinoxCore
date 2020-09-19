@@ -11,13 +11,15 @@
     {
         private readonly ISocietieRepositorie societieRepositorie;
         private readonly IManagementFile managementFile;
+        private readonly IManagementFtp managementFtp;
         private readonly ILogger<SocietieBusiness> logger;
 
-        public SocietieBusiness(ILogger<SocietieBusiness> logger, ISocietieRepositorie societieRepositorie, IManagementFile managementFile)
+        public SocietieBusiness(ILogger<SocietieBusiness> logger, ISocietieRepositorie societieRepositorie, IManagementFile managementFile, IManagementFtp managementFtp)
         {
             this.logger = logger;
             this.societieRepositorie = societieRepositorie;
             this.managementFile = managementFile;
+            this.managementFtp = managementFtp;
         }
 
         public void ProcessSocietie()
@@ -30,6 +32,7 @@
             }
 
             this.managementFile.CreateFileCsv<SocietieEntitie>("sociedades", societies);
+            this.managementFtp.UnloadFileFtp("");
             this.managementFile.MoveFileUpLoadFtp("sociedades.csv");
 
         }

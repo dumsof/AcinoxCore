@@ -37,7 +37,7 @@
                 Log.CloseAndFlush();
             }
         }
-
+       
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseWindowsService()
@@ -46,7 +46,10 @@
                     services.AddSingleton<ISocietieRepositorie, SocietieRepositorie>();
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IManagementFile, ManagementFile>();
+                    services.AddSingleton<IManagementFtp, ManagementFtp>();
+                    
                     services.Configure<ConfiguracionHoraEjecucionProceso>(Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
+                    services.Configure<ConfiguracionFtp>(Configuration.GetSection("ConfiguracionFtp"));
                     services.AddHostedService<Worker>();
 
                 })

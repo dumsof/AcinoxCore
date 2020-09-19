@@ -28,6 +28,7 @@
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             //DUM: se inicia las variables
+            _logger.LogInformation("Proces start");
             this.managementFile.CreatedPathFile();
             await base.StartAsync(cancellationToken);
         }
