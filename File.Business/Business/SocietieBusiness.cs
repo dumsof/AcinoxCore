@@ -2,6 +2,7 @@
 {
     using File.Business.IBusiness;
     using File.Entities;
+    using File.Entities.sociedad;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
@@ -32,8 +33,12 @@
             }
 
             this.managementFile.CreateFileCsv<SocietieEntitie>("sociedades", societies);
-            this.managementFtp.UnloadFileFtp("");
-            this.managementFile.MoveFileUpLoadFtp("sociedades.csv");
+
+            var societiesXml = new Societie { Sociedades = societies.ToList() };
+            this.managementFile.CreateFileXml<Societie>("sociedades", societiesXml);
+            this.managementFtp.UnloadAllFileFolderFtp();
+            this.managementFile.MoveAllFileFolder();
+
 
         }
 
@@ -50,6 +55,6 @@
             }).ToList();
 
             return societie;
-        }
+        }      
     }
 }

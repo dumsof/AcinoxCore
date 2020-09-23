@@ -2,6 +2,8 @@
 {
     public interface IManagementFtp
     {
-        public bool UnloadFileFtp(string nameFolder);
+        public bool UnloadFileFtp(string nameFileExtension);
+
+        public bool UnloadAllFileFolderFtp();
     }
 }

@@ -6,13 +6,16 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Text;
+    using System.Xml.Serialization;
 
     public class ManagementFile : IManagementFile
     {
         public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas)
         {
             var path = $"{Utility.PathFolderGenerated}\\{nameFile}.csv";
+            this.DeleteFile(path);
             using (StreamWriter sw = new StreamWriter(path, false, new UTF8Encoding(true)))
             using (CsvWriter cw = new CsvWriter(sw, CultureInfo.CurrentCulture))
             {
@@ -23,6 +26,20 @@
                     cw.WriteRecord<T>(data);
                     cw.NextRecord();
                 }
+            }
+
+            return true;
+        }
+
+        public bool CreateFileXml<T>(string nameFile, T datas)
+        {
+            var path = $"{Utility.PathFolderGenerated}\\{nameFile}.xml";
+            this.DeleteFile(path);
+
+            var serializer = new XmlSerializer(typeof(T));
+            using (var stream = new StreamWriter(path))
+            {
+                serializer.Serialize(stream, datas);
             }
 
             return true;
@@ -55,17 +72,23 @@
             File.Move($"{pathFileGenerated}\\{nameFileWithExtension}", $"{pathFileProcessed}\\{nameFileWithExtension}");
         }
 
-        public bool UnloadFileFtp(string nameFolder)
+        public bool MoveAllFileFolder()
         {
-            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathAplication}\\{nameFolder}");
-            FileInfo[] files = directorio.GetFiles("*.xml");
-            string nombreFolderArchivoProcesado = "ArchivoProcesado";
+            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\");           
+            string[] extensioFile = Utility.ExtesionFiles?.Split(";");
+            FileInfo[] files = directorio.EnumerateFiles().Where(c => extensioFile.Contains(c.Extension.ToLower())).ToArray();
             foreach (var file in files)
             {
-                Directory.Move($"{Utility.PathAplication}\\{nameFolder}\\{file.Name}", $"{Utility.PathAplication}\\{nombreFolderArchivoProcesado}\\{file.Name}");
+                this.DeleteFile($"{Utility.PathFolderProcessed}\\{file.Name}");
+                Directory.Move($"{Utility.PathFolderGenerated}\\{file.Name}", $"{Utility.PathFolderProcessed}\\{file.Name}");
             }
 
             return true;
+        }
+
+        private void DeleteFile(string pathFile)
+        {
+            File.Delete(pathFile);
         }
     }
 }

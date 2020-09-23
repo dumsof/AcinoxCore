@@ -43,6 +43,15 @@
             }
         }
 
+        public static string ExtesionFiles
+        {
+            get
+            {
+                CofigurationJson();
+                return $"{Configuration.GetSection("ConfiguracionFtp:TiposArchivoEnviarFtp").Value}";
+            }
+        }
+
         public static int HourFormat24
         {
             get

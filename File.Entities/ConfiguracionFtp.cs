@@ -9,5 +9,7 @@
         public string PasswordFtp { get; set; }
 
         public string RutaCarpetaServidorFtp { get; set; }
+
+        public string TiposArchivoEnviarFtp { get; set; }
     }
 }
