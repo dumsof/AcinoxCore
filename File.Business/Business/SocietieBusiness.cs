@@ -1,7 +1,6 @@
 ﻿namespace File.Business.Business
 {
     using File.Business.IBusiness;
-    using File.Entities;
     using File.Entities.sociedad;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
@@ -38,8 +37,6 @@
             this.managementFile.CreateFileXml<Societie>("sociedades", societiesXml);
             this.managementFtp.UnloadAllFileFolderFtp();
             this.managementFile.MoveAllFileFolder();
-
-
         }
 
         private IEnumerable<SocietieEntitie> GetSocieties()
@@ -55,6 +52,6 @@
             }).ToList();
 
             return societie;
-        }      
+        }
     }
 }

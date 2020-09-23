@@ -74,7 +74,7 @@
 
         public bool MoveAllFileFolder()
         {
-            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\");           
+            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\");
             string[] extensioFile = Utility.ExtesionFiles?.Split(";");
             FileInfo[] files = directorio.EnumerateFiles().Where(c => extensioFile.Contains(c.Extension.ToLower())).ToArray();
             foreach (var file in files)

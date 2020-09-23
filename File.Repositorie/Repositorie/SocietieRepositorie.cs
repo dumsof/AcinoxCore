@@ -27,7 +27,7 @@
             if (disposing)
             {
                 this.dbContext.Dispose();
-            }            
+            }
         }
 
         public void Dispose()
