@@ -47,6 +47,7 @@
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();
+                    services.AddSingleton<IValidationXsd, ValidationXsd>();
                     
                     services.Configure<ConfiguracionHoraEjecucionProceso>(Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
                     services.Configure<ConfiguracionFtp>(Configuration.GetSection("ConfiguracionFtp"));

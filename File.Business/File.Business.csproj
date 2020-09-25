@@ -16,4 +16,10 @@
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xsd\sociedades.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
