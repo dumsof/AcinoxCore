@@ -10,14 +10,14 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class Worker : BackgroundService
+    public class GenerateFile : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger<GenerateFile> _logger;
         private readonly IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso;
         private readonly ISocietieBusiness societieBusiness;
         private readonly IManagementFile managementFile;
 
-        public Worker(ILogger<Worker> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso, ISocietieBusiness societieBusiness, IManagementFile managementFile)
+        public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso, ISocietieBusiness societieBusiness, IManagementFile managementFile)
         {
             _logger = logger;
             this.configHoraProceso = configHoraProceso;

@@ -19,6 +19,8 @@
 
         public IEnumerable<Empresas> GetEmpresas()
         {
+            //si no hay forma de identificar que es lo nuevo se debe partir los archivos para que se generen 10 mil registros.
+
             List<Empresas> societie;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())

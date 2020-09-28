@@ -1,8 +1,6 @@
 ﻿namespace File.Repositorie.DataAccessPqa
 {
-    using System;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata;
 
     public partial class PQADbContext : DbContext
     {
@@ -47,7 +45,6 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-
                 optionsBuilder.UseSqlServer("Server=DARWIN-PC;user=sa;password=123;database=PQA");
             }
         }

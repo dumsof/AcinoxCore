@@ -25,12 +25,12 @@
             CofigurationJson();
             try
             {
-                Log.Information("Starting up the service");
+                Log.Information("Inicio la subida del servicio.");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "There was a problem starting the service");
+                Log.Fatal(ex, "Hay un problema al iniciar el servicio, por favor verifique.");
             }
             finally
             {
@@ -46,13 +46,14 @@
                     services.AddSingleton<ISocietieRepositorie, SocietieRepositorie>();
                     services.AddSingleton<ISocietiePqaRepositorie, SocietiePqaRepositorie>();
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
+
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();
                     services.AddSingleton<IValidationXsd, ValidationXsd>();
                     
                     services.Configure<ConfiguracionHoraEjecucionProceso>(Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
                     services.Configure<ConfiguracionFtp>(Configuration.GetSection("ConfiguracionFtp"));
-                    services.AddHostedService<Worker>();
+                    services.AddHostedService<GenerateFile>();
 
                 })
             
