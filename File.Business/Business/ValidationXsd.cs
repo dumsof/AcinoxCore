@@ -1,9 +1,9 @@
 ﻿namespace File.Business.Business
 {
-    using System.Xml.Linq;
-    using System.Xml.Schema;
     using File.Business.IBusiness;
     using File.Utility;
+    using System.Xml.Linq;
+    using System.Xml.Schema;
 
     public class ValidationXsd : IValidationXsd
     {
@@ -18,7 +18,6 @@
                 {
                     result = $"EL ARCHIVO [XML] CONTIENE LOS SIGUIENTES ERRORES : {e.Message}";
                 });
-
 
             return result;
         }

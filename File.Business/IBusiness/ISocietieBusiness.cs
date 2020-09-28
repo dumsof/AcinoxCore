@@ -3,5 +3,7 @@
     public interface ISocietieBusiness
     {
         public void ProcessSocietie();
+
+        public void ProcessSocietiePQA();
     }
 }

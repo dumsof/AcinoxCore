@@ -5,7 +5,7 @@
 
     [XmlRoot("sociedades")]
     public class Societie
-    {        
+    {
         [XmlElement("soc")]
         public List<SocietieEntitie> Sociedades
         {

@@ -40,7 +40,7 @@
                 if (Utility.IsHourProced() || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
                     _logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
-                    this.societieBusiness.ProcessSocietie();
+                    this.societieBusiness.ProcessSocietiePQA();
                     _logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
                 }
 

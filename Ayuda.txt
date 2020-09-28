@@ -1,6 +1,9 @@
-#como crear los objetos de la base de datos.
+#como crear los objetos de la base de datos mysql.
 
 Scaffold-DbContext "server=localhost;port=3306;user=admin;password=Dar11802Dum.;database=bd_biable01" MySql.Data.EntityFrameworkCore -OutputDir DataAccess -f
+
+#generación de elemento de sql server
+Scaffold-DbContext "Server=DARWIN-PC;user=sa;password=123;database=PQA" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DataAccessPqa -f
 
 --INSTALACIÓN SERVICIO
 #1.crear el servicio en la ventana de comando
