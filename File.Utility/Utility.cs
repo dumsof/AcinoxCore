@@ -52,6 +52,22 @@
             }
         }
 
+        public static string ConnectionStringsSQLServer
+        {
+            get
+            {
+                CofigurationJson();
+                string connectionStringsSQLServer = Configuration.GetSection("ConnectionStringsSQlServer:ConexionBaseDato").Value;
+                string nameServer = Configuration.GetSection("ConnectionStringsSQlServer:NombreServidor").Value;
+                string userDataBase = Configuration.GetSection("ConnectionStringsSQlServer:UsuarioBaseDato").Value;
+                string password = Configuration.GetSection("ConnectionStringsSQlServer:PasswordUsuarioBaseDato").Value;
+                string nameDataBase = Configuration.GetSection("ConnectionStringsSQlServer:NombreBaseDato").Value;
+
+                return string.Format(connectionStringsSQLServer, nameServer, userDataBase, password, nameDataBase);
+            }
+        }
+
+
         public static int HourFormat24
         {
             get

@@ -1,9 +1,13 @@
 ﻿namespace File.Repositorie.DataAccessPqa
 {
+    using File.Utility;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
 
     public partial class PQADbContext : DbContext
     {
+        private static IConfigurationRoot Configuration { get; set; }
+
         public PQADbContext()
         {
         }
@@ -45,7 +49,7 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DARWIN-PC;user=sa;password=123;database=PQA");
+                optionsBuilder.UseSqlServer(Utility.ConnectionStringsSQLServer);
             }
         }
 
@@ -2257,5 +2261,13 @@
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        private static void CofigurationJson()
+        {
+            var builder = new ConfigurationBuilder()
+           .SetBasePath(Utility.PathAplication)
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            Configuration = builder.Build();
+        }
     }
 }
