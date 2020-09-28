@@ -37,7 +37,7 @@
                 Log.CloseAndFlush();
             }
         }
-       
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseWindowsService()
@@ -50,13 +50,12 @@
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();
                     services.AddSingleton<IValidationXsd, ValidationXsd>();
-                    
+
                     services.Configure<ConfiguracionHoraEjecucionProceso>(Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
                     services.Configure<ConfiguracionFtp>(Configuration.GetSection("ConfiguracionFtp"));
                     services.AddHostedService<GenerateFile>();
-
                 })
-            
+
                 .UseSerilog(); //Dum: cuando se habilita no se presentan los mensaje en la cosola se guardan en el archivo de Log
 
         private static void ConfiguracionSeriLog()

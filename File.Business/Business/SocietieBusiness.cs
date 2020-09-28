@@ -4,6 +4,7 @@
     using File.Entities.sociedad;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -29,6 +30,8 @@
 
         public void ProcessSocietie()
         {
+            logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
+
             var societies = this.GetSocieties();
             if (societies == null)
             {
@@ -55,10 +58,13 @@
 
             this.managementFile.MoveAllFileFolder();
             logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.");
+
+            logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
         }
 
         public void ProcessSocietiePQA()
         {
+            logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
             var societies = this.GetSocietiesPqa();
             if (societies == null)
             {
@@ -85,6 +91,7 @@
 
             this.managementFile.MoveAllFileFolder();
             logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.");
+            logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
         }
 
         private IEnumerable<SocietieEntitie> GetSocieties()

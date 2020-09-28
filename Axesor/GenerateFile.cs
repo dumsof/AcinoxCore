@@ -6,7 +6,6 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -28,7 +27,7 @@
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             //DUM: se inicia las variables
-            _logger.LogInformation("Proces start");
+            _logger.LogInformation("Inicio del Proceso..");
             this.managementFile.CreatedPathFile();
             await base.StartAsync(cancellationToken);
         }
@@ -39,9 +38,7 @@
             {
                 if (Utility.IsHourProced() || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
-                    _logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
                     this.societieBusiness.ProcessSocietiePQA();
-                    _logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
                 }
 
                 await Task.Delay(60000 * this.configHoraProceso.Value.ProcesarCadaMinuto, stoppingToken);
@@ -50,7 +47,7 @@
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Proces stops");
+            _logger.LogInformation("El proceso esta detenido o parado.");
             await base.StopAsync(cancellationToken);
         }
     }
