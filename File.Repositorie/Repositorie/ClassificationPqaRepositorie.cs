@@ -1,6 +1,7 @@
 ﻿namespace File.Repositorie.Repositorie
 {
     using File.Repositorie.DataAccessPqa;
+    using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -16,27 +17,29 @@
             this.dbContext = new PQADbContext();
         }
 
-        public IEnumerable<CategoriasClientes> GetClassification()
+        public IEnumerable<ClasificacionRepoEntitie> GetClassification()
         {
-            List<CategoriasClientes> classification;
+            List<ClasificacionRepoEntitie> classification;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
-                command.CommandText = @"SELECT  DISTINCT
-                                                cod=SUBSTRING(ISNULL(STR(ID_CategoriaCliente),''),1,64)
-                                                ,[desc]=SUBSTRING(ISNULL(NombreCategoriaCliente,''),1,255)
+                command.CommandText = @"SELECT DISTINCT
+                                           id= str(1000 + UsoCategoria)
+                                          ,cod=SUBSTRING(ISNULL(STR(ID_CategoriaCliente),''),1,64)
+                                          ,[desc]=SUBSTRING(ISNULL(NombreCategoriaCliente,''),1,255)
                                         FROM [Corporativo].CategoriasClientes
-                                        ORDER BY [desc] ASC";
+                                        ORDER BY cod ASC";
                 this.dbContext.Database.OpenConnection();
 
                 using (var resultClassification = command.ExecuteReader())
                 {
                     var enumerable = resultClassification.Cast<IDataRecord>();
                     classification = enumerable.Select(registro =>
-                    new CategoriasClientes
+                    new ClasificacionRepoEntitie
                     {
-                        IdCategoriaCliente = long.Parse(registro.GetString(0)),
-                        NombreCategoriaCliente = registro.GetString(1)
+                        Id = registro.GetString(0),
+                        Cod = registro.GetString(1),
+                        Desc = registro.GetString(2)
                     }).ToList();
                 }
             }

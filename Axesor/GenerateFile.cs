@@ -18,8 +18,8 @@
         private readonly IManagementFile managementFile;
         private readonly IManagementFtp managementFtp;
 
-        public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso, 
-            ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, 
+        public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso,
+            ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness,
             IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;

@@ -58,9 +58,9 @@
 
             return classification.Select(c => new ClassificationEntitie
             {
-                Id = 0,
-                Cod = c.IdCategoriaCliente.ToString(),
-                Desc = c.NombreCategoriaCliente
+                Id = c.Id,
+                Cod = c.Cod,
+                Desc = c.Desc
             }).ToList();
         }
     }

@@ -5,7 +5,7 @@
     public class ClassificationEntitie
     {
         [XmlElement("id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [XmlElement("cod")]
         public string Cod { get; set; }
