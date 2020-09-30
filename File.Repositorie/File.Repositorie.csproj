@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntitieRepositorie\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\File.Utility\File.Utility.csproj" />
   </ItemGroup>
 

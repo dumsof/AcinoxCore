@@ -45,7 +45,10 @@
                 {
                     services.AddSingleton<ISocietieRepositorie, SocietieRepositorie>();
                     services.AddSingleton<ISocietiePqaRepositorie, SocietiePqaRepositorie>();
+                    services.AddSingleton<IClassificationPqaRepositorie, ClassificationPqaRepositorie>();
+
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
+                    services.AddSingleton<IClassificationBusiness, ClassificationBusiness>();
 
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();

@@ -53,12 +53,6 @@
             }
             logger.LogInformation($"La validación del XSD se realizo con éxito");
 
-            this.managementFtp.UnloadAllFileFolderFtp();
-            logger.LogInformation($"Los archivos generados [2] fueron enviados por [FTP] con éxito.");
-
-            this.managementFile.MoveAllFileFolder();
-            logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.");
-
             logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
         }
 
@@ -86,11 +80,6 @@
             }
             logger.LogInformation($"La validación del XSD se realizo con éxito");
 
-            this.managementFtp.UnloadAllFileFolderFtp();
-            logger.LogInformation($"Los archivos generados [2] fueron enviados por [FTP] con éxito.");
-
-            this.managementFile.MoveAllFileFolder();
-            logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.");
             logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
         }
 
@@ -113,15 +102,13 @@
         {
             var empresa = this.societiePqaRepositorie.GetEmpresas();
 
-            var societie = empresa.Select(c => new SocietieEntitie
+            return empresa.Select(c => new SocietieEntitie
             {
-                Cod = c.IdEmpresa.ToString(),
-                Razons = c.NombreEmpresa,
-                Nif = c.Rfc,
-                CodMoneda = "01"
+                Cod = c.Cod,
+                Razons = c.Razons,
+                Nif = c.Nif,
+                CodMoneda = c.CodMoneda
             }).ToList();
-
-            return societie;
         }
     }
 }

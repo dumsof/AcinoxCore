@@ -14,14 +14,20 @@
         private readonly ILogger<GenerateFile> _logger;
         private readonly IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso;
         private readonly ISocietieBusiness societieBusiness;
+        private readonly IClassificationBusiness classificationBusiness;
         private readonly IManagementFile managementFile;
+        private readonly IManagementFtp managementFtp;
 
-        public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso, ISocietieBusiness societieBusiness, IManagementFile managementFile)
+        public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso, 
+            ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, 
+            IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;
             this.configHoraProceso = configHoraProceso;
             this.societieBusiness = societieBusiness;
+            this.classificationBusiness = classificationBusiness;
             this.managementFile = managementFile;
+            this.managementFtp = managementFtp;
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -39,6 +45,9 @@
                 if (Utility.IsHourProced() || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
                     this.societieBusiness.ProcessSocietiePQA();
+                    this.classificationBusiness.ProcessClassification();
+                    this.managementFtp.UnloadAllFileFolderFtp();
+                    this.managementFile.MoveAllFileFolder();
                 }
 
                 await Task.Delay(60000 * this.configHoraProceso.Value.ProcesarCadaMinuto, stoppingToken);

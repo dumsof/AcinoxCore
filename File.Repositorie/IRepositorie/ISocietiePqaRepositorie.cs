@@ -1,10 +1,10 @@
 ﻿namespace File.Repositorie.IRepositorie
 {
-    using File.Repositorie.DataAccessPqa;
+    using File.Repositorie.EntitieRepositorie;
     using System.Collections.Generic;
 
     public interface ISocietiePqaRepositorie
     {
-        public IEnumerable<Empresas> GetEmpresas();
+        public IEnumerable<EmpresasRepoEntitie> GetEmpresas();
     }
 }

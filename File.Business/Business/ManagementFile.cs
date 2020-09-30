@@ -3,6 +3,7 @@
     using CsvHelper;
     using File.Business.IBusiness;
     using File.Utility;
+    using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
@@ -12,6 +13,12 @@
 
     public class ManagementFile : IManagementFile
     {
+        private readonly ILogger<ManagementFile> logger;
+
+        public ManagementFile(ILogger<ManagementFile> logger)
+        {
+            this.logger = logger;
+        }
         public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas)
         {
             var path = $"{Utility.PathFolderGenerated}\\{nameFile}.csv";
@@ -82,6 +89,8 @@
                 this.DeleteFile($"{Utility.PathFolderProcessed}\\{file.Name}");
                 Directory.Move($"{Utility.PathFolderGenerated}\\{file.Name}", $"{Utility.PathFolderProcessed}\\{file.Name}");
             }
+
+            this.logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.");
 
             return true;
         }

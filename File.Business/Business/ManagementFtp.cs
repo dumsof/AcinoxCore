@@ -4,6 +4,7 @@
     using File.Entities;
     using File.Utility;
     using FluentFTP;
+    using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using System.Collections.Generic;
     using System.IO;
@@ -12,10 +13,12 @@
 
     public class ManagementFtp : IManagementFtp
     {
+        private readonly ILogger<ManagementFtp> logger;
         private readonly IOptions<ConfiguracionFtp> configFtp;
 
-        public ManagementFtp(IOptions<ConfiguracionFtp> configFtp)
+        public ManagementFtp(ILogger<ManagementFtp> logger, IOptions<ConfiguracionFtp> configFtp)
         {
+            this.logger = logger;
             this.configFtp = configFtp;
         }
 
@@ -42,7 +45,7 @@
             {
                 ftp.UploadFiles(files, $"{configFtp.Value.RutaCarpetaServidorFtp}", FtpRemoteExists.Overwrite);
             }
-
+            this.logger.LogInformation($"Los archivos generados fueron enviados por [FTP] con éxito.");
             return true;
         }
     }
