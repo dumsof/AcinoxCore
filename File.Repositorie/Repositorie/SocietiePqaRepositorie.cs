@@ -1,9 +1,11 @@
 ﻿namespace File.Repositorie.Repositorie
 {
+    using File.Entities;
     using File.Repositorie.DataAccessPqa;
     using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Options;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -12,10 +14,12 @@
     public class SocietiePqaRepositorie : ISocietiePqaRepositorie, IDisposable
     {
         private readonly PQADbContext dbContext;
+        private readonly IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql;
 
-        public SocietiePqaRepositorie()
+        public SocietiePqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
         {
             this.dbContext = new PQADbContext();
+            this.configurationQuerySql = configurationQuerySql;
         }
 
         public IEnumerable<EmpresasRepoEntitie> GetEmpresas()
@@ -26,17 +30,8 @@
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
-                command.CommandText = @"SELECT DISTINCT
-	                                         cod		=SUBSTRING(STR(E.ID_Empresa),1,64)
-	                                        ,razons		=SUBSTRING(ISNULL(E.NombreEmpresa,''),1,255)
-	                                        ,nif		=SUBSTRING(ISNULL(E.RFC,''),1,32)
-	                                        ,codmoneda	=SUBSTRING(ISNULL(M.CodigoMoneda,''),1,32)
-                                        FROM [Corporativo].[Empresas] E
-                                        JOIN [Facturacion].[TiposPagosPOSEmpresasSucursales] TP ON E.ID_Empresa=TP.ID_Empresa
-                                        JOIN [Facturacion].[TiposPagosPOS] TPP ON TP.ID_TipoPago=TP.ID_TipoPago
-                                        JOIN [Corporativo].[Monedas] M ON TPP.ID_Moneda=M.ID_Moneda
-                                        --WHERE UPPER(LTRIM(CodigoMoneda))='MXP'
-                                        ORDER BY cod ASC";
+                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLSociedad;
+
                 this.dbContext.Database.OpenConnection();
 
                 using (var resultSocietie = command.ExecuteReader())

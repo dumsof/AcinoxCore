@@ -1,9 +1,11 @@
 ﻿namespace File.Repositorie.Repositorie
 {
+    using File.Entities;
     using File.Repositorie.DataAccessPqa;
     using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Options;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
@@ -11,10 +13,12 @@
     public class ClassificationPqaRepositorie : IClassificationPqaRepositorie
     {
         private readonly PQADbContext dbContext;
+        private readonly IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql;
 
-        public ClassificationPqaRepositorie()
+        public ClassificationPqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
         {
             this.dbContext = new PQADbContext();
+            this.configurationQuerySql = configurationQuerySql;
         }
 
         public IEnumerable<ClasificacionRepoEntitie> GetClassification()
@@ -23,12 +27,8 @@
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
-                command.CommandText = @"SELECT DISTINCT
-                                           id= str(1000 + UsoCategoria)
-                                          ,cod=SUBSTRING(ISNULL(STR(ID_CategoriaCliente),''),1,64)
-                                          ,[desc]=SUBSTRING(ISNULL(NombreCategoriaCliente,''),1,255)
-                                        FROM [Corporativo].CategoriasClientes
-                                        ORDER BY cod ASC";
+                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLClasificacion;
+
                 this.dbContext.Database.OpenConnection();
 
                 using (var resultClassification = command.ExecuteReader())

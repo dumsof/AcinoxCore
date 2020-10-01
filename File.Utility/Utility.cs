@@ -67,7 +67,6 @@
             }
         }
 
-
         public static int HourFormat24
         {
             get
@@ -88,10 +87,13 @@
 
         private static void CofigurationJson()
         {
-            var builder = new ConfigurationBuilder()
-           .SetBasePath(PathAplication)
-           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            Configuration = builder.Build();
+            if (Configuration == null)
+            {
+                var builder = new ConfigurationBuilder()
+                                   .SetBasePath(PathAplication)
+                                   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                Configuration = builder.Build();
+            }
         }
     }
 }

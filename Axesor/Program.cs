@@ -16,6 +16,7 @@
     public class Program
     {
         private static IConfigurationRoot Configuration { get; set; }
+        private static IConfigurationRoot ConfigurationSql { get; set; }
 
         //DUM: pagina de como se puede publicar el servicio de windows
         //Url:https://geeks.ms/jorge/2020/03/02/creando-un-servicio-windows-con-net-core-3-1/
@@ -23,6 +24,7 @@
         {
             ConfiguracionSeriLog();
             CofigurationJson();
+            CofigurationSQL();
             try
             {
                 Log.Information("Inicio la subida del servicio.");
@@ -56,9 +58,9 @@
 
                     services.Configure<ConfiguracionHoraEjecucionProceso>(Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
                     services.Configure<ConfiguracionFtp>(Configuration.GetSection("ConfiguracionFtp"));
+                    services.Configure<ConfiguracionQuerySqlPqa>(ConfigurationSql.GetSection("ConfiguracionQuerySqlPqa"));
+
                     services.AddHostedService<GenerateFile>();
-                   
-                    
                 })
 
                 .UseSerilog(); //Dum: cuando se habilita no se presentan los mensaje en la cosola se guardan en el archivo de Log
@@ -75,10 +77,27 @@
 
         private static void CofigurationJson()
         {
+            if (Configuration == null)
+            {
+                Configuration = GetBuilder("appsettings");
+            }
+        }
+
+        private static void CofigurationSQL()
+        {
+            if (ConfigurationSql == null)
+            {
+                ConfigurationSql = GetBuilder("consultasSQLPqa");
+            }
+        }
+
+        private static IConfigurationRoot GetBuilder(string nameFileConfigJson)
+        {
             var builder = new ConfigurationBuilder()
            .SetBasePath(Utility.PathAplication)
-           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            Configuration = builder.Build();
+           .AddJsonFile($"{nameFileConfigJson}.json", optional: true, reloadOnChange: true);
+
+            return builder.Build();
         }
     }
 }
