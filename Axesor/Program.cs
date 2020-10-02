@@ -3,28 +3,26 @@
     using File.Business.Business;
     using File.Business.IBusiness;
     using File.Entities;
+    using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
     using File.Repositorie.Repositorie;
     using File.Utility;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Serilog;
     using Serilog.Events;
     using System;
 
-    public class Program
+    public static class Program
     {
-        private static IConfigurationRoot Configuration { get; set; }
-        private static IConfigurationRoot ConfigurationSql { get; set; }
-
         //DUM: pagina de como se puede publicar el servicio de windows
         //Url:https://geeks.ms/jorge/2020/03/02/creando-un-servicio-windows-con-net-core-3-1/
         public static void Main(string[] args)
         {
+            Utility.CofigurationJson();
+            Utility.CofigurationSQL();
             ConfiguracionSeriLog();
-            CofigurationJson();
-            CofigurationSQL();
+
             try
             {
                 Log.Information("Inicio la subida del servicio.");
@@ -56,9 +54,9 @@
                     services.AddSingleton<IManagementFtp, ManagementFtp>();
                     services.AddSingleton<IValidationXsd, ValidationXsd>();
 
-                    services.Configure<ConfiguracionHoraEjecucionProceso>(Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
-                    services.Configure<ConfiguracionFtp>(Configuration.GetSection("ConfiguracionFtp"));
-                    services.Configure<ConfiguracionQuerySqlPqa>(ConfigurationSql.GetSection("ConfiguracionQuerySqlPqa"));
+                    services.Configure<ConfiguracionHoraEjecucionProceso>(Utility.Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
+                    services.Configure<ConfiguracionFtp>(Utility.Configuration.GetSection("ConfiguracionFtp"));
+                    services.Configure<ConfiguracionQuerySqlPqa>(Utility.ConfigurationSql.GetSection("ConfiguracionQuerySqlPqa"));
 
                     services.AddHostedService<GenerateFile>();
                 })
@@ -73,31 +71,6 @@
                 .Enrich.FromLogContext()
                 .WriteTo.File($"{Utility.PathFolderLogs}\\{string.Format("{0:yyyy-MM-dd}", DateTime.Now)}-LogAplication.txt")
                 .CreateLogger();
-        }
-
-        private static void CofigurationJson()
-        {
-            if (Configuration == null)
-            {
-                Configuration = GetBuilder("appsettings");
-            }
-        }
-
-        private static void CofigurationSQL()
-        {
-            if (ConfigurationSql == null)
-            {
-                ConfigurationSql = GetBuilder("consultasSQLPqa");
-            }
-        }
-
-        private static IConfigurationRoot GetBuilder(string nameFileConfigJson)
-        {
-            var builder = new ConfigurationBuilder()
-           .SetBasePath(Utility.PathAplication)
-           .AddJsonFile($"{nameFileConfigJson}.json", optional: true, reloadOnChange: true);
-
-            return builder.Build();
         }
     }
 }

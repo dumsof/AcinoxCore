@@ -5,7 +5,8 @@
 
     public static class Utility
     {
-        private static IConfigurationRoot Configuration { get; set; }
+        public static IConfigurationRoot Configuration { get; set; }
+        public static IConfigurationRoot ConfigurationSql { get; set; }
 
         public static string PathAplication
         {
@@ -20,7 +21,6 @@
         {
             get
             {
-                CofigurationJson();
                 return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoGenerado").Value}";
             }
         }
@@ -29,7 +29,6 @@
         {
             get
             {
-                CofigurationJson();
                 return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoProcesado").Value}";
             }
         }
@@ -38,7 +37,6 @@
         {
             get
             {
-                CofigurationJson();
                 return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaLog").Value}";
             }
         }
@@ -47,7 +45,6 @@
         {
             get
             {
-                CofigurationJson();
                 return $"{Configuration.GetSection("ConfiguracionFtp:TiposArchivoEnviarFtp").Value}";
             }
         }
@@ -56,7 +53,6 @@
         {
             get
             {
-                CofigurationJson();
                 string connectionStringsSQLServer = Configuration.GetSection("ConnectionStringsSQlServer:ConexionBaseDato").Value;
                 string nameServer = Configuration.GetSection("ConnectionStringsSQlServer:NombreServidor").Value;
                 string userDataBase = Configuration.GetSection("ConnectionStringsSQlServer:UsuarioBaseDato").Value;
@@ -76,24 +72,41 @@
             }
         }
 
-        public static bool IsHourProced()
+        public static bool IsHourProced
         {
-            CofigurationJson();
-            var hour24 = int.Parse(Configuration.GetSection("ConfiguracionHoraEjecucionProceso:Hora24").Value);
-            var minute60 = int.Parse(Configuration.GetSection("ConfiguracionHoraEjecucionProceso:Minuto60").Value);
+            get
+            {
+                var hour24 = int.Parse(Configuration.GetSection("ConfiguracionHoraEjecucionProceso:Hora24").Value);
+                var minute60 = int.Parse(Configuration.GetSection("ConfiguracionHoraEjecucionProceso:Minuto60").Value);
 
-            return hour24 == HourFormat24 && minute60 == DateTime.Now.Minute;
+                return hour24 == HourFormat24 && minute60 == DateTime.Now.Minute;
+            }
+
         }
 
-        private static void CofigurationJson()
+        public static void CofigurationJson()
         {
             if (Configuration == null)
             {
-                var builder = new ConfigurationBuilder()
-                                   .SetBasePath(PathAplication)
-                                   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-                Configuration = builder.Build();
+                Configuration = GetBuilder("appsettings");
             }
+        }
+
+        public static void CofigurationSQL()
+        {
+            if (ConfigurationSql == null)
+            {
+                ConfigurationSql = GetBuilder("consultasSQLPqa");
+            }
+        }
+
+        private static IConfigurationRoot GetBuilder(string nameFileConfigJson)
+        {
+            var builder = new ConfigurationBuilder()
+           .SetBasePath(PathAplication)
+           .AddJsonFile($"{nameFileConfigJson}.json", optional: true, reloadOnChange: true);
+
+            return builder.Build();
         }
     }
 }

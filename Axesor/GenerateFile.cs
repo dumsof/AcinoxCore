@@ -42,7 +42,7 @@
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (Utility.IsHourProced() || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
+                if (Utility.IsHourProced || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
                     this.societieBusiness.ProcessSocietiePQA();
                     this.classificationBusiness.ProcessClassification();

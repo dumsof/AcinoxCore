@@ -1,4 +1,4 @@
-﻿namespace File.Entities
+﻿namespace File.Repositorie.EntitieRepositorie
 {
     public class ConfiguracionQuerySqlPqa
     {

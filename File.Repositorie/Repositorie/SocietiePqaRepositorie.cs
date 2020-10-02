@@ -1,6 +1,5 @@
 ﻿namespace File.Repositorie.Repositorie
 {
-    using File.Entities;
     using File.Repositorie.DataAccessPqa;
     using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
