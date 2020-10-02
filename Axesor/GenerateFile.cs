@@ -48,10 +48,10 @@
             {
                 if (Utility.IsHourProced || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
-                    //this.societieBusiness.ProcessSocietiePQA();
-                    //this.classificationBusiness.ProcessClassification();
+                    this.societieBusiness.ProcessSocietiePQA();
+                    this.classificationBusiness.ProcessClassification();
                     this.paymentMethodBusiness.ProcessPaymentMethod();
-                    //this.customerBusiness.ProcessCustomer();
+                    this.customerBusiness.ProcessCustomer();
                     this.managementFtp.UnloadAllFileFolderFtp();
                     this.managementFile.MoveAllFileFolder();
                 }

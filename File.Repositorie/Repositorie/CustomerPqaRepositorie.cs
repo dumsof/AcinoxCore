@@ -11,7 +11,6 @@
     using System.Data;
     using System.Linq;
 
-
     public class CustomerPqaRepositorie : ICustomerPqaRepositorie, IDisposable
     {
         private readonly PQADbContext dbContext;
@@ -37,7 +36,7 @@
 	                                          ,razons=C.NombreCliente
 	                                          ,codcondp=''
 	                                          ,limitrg=0.0
-	                                          ,prov=p.NombrePais	
+	                                          ,prov=p.NombrePais
 	                                          ,dims ='['+(SELECT ',{CodCrite:'+LTRIM(STR(1000+ISNULL(CAC.UsoCategoria,0))),',CodElemen:'+LTRIM(STR(CCC.ID_CategoriaCliente))+'}'
 				                                        FROM Corporativo.ClientesCategoriasClientes CCC
 				                                        JOIN Corporativo.CategoriasClientes CAC ON CAC.ID_CategoriaCliente=CCC.ID_CategoriaCliente
@@ -64,7 +63,6 @@
                                         FROM [Corporativo].[Clientes] C
                                         JOIN [Corporativo].[ClientesSucursales] CS ON C.ID_Cliente=CS.ID_Cliente
                                         JOIN [Corporativo].[Paises] p ON C.ID_Nacionalidad=P.ID_Pais";
-
 
                 this.dbContext.Database.OpenConnection();
 
