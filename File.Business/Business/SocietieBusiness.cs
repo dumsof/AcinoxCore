@@ -59,7 +59,7 @@
         public void ProcessSocietiePQA()
         {
             logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
-            var societies = this.GetSocietiesPqa();
+            var societies = this.GetSocietiesPqa();           
             if (societies == null)
             {
                 this.logger.LogInformation("No existe información de las sociedades");

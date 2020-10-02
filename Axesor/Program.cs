@@ -19,12 +19,11 @@
         //Url:https://geeks.ms/jorge/2020/03/02/creando-un-servicio-windows-con-net-core-3-1/
         public static void Main(string[] args)
         {
-            Utility.CofigurationJson();
-            Utility.CofigurationSQL();
-            ConfiguracionSeriLog();
-
             try
             {
+                Utility.CofigurationJson();
+                Utility.CofigurationSQL();
+                ConfiguracionSeriLog();
                 Log.Information("Inicio la subida del servicio.");
                 CreateHostBuilder(args).Build().Run();
             }
@@ -47,7 +46,7 @@
                     services.AddSingleton<ISocietiePqaRepositorie, SocietiePqaRepositorie>();
                     services.AddSingleton<IClassificationPqaRepositorie, ClassificationPqaRepositorie>();
                     services.AddSingleton<ICustomerPqaRepositorie, CustomerPqaRepositorie>();
-                    services.AddSingleton< IPaymentMethodPqaRepositorie, PaymentMethodPqaRepositorie >();
+                    services.AddSingleton<IPaymentMethodPqaRepositorie, PaymentMethodPqaRepositorie>();
 
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IClassificationBusiness, ClassificationBusiness>();
