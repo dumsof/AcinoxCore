@@ -16,18 +16,20 @@
         private readonly ISocietieBusiness societieBusiness;
         private readonly IClassificationBusiness classificationBusiness;
         private readonly ICustomerBusiness customerBusiness;
+        private readonly IPaymentMethodBusiness paymentMethodBusiness;
         private readonly IManagementFile managementFile;
         private readonly IManagementFtp managementFtp;
 
         public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso,
             ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, ICustomerBusiness customerBusiness,
-            IManagementFile managementFile, IManagementFtp managementFtp)
+            IPaymentMethodBusiness paymentMethodBusiness, IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;
             this.configHoraProceso = configHoraProceso;
             this.societieBusiness = societieBusiness;
             this.classificationBusiness = classificationBusiness;
             this.customerBusiness = customerBusiness;
+            this.paymentMethodBusiness = paymentMethodBusiness;
             this.managementFile = managementFile;
             this.managementFtp = managementFtp;
         }
@@ -48,7 +50,8 @@
                 {
                     //this.societieBusiness.ProcessSocietiePQA();
                     //this.classificationBusiness.ProcessClassification();
-                    this.customerBusiness.ProcessCustomer();
+                    this.paymentMethodBusiness.ProcessPaymentMethod();
+                    //this.customerBusiness.ProcessCustomer();
                     this.managementFtp.UnloadAllFileFolderFtp();
                     this.managementFile.MoveAllFileFolder();
                 }

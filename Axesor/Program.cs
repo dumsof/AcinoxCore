@@ -47,10 +47,12 @@
                     services.AddSingleton<ISocietiePqaRepositorie, SocietiePqaRepositorie>();
                     services.AddSingleton<IClassificationPqaRepositorie, ClassificationPqaRepositorie>();
                     services.AddSingleton<ICustomerPqaRepositorie, CustomerPqaRepositorie>();
+                    services.AddSingleton< IPaymentMethodPqaRepositorie, PaymentMethodPqaRepositorie >();
 
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IClassificationBusiness, ClassificationBusiness>();
                     services.AddSingleton<ICustomerBusiness, CustomerBusiness>();
+                    services.AddSingleton<IPaymentMethodBusiness, PaymentMethodBusiness>();
 
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();

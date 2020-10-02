@@ -22,26 +22,36 @@
             this.configurationQuerySql = configurationQuerySql;
         }
 
-        public IEnumerable<PaymentMethodEntitie> GetPaymentMethods()
+        public IEnumerable<PaymentMethodRepoEntitie> GetPaymentMethods()
         {
-            List<PaymentMethodEntitie> paymentMethod;
+            List<PaymentMethodRepoEntitie> paymentMethod;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro;
-
+                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro;
+                command.CommandText = @"SELECT DISTINCT
+                                                LTRIM(STR(t1.DiasCredito)) as cod,
+                                                LTRIM(STR(t1.DiasCredito)) + ' días de plazo ' as 'desc',
+                                                '0' as gencart,
+                                                ' ' as ind1,
+                                                ' ' as ind2,
+                                                '1' as numdias
+                                        FROM [Corporativo].[Clientes] as t1";
                 this.dbContext.Database.OpenConnection();
 
                 using (var resultCustomer = command.ExecuteReader())
                 {
                     var enumerable = resultCustomer.Cast<IDataRecord>();
                     paymentMethod = enumerable.Select(registro =>
-                    new PaymentMethodEntitie
+                    new PaymentMethodRepoEntitie
                     {
                         Cod = registro.GetString(0),
                         Desc = registro.GetString(1),
-                        GenCart = registro.GetString(2)
+                        GenCart = registro.GetString(2),
+                        Ind1 = registro.GetString(3),
+                        Ind2 = registro.GetString(4),
+                        NumDias = registro.GetString(5),
                     }).ToList();
                 }
             }
