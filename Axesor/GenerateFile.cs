@@ -15,17 +15,19 @@
         private readonly IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso;
         private readonly ISocietieBusiness societieBusiness;
         private readonly IClassificationBusiness classificationBusiness;
+        private readonly ICustomerBusiness customerBusiness;
         private readonly IManagementFile managementFile;
         private readonly IManagementFtp managementFtp;
 
         public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso,
-            ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness,
+            ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, ICustomerBusiness customerBusiness,
             IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;
             this.configHoraProceso = configHoraProceso;
             this.societieBusiness = societieBusiness;
             this.classificationBusiness = classificationBusiness;
+            this.customerBusiness = customerBusiness;
             this.managementFile = managementFile;
             this.managementFtp = managementFtp;
         }
@@ -44,8 +46,9 @@
             {
                 if (Utility.IsHourProced || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
-                    this.societieBusiness.ProcessSocietiePQA();
-                    this.classificationBusiness.ProcessClassification();
+                    //this.societieBusiness.ProcessSocietiePQA();
+                    //this.classificationBusiness.ProcessClassification();
+                    this.customerBusiness.ProcessCustomer();
                     this.managementFtp.UnloadAllFileFolderFtp();
                     this.managementFile.MoveAllFileFolder();
                 }

@@ -11,44 +11,42 @@
     using System.Data;
     using System.Linq;
 
-    public class SocietiePqaRepositorie : ISocietiePqaRepositorie, IDisposable
+    public class PaymentMethodPqaRepositorie : IPaymentMethodPqaRepositorie, IDisposable
     {
         private readonly PQADbContext dbContext;
         private readonly IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql;
 
-        public SocietiePqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
+        public PaymentMethodPqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
         {
             this.dbContext = new PQADbContext();
             this.configurationQuerySql = configurationQuerySql;
         }
 
-        public IEnumerable<EmpresasRepoEntitie> GetEmpresas()
+        public IEnumerable<PaymentMethodEntitie> GetPaymentMethods()
         {
-            //si no hay forma de identificar que es lo nuevo se debe partir los archivos para que se generen 10 mil registros.
-
-            List<EmpresasRepoEntitie> societie;
+            List<PaymentMethodEntitie> paymentMethod;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLSociedad;                
+                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro;
+
                 this.dbContext.Database.OpenConnection();
 
-                using (var resultSocietie = command.ExecuteReader())
+                using (var resultCustomer = command.ExecuteReader())
                 {
-                    var enumerable = resultSocietie.Cast<IDataRecord>();
-                    societie = enumerable.Select(registro =>
-                    new EmpresasRepoEntitie
+                    var enumerable = resultCustomer.Cast<IDataRecord>();
+                    paymentMethod = enumerable.Select(registro =>
+                    new PaymentMethodEntitie
                     {
                         Cod = registro.GetString(0),
-                        Razons = registro.GetString(1),
-                        Nif = registro.GetString(2),
-                        CodMoneda = registro.GetString(3),
+                        Desc = registro.GetString(1),
+                        GenCart = registro.GetString(2)
                     }).ToList();
                 }
             }
 
-            return societie;
+            return paymentMethod;
         }
 
         protected virtual void Dispose(bool disposing)

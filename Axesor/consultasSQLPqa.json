@@ -1,7 +1,11 @@
 {
   "ConfiguracionQuerySqlPqa": {
-    "ConsultaSQLSociedad": "SELECT DISTINCT cod=SUBSTRING(STR(E.ID_Empresa),1,64),razons=SUBSTRING(ISNULL(E.NombreEmpresa,''),1,255),nif=SUBSTRING(ISNULL(E.RFC,''),1,32),codmoneda\t=SUBSTRING(ISNULL(M.CodigoMoneda,''),1,32) FROM [Corporativo].[Empresas] E JOIN [Facturacion].[TiposPagosPOSEmpresasSucursales] TP ON E.ID_Empresa=TP.ID_Empresa JOIN [Facturacion].[TiposPagosPOS] TPP ON TP.ID_TipoPago=TP.ID_TipoPago JOIN [Corporativo].[Monedas] M ON TPP.ID_Moneda=M.ID_Moneda WHERE UPPER(LTRIM(CodigoMoneda))='USD' ORDER BY cod ASC",
-    "ConsultaSQLClasificacion": "SELECT DISTINCT id=str(1000 + UsoCategoria) ,cod=SUBSTRING(ISNULL(STR(ID_CategoriaCliente),''),1,64) ,[desc]=SUBSTRING(ISNULL(NombreCategoriaCliente,''),1,255) FROM [Corporativo].CategoriasClientes ORDER BY cod ASC",
-    "ConsultaSQLCliente": ""
+    "ConsultaSQLSociedad": "SELECT DISTINCT cod=SUBSTRING(LTRIM(STR(E.ID_Empresa)),1,64),razons=SUBSTRING(ISNULL(E.NombreEmpresa,''),1,255),nif=SUBSTRING(ISNULL(E.RFC,''),1,32),codmoneda\t=SUBSTRING(ISNULL(M.CodigoMoneda,''),1,32) FROM [Corporativo].[Empresas] E JOIN [Facturacion].[TiposPagosPOSEmpresasSucursales] TP ON E.ID_Empresa=TP.ID_Empresa JOIN [Facturacion].[TiposPagosPOS] TPP ON TP.ID_TipoPago=TP.ID_TipoPago JOIN [Corporativo].[Monedas] M ON TPP.ID_Moneda=M.ID_Moneda WHERE UPPER(LTRIM(CodigoMoneda))='USD' ORDER BY cod ASC",
+    "ConsultaSQLClasificacion": "SELECT DISTINCT id=LTRIM(STR(1000 + UsoCategoria)) ,cod=SUBSTRING(ISNULL(LTRIM(STR(ID_CategoriaCliente)),''),1,64) ,[desc]=SUBSTRING(ISNULL(NombreCategoriaCliente,''),1,255) FROM [Corporativo].CategoriasClientes ORDER BY cod ASC",
+    "ConsultaSQLCliente": "",
+    "ConsultaSQLFormasPagoCobro": "",
+    "ConsultaSQLCondicionPago": "",
+    "ConsultaSQLDireccion": "",
+    "ConsultaSQLContactoCliente": ""
   }
 }

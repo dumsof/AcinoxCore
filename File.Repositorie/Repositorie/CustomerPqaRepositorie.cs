@@ -11,44 +11,51 @@
     using System.Data;
     using System.Linq;
 
-    public class SocietiePqaRepositorie : ISocietiePqaRepositorie, IDisposable
+
+    public class CustomerPqaRepositorie : ICustomerPqaRepositorie, IDisposable
     {
         private readonly PQADbContext dbContext;
         private readonly IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql;
 
-        public SocietiePqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
+        public CustomerPqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
         {
             this.dbContext = new PQADbContext();
             this.configurationQuerySql = configurationQuerySql;
         }
 
-        public IEnumerable<EmpresasRepoEntitie> GetEmpresas()
+        public IEnumerable<CustomerEntitie> GetCustomers()
         {
-            //si no hay forma de identificar que es lo nuevo se debe partir los archivos para que se generen 10 mil registros.
-
-            List<EmpresasRepoEntitie> societie;
+            List<CustomerEntitie> customers;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLSociedad;                
+                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente;
+
+                command.CommandText = @"SELECT top 1 cod=C.ID_Cliente,nif=C.RFC,razons=C.NombreCliente FROM [Corporativo].[Clientes] C";
+                                       
+
                 this.dbContext.Database.OpenConnection();
 
-                using (var resultSocietie = command.ExecuteReader())
+                using (var resultCustomer = command.ExecuteReader())
                 {
-                    var enumerable = resultSocietie.Cast<IDataRecord>();
-                    societie = enumerable.Select(registro =>
-                    new EmpresasRepoEntitie
+                    var enumerable = resultCustomer.Cast<IDataRecord>();
+                    customers = enumerable.Select(registro =>
+                    new CustomerEntitie
                     {
-                        Cod = registro.GetString(0),
-                        Razons = registro.GetString(1),
-                        Nif = registro.GetString(2),
-                        CodMoneda = registro.GetString(3),
+                        Cod = registro.GetString(0)
+                        //Nif = registro.GetString(1),
+                        //Razons = registro.GetString(2),
+                        //Codcondp= registro.GetString(3),
+                        //Limitrg=registro.GetDecimal(4),
+                        //Prov=registro.GetString(5),
+                        //Dims=registro.GetString(6)
+
                     }).ToList();
                 }
             }
 
-            return societie;
+            return customers;
         }
 
         protected virtual void Dispose(bool disposing)

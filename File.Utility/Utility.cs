@@ -19,34 +19,22 @@
 
         public static string PathFolderGenerated
         {
-            get
-            {
-                return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoGenerado").Value}";
-            }
+            get => $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoGenerado").Value}";
         }
 
         public static string PathFolderProcessed
         {
-            get
-            {
-                return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoProcesado").Value}";
-            }
+            get => $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaArchivoProcesado").Value}";
         }
 
         public static string PathFolderLogs
         {
-            get
-            {
-                return $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaLog").Value}";
-            }
+            get => $"{PathAplication}\\{Configuration.GetSection("ConfiguracionNombreCarpeta:NombreCarpetaLog").Value}";
         }
 
         public static string ExtesionFiles
         {
-            get
-            {
-                return $"{Configuration.GetSection("ConfiguracionFtp:TiposArchivoEnviarFtp").Value}";
-            }
+            get => $"{Configuration.GetSection("ConfiguracionFtp:TiposArchivoEnviarFtp").Value}";
         }
 
         public static string ConnectionStringsSQLServer
@@ -58,9 +46,15 @@
                 string userDataBase = Configuration.GetSection("ConnectionStringsSQlServer:UsuarioBaseDato").Value;
                 string password = Configuration.GetSection("ConnectionStringsSQlServer:PasswordUsuarioBaseDato").Value;
                 string nameDataBase = Configuration.GetSection("ConnectionStringsSQlServer:NombreBaseDato").Value;
+                string timeOut = Configuration.GetSection("ConnectionStringsSQlServer:Timeout").Value;
 
-                return string.Format(connectionStringsSQLServer, nameServer, userDataBase, password, nameDataBase);
+                return string.Format(connectionStringsSQLServer, nameServer, userDataBase, password, nameDataBase, timeOut);
             }
+        }
+
+        public static int ConnectionStringsTimeout
+        {
+            get => Convert.ToInt32(Configuration.GetSection("ConnectionStringsSQlServer:Timeout").Value);
         }
 
         public static int HourFormat24
@@ -81,7 +75,6 @@
 
                 return hour24 == HourFormat24 && minute60 == DateTime.Now.Minute;
             }
-
         }
 
         public static void CofigurationJson()
