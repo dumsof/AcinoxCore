@@ -54,6 +54,7 @@
                     this.customerBusiness.ProcessCustomer();
                     this.managementFtp.UnloadAllFileFolderFtp();
                     this.managementFile.MoveAllFileFolder();
+                    _logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");
                 }
 
                 await Task.Delay(60000 * this.configHoraProceso.Value.ProcesarCadaMinuto, stoppingToken);
