@@ -2,6 +2,7 @@
 {
     using System.Xml.Serialization;
 
+    [XmlRoot("dim")]
     public class Dim
     {
         [XmlElement("codcrit")]

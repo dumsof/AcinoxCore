@@ -9,10 +9,10 @@
         public decimal? Limitrg { get; set; }
         public string Prov { get; set; }
         public string Dims { get; set; }
-        public uint? Lrcomp { get; set; }
+        public int? Lrcomp { get; set; }
         public string Viasp { get; set; }
         public string ClasifContable { get; set; }
-        public string LsegCredito { get; set; }
+        public decimal? LsegCredito { get; set; }
         public string Fchcadsegcred { get; set; }
         public string Tipoentidad { get; set; }
         public string Sector { get; set; }

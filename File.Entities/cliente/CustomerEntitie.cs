@@ -23,16 +23,16 @@
         [XmlElement("prov")]
         public string Prov { get; set; }
 
-        [XmlArrayItem("dims")]
-        [XmlElement("dim")]
-        public List<Dim> Dims { get; set; }
+
+        [XmlArrayItem("dim")]
+        public List<Dim> dims { get; set; }
 
         [XmlElement("lrcomp", IsNullable = true)]
-        public uint? Lrcomp { get; set; }
+        public int? Lrcomp { get; set; }
 
-        [XmlArrayItem("codvp")]
-        [XmlElement("viasp")]
-        public List<string> Viasp { get; set; }
+
+        [XmlArrayItem("codvp", IsNullable = true)]
+        public List<string> viasp { get; set; }
 
         [XmlElement("clasifcontable")]
         public string Clasifcontable { get; set; }

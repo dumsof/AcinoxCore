@@ -65,8 +65,25 @@
                 Codcondp = c.Codcondp,
                 limitrg = c.Limitrg,
                 Prov = c.Prov,
-                Dims = JsonConvert.DeserializeObject<List<Dim>>(c.Dims?.Replace("[,", "[")),
-                Lrcomp = c.Lrcomp
+                dims = JsonConvert.DeserializeObject<List<Dim>>(c.Dims?.Replace("[,", "[")),
+                Lrcomp = c.Lrcomp,
+                viasp = new List<string> { c.Viasp },
+                Clasifcontable = c.ClasifContable,
+                Lsegcredito = c.LsegCredito,
+                Fchcadsegcred = c.Fchcadsegcred,
+                Tipoentidad = c.Tipoentidad,
+                Sector = c.Sector,
+                Fchaltaerp = c.Fchaltaerp,
+                Fchinitact = c.Fchinitact,
+                Ind1 = c.Ind1,
+                Ind2 = c.Ind2,
+                Ind3 = c.Ind3,
+                Ind4 = c.Ind4,
+                Ind5 = c.Ind5,
+                Ind6 = c.Ind6,
+                Ind7 = c.Ind7,
+                Ind8 = c.Ind8,
+                Ind9 = c.Ind9,
             }).ToList();
 
             return dato;

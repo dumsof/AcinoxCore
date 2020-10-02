@@ -32,8 +32,39 @@
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
                 //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente;
 
-                command.CommandText = @"SELECT top 1 cod=C.ID_Cliente,nif=C.RFC,razons=C.NombreCliente FROM [Corporativo].[Clientes] C";
-                                       
+                command.CommandText = @"SELECT cod=LTRIM(STR(C.ID_Cliente))
+	                                          ,nif=C.RFC
+	                                          ,razons=C.NombreCliente
+	                                          ,codcondp=''
+	                                          ,limitrg=0.0
+	                                          ,prov=p.NombrePais	
+	                                          ,dims ='['+(SELECT ',{CodCrite:'+LTRIM(STR(1000+ISNULL(CAC.UsoCategoria,0))),',CodElemen:'+LTRIM(STR(CCC.ID_CategoriaCliente))+'}'
+				                                        FROM Corporativo.ClientesCategoriasClientes CCC
+				                                        JOIN Corporativo.CategoriasClientes CAC ON CAC.ID_CategoriaCliente=CCC.ID_CategoriaCliente
+				                                        WHERE CCC.ID_Cliente=C.ID_Cliente
+				                                        FOR XML PATH ('') )+']'
+	                                          ,lrcomp=1
+	                                          ,viasp=LTRIM(STR(C.DiasCredito))
+	                                          ,clasifcontable='indica cliente nacional extranjero'
+	                                          ,lsegcredito=0
+	                                          ,fchcadsegcred=(select FORMAT (getdate(), 'yyyy-MM-dd'))
+	                                          ,tipoentidad=''
+	                                          ,sector=''
+	                                          ,fchaltaerp= (select FORMAT (getdate(), 'yyyy-MM-dd'))
+	                                          ,fchinitact= (select FORMAT (getdate(), 'yyyy-MM-dd'))
+	                                          ,ind1=''
+	                                          ,ind2=''
+	                                          ,ind3=''
+	                                          ,ind4=''
+	                                          ,ind5=''
+	                                          ,ind6=''
+	                                          ,ind7=''
+	                                          ,ind8=''
+	                                          ,ind9=''
+                                        FROM [Corporativo].[Clientes] C
+                                        JOIN [Corporativo].[ClientesSucursales] CS ON C.ID_Cliente=CS.ID_Cliente
+                                        JOIN [Corporativo].[Paises] p ON C.ID_Nacionalidad=P.ID_Pais";
+
 
                 this.dbContext.Database.OpenConnection();
 
@@ -43,14 +74,31 @@
                     customers = enumerable.Select(registro =>
                     new CustomerEntitie
                     {
-                        Cod = registro.GetString(0)
-                        //Nif = registro.GetString(1),
-                        //Razons = registro.GetString(2),
-                        //Codcondp= registro.GetString(3),
-                        //Limitrg=registro.GetDecimal(4),
-                        //Prov=registro.GetString(5),
-                        //Dims=registro.GetString(6)
-
+                        Cod = registro.GetString(0),
+                        Nif = registro.GetString(1),
+                        Razons = registro.GetString(2),
+                        Codcondp = registro.GetString(3),
+                        Limitrg = registro.GetDecimal(4),
+                        Prov = registro.GetString(5),
+                        Dims = registro.GetString(6),
+                        Lrcomp = registro.GetInt32(7),
+                        Viasp = registro.GetString(8),
+                        ClasifContable = registro.GetString(9),
+                        //LsegCredito = registro.GetDecimal(10),
+                        Fchcadsegcred = registro.GetString(11),
+                        Tipoentidad = registro.GetString(12),
+                        Sector = registro.GetString(13),
+                        Fchaltaerp = registro.GetString(14),
+                        Fchinitact = registro.GetString(15),
+                        Ind1 = registro.GetString(16),
+                        Ind2 = registro.GetString(17),
+                        Ind3 = registro.GetString(18),
+                        Ind4 = registro.GetString(19),
+                        Ind5 = registro.GetString(20),
+                        Ind6 = registro.GetString(21),
+                        Ind7 = registro.GetString(22),
+                        Ind8 = registro.GetString(23),
+                        Ind9 = registro.GetString(24)
                     }).ToList();
                 }
             }
