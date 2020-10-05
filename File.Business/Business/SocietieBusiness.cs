@@ -16,6 +16,7 @@
         private readonly IManagementFtp managementFtp;
         private readonly IValidationXsd validationXsd;
         private readonly ILogger<SocietieBusiness> logger;
+        private const string nameFileXml = "sociedades";
 
         public SocietieBusiness(ILogger<SocietieBusiness> logger, ISocietieRepositorie societieRepositorie, ISocietiePqaRepositorie societiePqaRepositorie,
             IManagementFile managementFile, IManagementFtp managementFtp, IValidationXsd validationXsd)
@@ -30,21 +31,21 @@
 
         public void ProcessSocietie()
         {
-            logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
+            logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
 
             var societies = this.GetSocieties();
             if (societies == null)
             {
-                this.logger.LogInformation("No existe información de las sociedades");
+                this.logger.LogInformation($"No existe información de las {nameFileXml}");
                 return;
             }
 
-            this.managementFile.CreateFileCsv<SocietieEntitie>("sociedades", societies);
+            this.managementFile.CreateFileCsv<SocietieEntitie>(nameFileXml, societies);
             var societiesXml = new Societie { Sociedades = societies.ToList() };
-            this.managementFile.CreateFileXml<Societie>("sociedades", societiesXml);
-            logger.LogInformation($"Archivo [sociendades] con {societies.Count()} registros generado con éxito.");
+            this.managementFile.CreateFileXml<Societie>(nameFileXml, societiesXml);
+            logger.LogInformation($"Archivo [{nameFileXml}] con {societies.Count()} registros generado con éxito.");
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml("sociedades.xsd", "sociedades.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
@@ -53,25 +54,25 @@
             }
             logger.LogInformation($"La validación del XSD se realizo con éxito");
 
-            logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
+            logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now} \n");
         }
 
         public void ProcessSocietiePQA()
         {
-            logger.LogInformation($"Inicio el proceso de [Sociedades]: {DateTimeOffset.Now}");
-            var societies = this.GetSocietiesPqa();           
+            logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
+            var societies = this.GetSocietiesPqa();
             if (societies == null)
             {
                 this.logger.LogInformation("No existe información de las sociedades");
                 return;
             }
 
-            this.managementFile.CreateFileCsv<SocietieEntitie>("sociedades", societies);
+            this.managementFile.CreateFileCsv<SocietieEntitie>(nameFileXml, societies);
             var societiesXml = new Societie { Sociedades = societies.ToList() };
-            this.managementFile.CreateFileXml<Societie>("sociedades", societiesXml);
-            logger.LogInformation($"Archivo [sociendades] con {societies.Count()} registros generado con éxito.");
+            this.managementFile.CreateFileXml<Societie>(nameFileXml, societiesXml);
+            logger.LogInformation($"Archivo [{nameFileXml}] con {societies.Count()} registros generado con éxito.");
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml("sociedades.xsd", "sociedades.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
@@ -80,7 +81,7 @@
             }
             logger.LogInformation($"La validación del XSD se realizo con éxito");
 
-            logger.LogInformation($"Finalizo el proceso de [Sociedades]: {DateTimeOffset.Now}");
+            logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now} \n");
         }
 
         private IEnumerable<SocietieEntitie> GetSocieties()

@@ -50,7 +50,7 @@
             }
             logger.LogInformation($"La validación del XSD se realizo con éxito");
 
-            logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
+            logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now} \n");
         }
 
         private IEnumerable<CustomerEntitie> GetCustomers()

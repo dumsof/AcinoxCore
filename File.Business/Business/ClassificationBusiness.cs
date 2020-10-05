@@ -31,7 +31,7 @@
             var classification = this.GetClassification();
             if (classification == null)
             {
-                this.logger.LogInformation($"No existe información de los {nombreFileClassification}");
+                this.logger.LogInformation($"No existe información de los {nombreFileClassification} \n");
                 return;
             }
 
@@ -49,7 +49,7 @@
             }
             logger.LogInformation($"La validación del XSD se realizo con éxito");
 
-            logger.LogInformation($"Finalizo el proceso de [{nombreFileClassification}]: {DateTimeOffset.Now}");
+            logger.LogInformation($"Finalizo el proceso de [{nombreFileClassification}]: {DateTimeOffset.Now} \n");
         }
 
         private IEnumerable<ClassificationEntitie> GetClassification()
