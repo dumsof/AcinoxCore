@@ -44,12 +44,12 @@
 				                                        FOR XML PATH ('') )+']'
 	                                          ,lrcomp=1
 	                                          ,viasp=LTRIM(STR(C.DiasCredito))
-	                                          ,clasifcontable='indica cliente nacional extranjero'
-	                                          ,lsegcredito=0
-	                                          ,fchcadsegcred=(select FORMAT (getdate(), 'yyyy-MM-dd'))
+	                                          ,clasifcontable= CASE WHEN LOWER(LTRIM(P.NombrePais))='Mexico' THEN 'Nacional' ELSE 'Extranjero' END 
+	                                          ,lsegcredito=CC.LimiteCredito
+	                                          ,fchcadsegcred=(select FORMAT (CC.RegistroAlta, 'yyyy-MM-dd'))
 	                                          ,tipoentidad=''
 	                                          ,sector=''
-	                                          ,fchaltaerp= (select FORMAT (getdate(), 'yyyy-MM-dd'))
+	                                          ,fchaltaerp= (select FORMAT (C.RegistroAlta, 'yyyy-MM-dd'))
 	                                          ,fchinitact= (select FORMAT (getdate(), 'yyyy-MM-dd'))
 	                                          ,ind1=''
 	                                          ,ind2=''
@@ -62,7 +62,8 @@
 	                                          ,ind9=''
                                         FROM [Corporativo].[Clientes] C
                                         JOIN [Corporativo].[ClientesSucursales] CS ON C.ID_Cliente=CS.ID_Cliente
-                                        JOIN [Corporativo].[Paises] p ON C.ID_Nacionalidad=P.ID_Pais";
+                                        JOIN [Corporativo].[Paises] p ON C.ID_Nacionalidad=P.ID_Pais
+                                        JOIN [Facturacion].[CondicionesCreditosClientes] CC ON CC.ID_Cliente=C.ID_Cliente";
 
                 this.dbContext.Database.OpenConnection();
 

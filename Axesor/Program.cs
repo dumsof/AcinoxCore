@@ -47,12 +47,14 @@
                     services.AddSingleton<IClassificationPqaRepositorie, ClassificationPqaRepositorie>();
                     services.AddSingleton<ICustomerPqaRepositorie, CustomerPqaRepositorie>();
                     services.AddSingleton<IPaymentMethodPqaRepositorie, PaymentMethodPqaRepositorie>();
+                    services.AddSingleton<IAddressPqaRepositorie, AddressPqaRepositorie>();
 
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IClassificationBusiness, ClassificationBusiness>();
                     services.AddSingleton<ICustomerBusiness, CustomerBusiness>();
                     services.AddSingleton<IPaymentMethodBusiness, PaymentMethodBusiness>();
-
+                    services.AddSingleton<IAddressBusiness, AddressBusiness>();
+                    
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();
                     services.AddSingleton<IValidationXsd, ValidationXsd>();

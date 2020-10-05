@@ -16,19 +16,22 @@
         private readonly ISocietieBusiness societieBusiness;
         private readonly IClassificationBusiness classificationBusiness;
         private readonly ICustomerBusiness customerBusiness;
+        private readonly IAddressBusiness addressBusiness;
         private readonly IPaymentMethodBusiness paymentMethodBusiness;
         private readonly IManagementFile managementFile;
         private readonly IManagementFtp managementFtp;
 
         public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso,
             ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, ICustomerBusiness customerBusiness,
-            IPaymentMethodBusiness paymentMethodBusiness, IManagementFile managementFile, IManagementFtp managementFtp)
+            IAddressBusiness addressBusiness, IPaymentMethodBusiness paymentMethodBusiness,
+            IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;
             this.configHoraProceso = configHoraProceso;
             this.societieBusiness = societieBusiness;
             this.classificationBusiness = classificationBusiness;
             this.customerBusiness = customerBusiness;
+            this.addressBusiness = addressBusiness;
             this.paymentMethodBusiness = paymentMethodBusiness;
             this.managementFile = managementFile;
             this.managementFtp = managementFtp;
@@ -52,6 +55,7 @@
                     this.classificationBusiness.ProcessClassification();
                     this.paymentMethodBusiness.ProcessPaymentMethod();
                     this.customerBusiness.ProcessCustomer();
+                    this.addressBusiness.ProcessAddress();
                     this.managementFtp.UnloadAllFileFolderFtp();
                     this.managementFile.MoveAllFileFolder();
                     _logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");
