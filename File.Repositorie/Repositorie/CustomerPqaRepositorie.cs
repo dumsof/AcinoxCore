@@ -22,9 +22,9 @@
             this.configurationQuerySql = configurationQuerySql;
         }
 
-        public IEnumerable<CustomerEntitie> GetCustomers()
+        public IEnumerable<CustomerRepoEntitie> GetCustomers()
         {
-            List<CustomerEntitie> customers;
+            List<CustomerRepoEntitie> customers;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
@@ -71,7 +71,7 @@
                 {
                     var enumerable = resultCustomer.Cast<IDataRecord>();
                     customers = enumerable.Select(registro =>
-                    new CustomerEntitie
+                    new CustomerRepoEntitie
                     {
                         Cod = registro.GetString(0),
                         Nif = registro.GetString(1),

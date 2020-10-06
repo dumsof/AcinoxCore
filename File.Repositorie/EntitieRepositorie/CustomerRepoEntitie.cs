@@ -1,6 +1,6 @@
 ﻿namespace File.Repositorie.EntitieRepositorie
 {
-    public class CustomerEntitie
+    public class CustomerRepoEntitie
     {
         public string Cod { get; set; }
         public string Nif { get; set; }

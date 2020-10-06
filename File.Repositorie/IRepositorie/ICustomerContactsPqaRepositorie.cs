@@ -3,8 +3,8 @@
     using File.Repositorie.EntitieRepositorie;
     using System.Collections.Generic;
 
-    public interface ICustomerPqaRepositorie
+    public interface ICustomerContactsPqaRepositorie
     {
-        public IEnumerable<CustomerRepoEntitie> GetCustomers();
+        public IEnumerable<CustomerContactsRepoEntitie> GetContacts();
     }
 }
