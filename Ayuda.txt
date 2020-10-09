@@ -22,5 +22,9 @@ sc stop ServiceAcinoxUploadFileFtp
 sc delete ServiceAcinoxUploadFileFtp binPath=E:\DUMSOFT\AXESOR\ServicioAcinox\Acinox.exe
 --FIN INSTALACIÓN
 
+--convertir texto en una linea notepad++
+https://www.youtube.com/watch?v=acBHPRlxufc
+
+
 
 

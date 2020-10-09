@@ -29,15 +29,8 @@
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro;
-                command.CommandText = @"SELECT DISTINCT
-                                                LTRIM(STR(t1.DiasCredito)) as cod,
-                                                LTRIM(STR(t1.DiasCredito)) + ' días de plazo ' as 'desc',
-                                                '0' as gencart,
-                                                ' ' as ind1,
-                                                ' ' as ind2,
-                                                '1' as numdias
-                                        FROM [Corporativo].[Clientes] as t1";
+                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro;
+              
                 this.dbContext.Database.OpenConnection();
 
                 using (var resultCustomer = command.ExecuteReader())

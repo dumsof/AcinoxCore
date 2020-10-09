@@ -29,42 +29,8 @@
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente;
-
-                command.CommandText = @"SELECT cod=LTRIM(STR(C.ID_Cliente))
-	                                          ,nif=C.RFC
-	                                          ,razons=C.NombreCliente
-	                                          ,codcondp=''
-	                                          ,limitrg=0.0
-	                                          ,prov=p.NombrePais
-	                                          ,dims ='['+(SELECT ',{CodCrite:'+LTRIM(STR(1000+ISNULL(CAC.UsoCategoria,0))),',CodElemen:'+LTRIM(STR(CCC.ID_CategoriaCliente))+'}'
-				                                        FROM Corporativo.ClientesCategoriasClientes CCC
-				                                        JOIN Corporativo.CategoriasClientes CAC ON CAC.ID_CategoriaCliente=CCC.ID_CategoriaCliente
-				                                        WHERE CCC.ID_Cliente=C.ID_Cliente
-				                                        FOR XML PATH ('') )+']'
-	                                          ,lrcomp=1
-	                                          ,viasp=LTRIM(STR(C.DiasCredito))
-	                                          ,clasifcontable= CASE WHEN LOWER(LTRIM(P.NombrePais))='Mexico' THEN 'Nacional' ELSE 'Extranjero' END 
-	                                          ,lsegcredito=CC.LimiteCredito
-	                                          ,fchcadsegcred=(select FORMAT (CC.RegistroAlta, 'yyyy-MM-dd'))
-	                                          ,tipoentidad=''
-	                                          ,sector=''
-	                                          ,fchaltaerp= (select FORMAT (C.RegistroAlta, 'yyyy-MM-dd'))
-	                                          ,fchinitact= (select FORMAT (getdate(), 'yyyy-MM-dd'))
-	                                          ,ind1=''
-	                                          ,ind2=''
-	                                          ,ind3=''
-	                                          ,ind4=''
-	                                          ,ind5=''
-	                                          ,ind6=''
-	                                          ,ind7=''
-	                                          ,ind8=''
-	                                          ,ind9=''
-                                        FROM [Corporativo].[Clientes] C
-                                        JOIN [Corporativo].[ClientesSucursales] CS ON C.ID_Cliente=CS.ID_Cliente
-                                        JOIN [Corporativo].[Paises] p ON C.ID_Nacionalidad=P.ID_Pais
-                                        JOIN [Facturacion].[CondicionesCreditosClientes] CC ON CC.ID_Cliente=C.ID_Cliente";
-
+                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente;
+                
                 this.dbContext.Database.OpenConnection();
 
                 using (var resultCustomer = command.ExecuteReader())
@@ -83,7 +49,7 @@
                         Lrcomp = registro.GetInt32(7),
                         Viasp = registro.GetString(8),
                         ClasifContable = registro.GetString(9),
-                        //LsegCredito = registro.GetDecimal(10),
+                        LsegCredito = registro.GetDecimal(10),
                         Fchcadsegcred = registro.GetString(11),
                         Tipoentidad = registro.GetString(12),
                         Sector = registro.GetString(13),
