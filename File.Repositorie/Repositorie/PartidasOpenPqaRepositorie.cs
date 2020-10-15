@@ -2,6 +2,7 @@
 {
     using File.Repositorie.DataAccessPqa;
     using File.Repositorie.EntitieRepositorie;
+    using File.Repositorie.IRepositorie;
     using File.Utility;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
@@ -10,7 +11,7 @@
     using System.Data;
     using System.Linq;
 
-    public class PartidasOpenPqaRepositorie
+    public class PartidasOpenPqaRepositorie : IPartidasOpenPqaRepositorie
     {
         private readonly PQADbContext dbContext;
         private readonly IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql;
@@ -28,7 +29,36 @@
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasAbiertas;
+                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasAbiertas;
+                command.CommandText = @"SELECT DISTINCT
+												 codcli=CLI.RFC
+												,ndoc=SerieDocumento+' '+LTRIM(STR( NumeroDocumento))
+												,nvcto=''
+												,fchemi='2014-01-02'
+												,fchvcto='2014-01-02'
+												,importe=0.0
+												,estado=2
+												,dotada=1
+												,codvp=''
+												,codcondp=''
+												,codmondoc=''
+												,impmondoc=0.0
+												,ind1=''
+												,ind2=''
+												,ind3=''
+												,ind4=''
+												,ind5=''
+												,ind6=''
+												,ind7=''
+												,ind8=''
+												,ind9=''
+												,tdoc=''
+												,campoid=''
+												,codejercicio=''
+												,numdocorigen=0.0
+										  FROM [Facturacion].[CXCCargos] CA
+										  JOIN Corporativo.ClientesSucursales SU ON SU.ID_ClienteSucursal=CA.ID_ClienteSucursal
+										  JOIN Corporativo.Clientes CLI ON CLI.ID_Cliente=SU.ID_Cliente";
 
                 this.dbContext.Database.OpenConnection();
 
@@ -44,8 +74,8 @@
                         Fchemi = registro.GetString(3),
                         Fchvcto = registro.GetString(4),
                         Importe = registro.GetDecimal(5),
-                        Estado = registro.GetInt16(6),
-                        Dotada = registro.GetInt16(7),
+                        Estado = registro.GetInt32(6),
+                        Dotada = registro.GetInt32(7),
                         CodVp = registro.GetString(8),
                         CodConDp = registro.GetString(9),
                         CodMonDoc = registro.GetString(10),
@@ -62,7 +92,7 @@
                         Tdoc = registro.GetString(21),
                         Campoid = registro.GetString(22),
                         CodeJercicio = registro.GetString(23),
-                        NumDocOrigen = registro.GetString(24)
+                        NumDocOrigen = registro.GetDecimal(24)
                     }).ToList();
                 }
             }

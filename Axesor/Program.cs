@@ -52,6 +52,7 @@
                     services.AddSingleton<IPaymentMethodPqaRepositorie, PaymentMethodPqaRepositorie>();
                     services.AddSingleton<IAddressPqaRepositorie, AddressPqaRepositorie>();
                     services.AddSingleton<ICustomerContactsPqaRepositorie, CustomerContactsPqaRepositorie>();
+                    services.AddSingleton<IPartidasOpenPqaRepositorie, PartidasOpenPqaRepositorie>();
 
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IClassificationBusiness, ClassificationBusiness>();
@@ -59,6 +60,7 @@
                     services.AddSingleton<IPaymentMethodBusiness, PaymentMethodBusiness>();
                     services.AddSingleton<IAddressBusiness, AddressBusiness>();
                     services.AddSingleton<ICustomerContactsBusiness, CustomerContactsBusiness>();
+                    services.AddSingleton<IPartidasOpenBusiness, PartidasOpenBusiness>();
 
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();
@@ -73,7 +75,6 @@
 
                     services.AddHostedService<GenerateFile>();
                 })
-
                 .UseSerilog(); //Dum: cuando se habilita no se presentan los mensaje en la cosola se guardan en el archivo de Log
 
         private static void ConfiguracionSeriLog()
