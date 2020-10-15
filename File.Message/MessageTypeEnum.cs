@@ -1,10 +1,15 @@
 ﻿namespace File.Message
 {
-    public class MessageTypeEnum
+    public enum MessageType : int
     {
-        public enum MessageType
-        {
-            InicioProcessGeneradFile = 1
-        }
+        /// <summary>
+        /// Inicio el proceso de
+        /// </summary>
+        InicioProcessGeneradFile = 1,
+
+        NoExitsInformation = 2,
+        CountFileGenerad = 3,
+        ValidationXSDSuccess = 4,
+        FinishedProcess = 5
     }
 }

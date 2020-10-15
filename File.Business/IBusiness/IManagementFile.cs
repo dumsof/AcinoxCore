@@ -6,7 +6,7 @@ namespace File.Business.IBusiness
     {
         public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas);
 
-        public bool CreateFileXml<T>(string nameFile, T datas);
+        public bool CreateFileXml<T>(string nameFile, T datas, string nameFolderNitSocietie = "");
 
         public void CreatedPathFile();
 

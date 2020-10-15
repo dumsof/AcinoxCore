@@ -3,6 +3,7 @@
     using File.Business.Business;
     using File.Business.IBusiness;
     using File.Entities;
+    using File.Message;
     using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
     using File.Repositorie.Repositorie;
@@ -12,6 +13,7 @@
     using Serilog;
     using Serilog.Events;
     using System;
+    using System.Collections.Generic;
 
     public static class Program
     {
@@ -23,6 +25,7 @@
             {
                 Utility.CofigurationJson();
                 Utility.CofigurationSQL();
+                Utility.CofigurationMessage();
                 ConfiguracionSeriLog();
                 Log.Information("Inicio la subida del servicio.");
                 CreateHostBuilder(args).Build().Run();
@@ -56,16 +59,17 @@
                     services.AddSingleton<IPaymentMethodBusiness, PaymentMethodBusiness>();
                     services.AddSingleton<IAddressBusiness, AddressBusiness>();
                     services.AddSingleton<ICustomerContactsBusiness, CustomerContactsBusiness>();
-                    
-
 
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();
                     services.AddSingleton<IValidationXsd, ValidationXsd>();
+                    services.AddSingleton<IMessageManagement, MessageManagement>();
 
                     services.Configure<ConfiguracionHoraEjecucionProceso>(Utility.Configuration.GetSection("ConfiguracionHoraEjecucionProceso"));
                     services.Configure<ConfiguracionFtp>(Utility.Configuration.GetSection("ConfiguracionFtp"));
                     services.Configure<ConfiguracionQuerySqlPqa>(Utility.ConfigurationSql.GetSection("ConfiguracionQuerySqlPqa"));
+
+                    services.Configure<List<Message>>(Utility.ConfigurationMessage.GetSection("Message"));
 
                     services.AddHostedService<GenerateFile>();
                 })

@@ -4,6 +4,6 @@
     {
         public int CodeMessage { get; set; }
 
-        public int DescriptionMessage { get; set; }
+        public string DescriptionMessage { get; set; }
     }
 }

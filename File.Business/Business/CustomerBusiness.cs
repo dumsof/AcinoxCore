@@ -13,15 +13,17 @@
     {
         private readonly ILogger<CustomerBusiness> logger;
         private readonly ICustomerPqaRepositorie customerRepositorie;
+        private readonly ISocietiePqaRepositorie societiePqaRepositorie;
         private readonly IManagementFile managementFile;
         private readonly IValidationXsd validationXsd;
         private const string nameFileXml = "clientes";
 
         public CustomerBusiness(ILogger<CustomerBusiness> logger, ICustomerPqaRepositorie customerRepositorie,
-            IManagementFile managementFile, IValidationXsd validationXsd)
+            ISocietiePqaRepositorie societiePqaRepositorie, IManagementFile managementFile, IValidationXsd validationXsd)
         {
             this.logger = logger;
             this.customerRepositorie = customerRepositorie;
+            this.societiePqaRepositorie = societiePqaRepositorie;
             this.managementFile = managementFile;
             this.validationXsd = validationXsd;
         }
@@ -29,7 +31,17 @@
         public void ProcessCustomer()
         {
             logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
-            var customers = this.GetCustomers();
+
+            var societies = this.societiePqaRepositorie.GetEmpresas();
+            foreach (var societie in societies)
+            {
+                var customers = this.GetCustomers(societie.Cod);
+                this.GenerateFileXml(customers, societie.Nif);
+            }
+        }
+
+        private void GenerateFileXml(IEnumerable<CustomerEntitie> customers, string nitSocietie)
+        {
             if (customers == null)
             {
                 this.logger.LogInformation($"No existe información de los {nameFileXml}");
@@ -38,10 +50,10 @@
 
             this.managementFile.CreateFileCsv<CustomerEntitie>(nameFileXml, customers);
             var customerXml = new Customer { Clientes = customers.ToList() };
-            this.managementFile.CreateFileXml<Customer>(nameFileXml, customerXml);
+            this.managementFile.CreateFileXml<Customer>(nameFileXml, customerXml, nitSocietie);
             logger.LogInformation($"Archivo [{nameFileXml}] con {customers.Count()} registros generado con éxito.");
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nitSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
@@ -53,9 +65,9 @@
             logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now} \n");
         }
 
-        private IEnumerable<CustomerEntitie> GetCustomers()
+        private IEnumerable<CustomerEntitie> GetCustomers(string idEmpresa)
         {
-            var customers = this.customerRepositorie.GetCustomers();
+            var customers = this.customerRepositorie.GetCustomers(idEmpresa);
 
             var dato = customers.Select(c => new CustomerEntitie
             {

@@ -5,6 +5,6 @@
 
     public interface ICustomerPqaRepositorie
     {
-        public IEnumerable<CustomerRepoEntitie> GetCustomers();
+        public IEnumerable<CustomerRepoEntitie> GetCustomers(string idEmpresa);
     }
 }

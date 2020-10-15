@@ -8,6 +8,8 @@
         public static IConfigurationRoot Configuration { get; set; }
         public static IConfigurationRoot ConfigurationSql { get; set; }
 
+        public static IConfigurationRoot ConfigurationMessage { get; set; }
+
         public static string PathAplication
         {
             get
@@ -90,6 +92,14 @@
             if (ConfigurationSql == null)
             {
                 ConfigurationSql = GetBuilder("consultasSQLPqa");
+            }
+        }
+
+        public static void CofigurationMessage()
+        {
+            if (ConfigurationMessage == null)
+            {
+                ConfigurationMessage = GetBuilder("MessageAplication");
             }
         }
 

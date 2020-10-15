@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="MessageAplication.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="MessageAplication.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\File.Business\File.Business.csproj" />
     <ProjectReference Include="..\File.Entities\File.Entities.csproj" />
+    <ProjectReference Include="..\File.Message\File.Message.csproj" />
     <ProjectReference Include="..\File.Utility\File.Utility.csproj" />
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
   </ItemGroup>

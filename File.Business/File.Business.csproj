@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\File.Entities\File.Entities.csproj" />
+    <ProjectReference Include="..\File.Message\File.Message.csproj" />
     <ProjectReference Include="..\File.Repositorie\File.Repositorie.csproj" />
     <ProjectReference Include="..\File.Utility\File.Utility.csproj" />
     <ProjectReference Include="..\LoggerService\LoggerService.csproj" />

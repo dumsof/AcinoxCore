@@ -22,15 +22,15 @@
             this.configurationQuerySql = configurationQuerySql;
         }
 
-        public IEnumerable<CustomerRepoEntitie> GetCustomers()
+        public IEnumerable<CustomerRepoEntitie> GetCustomers(string idEmpresa)
         {
             List<CustomerRepoEntitie> customers;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente;
-                
+                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente.Replace("{0}", idEmpresa);
+
                 this.dbContext.Database.OpenConnection();
 
                 using (var resultCustomer = command.ExecuteReader())

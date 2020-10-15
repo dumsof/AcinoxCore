@@ -38,9 +38,19 @@
             return true;
         }
 
-        public bool CreateFileXml<T>(string nameFile, T datas)
+        public bool CreateFileXml<T>(string nameFile, T datas, string nameFolderNitSocietie = "")
         {
-            var path = $"{Utility.PathFolderGenerated}\\{nameFile}.xml";
+            var path = string.Empty;
+            if (string.IsNullOrEmpty(nameFolderNitSocietie))
+            {
+                path = $"{Utility.PathFolderGenerated}\\{nameFile}.xml";
+            }
+            else
+            {
+                this.CreateFolderSocietie(nameFolderNitSocietie);
+                path = $"{Utility.PathFolderGenerated}\\{nameFolderNitSocietie}\\{nameFile}.xml";
+            }
+           
             this.DeleteFile(path);
 
             var serializer = new XmlSerializer(typeof(T));
@@ -50,6 +60,15 @@
             }
 
             return true;
+        }
+
+        private void CreateFolderSocietie(string nameFolderSocietie)
+        {
+            string pathFolderSocietie = $"{Utility.PathFolderGenerated}//{nameFolderSocietie}";
+            if (!Directory.Exists(pathFolderSocietie))
+            {
+                Directory.CreateDirectory(pathFolderSocietie);
+            }
         }
 
         public void CreatedPathFile()
