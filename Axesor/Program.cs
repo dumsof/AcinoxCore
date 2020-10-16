@@ -53,6 +53,7 @@
                     services.AddSingleton<IAddressPqaRepositorie, AddressPqaRepositorie>();
                     services.AddSingleton<ICustomerContactsPqaRepositorie, CustomerContactsPqaRepositorie>();
                     services.AddSingleton<IPartidasOpenPqaRepositorie, PartidasOpenPqaRepositorie>();
+                    services.AddSingleton<IPartidasCompensatedPqaRepositorie, PartidasCompensatedPqaRepositorie>();
 
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IClassificationBusiness, ClassificationBusiness>();
@@ -61,6 +62,7 @@
                     services.AddSingleton<IAddressBusiness, AddressBusiness>();
                     services.AddSingleton<ICustomerContactsBusiness, CustomerContactsBusiness>();
                     services.AddSingleton<IPartidasOpenBusiness, PartidasOpenBusiness>();
+                    services.AddSingleton<IPartidasCompensatedBusiness, PartidasCompensatedBusiness>();
 
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();

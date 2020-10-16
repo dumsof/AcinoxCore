@@ -11,25 +11,25 @@
     using System.Data;
     using System.Linq;
 
-    public class PartidasOpenPqaRepositorie : IPartidasOpenPqaRepositorie, IDisposable
+    public class PartidasCompensatedPqaRepositorie : IPartidasCompensatedPqaRepositorie, IDisposable
     {
         private readonly PQADbContext dbContext;
         private readonly IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql;
 
-        public PartidasOpenPqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
+        public PartidasCompensatedPqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
         {
             this.dbContext = new PQADbContext();
             this.configurationQuerySql = configurationQuerySql;
         }
 
-        public IEnumerable<PartidasOpenRepoEntitie> GetPartidasOpen()
+        public IEnumerable<PartidasCompensatedRepoEntitie> GetPartidasCompensated()
         {
-            List<PartidasOpenRepoEntitie> partidasOpen;
+            List<PartidasCompensatedRepoEntitie> partidasCompensated;
 
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasAbiertas;
+                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasCompensadas;
                 command.CommandText = @"SELECT DISTINCT
 												 codcli=CLI.RFC
 												,ndoc=SerieDocumento+' '+LTRIM(STR( NumeroDocumento))
@@ -62,11 +62,11 @@
 
                 this.dbContext.Database.OpenConnection();
 
-                using (var resultPartidasOpen = command.ExecuteReader())
+                using (var resultPartidasCompensated = command.ExecuteReader())
                 {
-                    var enumerable = resultPartidasOpen.Cast<IDataRecord>();
-                    partidasOpen = enumerable.Select(registro =>
-                    new PartidasOpenRepoEntitie
+                    var enumerable = resultPartidasCompensated.Cast<IDataRecord>();
+                    partidasCompensated = enumerable.Select(registro =>
+                    new PartidasCompensatedRepoEntitie
                     {
                         CodCli = registro.GetString(0),
                         Ndoc = registro.GetString(1),
@@ -97,7 +97,7 @@
                 }
             }
 
-            return partidasOpen;
+            return partidasCompensated;
         }
 
         protected virtual void Dispose(bool disposing)
