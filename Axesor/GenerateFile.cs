@@ -21,13 +21,15 @@
         private readonly ICustomerContactsBusiness customerContactsBusiness;
         private readonly IPartidasCompensatedBusiness partidasCompensatedBusiness;
         private readonly IPartidasOpenBusiness partidasOpenBusiness;
+        private readonly IPaymentConditionBusiness paymentCondition;
         private readonly IManagementFile managementFile;
         private readonly IManagementFtp managementFtp;
 
         public GenerateFile(ILogger<GenerateFile> logger, IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso,
             ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, ICustomerBusiness customerBusiness,
             IAddressBusiness addressBusiness, IPaymentMethodBusiness paymentMethodBusiness, ICustomerContactsBusiness customerContactsBusiness,
-            IPartidasCompensatedBusiness partidasCompensatedBusiness, IPartidasOpenBusiness partidasOpenBusiness, IManagementFile managementFile, IManagementFtp managementFtp)
+            IPartidasCompensatedBusiness partidasCompensatedBusiness, IPartidasOpenBusiness partidasOpenBusiness, IPaymentConditionBusiness paymentCondition,
+            IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;
             this.configHoraProceso = configHoraProceso;
@@ -39,6 +41,7 @@
             this.customerContactsBusiness = customerContactsBusiness;
             this.partidasCompensatedBusiness = partidasCompensatedBusiness;
             this.partidasOpenBusiness = partidasOpenBusiness;
+            this.paymentCondition = paymentCondition;
             this.managementFile = managementFile;
             this.managementFtp = managementFtp;
         }
@@ -57,16 +60,18 @@
             {
                 if (Utility.IsHourProced || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
-                    this.societieBusiness.ProcessSocietiePQA();
-                    this.classificationBusiness.ProcessClassification();
-                    this.paymentMethodBusiness.ProcessPaymentMethod();
-                    this.customerBusiness.ProcessCustomer();
-                    this.addressBusiness.ProcessAddress();
-                    this.customerContactsBusiness.ProcessContacts();
-                    this.partidasOpenBusiness.ProcessPartidasOpen();
-                    this.partidasCompensatedBusiness.ProcessPartidasCompensated();
-                    this.managementFtp.UnloadAllFileFolderFtp();
-                    this.managementFile.MoveAllFileFolder();
+                    //this.societieBusiness.ProcessSocietiePQA();
+                    //this.classificationBusiness.ProcessClassification();
+                    //this.paymentMethodBusiness.ProcessPaymentMethod();
+                    //this.customerBusiness.ProcessCustomer();
+                    //this.addressBusiness.ProcessAddress();
+                    //this.customerContactsBusiness.ProcessContacts();
+                    this.paymentCondition.ProcessPaymentCondition();
+                    //this.partidasOpenBusiness.ProcessPartidasOpen();
+                    //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
+
+                    //this.managementFtp.UnloadAllFileFolderFtp();
+                    //this.managementFile.MoveAllFileFolder();
                     _logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");
                 }
 

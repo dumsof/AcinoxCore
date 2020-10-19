@@ -29,7 +29,18 @@
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                command.CommandText = this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro;
+                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCondicionPago;
+                command.CommandText = @"SELECT  cod		=LTRIM(STR(CP.ID_CondicionPago))
+                                              ,[desc]	=CP.NombreCondicionPago
+                                              ,plazos='['+(SELECT ',{Dsc:""'+LTRIM(STR(Dias)) + ' días""'
+						                                          ,',Dias:' +LTRIM(STR(Dias))
+						                                          ,',Porc:'+'100'
+						                                          ,',CodVia:'+LTRIM(STR(ID_CondicionPago))
+						                                          ,',Codp:'+LTRIM(STR(Dias)) +'}'
+					                                        FROM PQA.Corporativo.CondicionesPagos
+					                                        WHERE Dias=CP.Dias AND ID_CondicionPago=CP.ID_CondicionPago
+					                                        FOR XML PATH (''))+']' 	  
+                                        FROM PQA.Corporativo.CondicionesPagos CP";
 
                 this.dbContext.Database.OpenConnection();
 
@@ -39,12 +50,10 @@
                     paymentCondition = enumerable.Select(registro =>
                     new PaymentConditionRepoEntitie
                     {
-                        //Cod = registro.GetString(0),
-                        //Desc = registro.GetString(1),
-                        //GenCart = registro.GetString(2),
-                        //Ind1 = registro.GetString(3),
-                        //Ind2 = registro.GetString(4),
-                        //NumDias = registro.GetString(5),
+                        Cod = registro.GetString(0),
+                        Desc = registro.GetString(1),
+                        Plazos = registro.GetString(2)
+
                     }).ToList();
                 }
             }
