@@ -7,7 +7,7 @@
         public string Nombre { get; set; }
         public string Nif { get; set; }
         public string codcliente { get; set; }
-        public int TContacto { get; set; }
+        public string TContacto { get; set; }
         public string CodDireccion { get; set; }
         public string TlFfijo { get; set; }
         public string TlfMovil { get; set; }

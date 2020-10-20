@@ -29,24 +29,27 @@
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente;
+                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLContactoCliente;
 
-                command.CommandText = @"SELECT   codcliente		=LTRIM(STR(CS.ID_Cliente))
-		                                        ,codcontacto	=LTRIM(STR(CSC.ID_ClienteSucursalContacto))
-		                                        ,nombre			=CSC.NombreContacto
-		                                        ,nif			=C.RFC
-		                                        ,tcontacto		=0
-		                                        ,coddireccion	=CS.Calle+' '+CS.NumExterior
-		                                        ,tlffijo		=''
-		                                        ,' ' as tlfmovil 
-		                                        ,' ' as fax 
-		                                        ,' ' as email 
-		                                        ,' ' as ind1 
-		                                        ,' ' as ind2 
-		                                        ,' ' as ind3
-                                        FROM Corporativo.ClientesSucursalesContactos CSC
-                                        JOIN Corporativo.ClientesSucursales CS							ON CSC.ID_ClienteSucursal=CSC.ID_ClienteSucursal
-                                        JOIN Corporativo.Clientes C										ON  C.ID_Cliente=CS.ID_Cliente";
+                command.CommandText = @"SELECT DISTINCT
+                                                ltrim(str(t2.ID_Cliente)) as codcliente ,
+                                                ISNULL(ltrim(str(t2.ID_Cliente))+ltrim(str(t2.ID_ClienteSucursal))+ltrim(str(t1.ID_ClienteSucursalContacto))+ltrim(str(t4.ID_ClienteSucursalContactoTelefono))+ltrim(str(t5.ID_Internet)),'') as codcontacto ,
+                                                t1.NombreContacto as nombre ,
+                                                t3.RFC as nif ,
+                                                ISNULL( (case when (t5.ID_Internet = 1) then '0' when (t5.ID_Internet = 2) then '1' end),'0') as tcontacto ,
+                                                t4.NumeroLocal as tlffijo ,
+                                                t4.CodigoArea as coddireccion ,
+                                                ISNULL((case when (t4.ID_Telefono = 7) then ISNULL(NumeroLocal,'') end),'') as tlfmovil ,
+                                                ISNULL((case when (t4.ID_Telefono = 6) then ISNULL(NumeroLocal,'') end),'') as fax ,
+                                                t5.CuentaDireccion as email ,
+                                                ' ' as ind1 ,
+                                                ' ' as ind2 ,
+                                                ' ' as ind3
+                                        FROM Corporativo.ClientesSucursalesContactos as t1
+                                        INNER JOIN Corporativo.ClientesSucursalesContactosTelefonos as t4  ON t1.ID_ClienteSucursalContacto=t4.ID_ClienteSucursalContacto
+                                        INNER JOIN Corporativo.ClientesSucursalesContactosInternets as t5  ON t1.ID_ClienteSucursalContacto=t5.ID_ClienteSucursalContacto  AND t5.ID_Internet IN(1,2,3,8,9,12,18)
+                                        INNER JOIN Corporativo.ClientesSucursales as t2					   ON t1.ID_ClienteSucursal=t2.ID_ClienteSucursal
+                                        INNER JOIN Corporativo.Clientes as t3							   ON t1.ID_ClienteSucursal=t3.ID_Cliente";
 
                 this.dbContext.Database.OpenConnection();
 
@@ -60,7 +63,7 @@
                         CodContacto = registro.GetString(1),
                         Nombre = registro.GetString(2),
                         Nif = registro.GetString(3),
-                        TContacto = registro.GetInt32(4),
+                        TContacto = registro.GetString(4),
                         CodDireccion = registro.GetString(5),
                         TlFfijo = registro.GetString(6),
                         TlfMovil = registro.GetString(7),

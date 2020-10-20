@@ -11,9 +11,9 @@
         [XmlElement("nombre")]
         public string Nombre { get; set; }
         [XmlElement("nif")]
-        public string Nif { get; set; }      
+        public string Nif { get; set; }
         [XmlElement("tcontacto")]
-        public int TContacto { get; set; }
+        public string TContacto { get; set; }
         [XmlElement("coddireccion")]
         public string CodDireccion { get; set; }
         [XmlElement("tlffijo")]

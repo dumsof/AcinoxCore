@@ -65,8 +65,8 @@
                     //this.paymentMethodBusiness.ProcessPaymentMethod();
                     //this.customerBusiness.ProcessCustomer();
                     //this.addressBusiness.ProcessAddress();
-                    //this.customerContactsBusiness.ProcessContacts();
-                    this.paymentCondition.ProcessPaymentCondition();
+                    this.customerContactsBusiness.ProcessContacts();
+                    //this.paymentCondition.ProcessPaymentCondition();
                     //this.partidasOpenBusiness.ProcessPartidasOpen();
                     //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
 
