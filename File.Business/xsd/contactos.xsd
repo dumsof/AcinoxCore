@@ -77,7 +77,7 @@
 				<xs:element name="email"  minOccurs="0" nillable="true" maxOccurs="1">
                   <xs:simpleType>
                     <xs:restriction base="xs:string">
-                      <xs:maxLength value="64"/>
+                      <xs:maxLength value="255"/>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
