@@ -60,13 +60,13 @@
             {
                 if (Utility.IsHourProced || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
-                    //this.societieBusiness.ProcessSocietiePQA();
-                    //this.classificationBusiness.ProcessClassification();
-                    //this.paymentMethodBusiness.ProcessPaymentMethod();
-                    //this.customerBusiness.ProcessCustomer();
-                    //this.addressBusiness.ProcessAddress();
+                    this.societieBusiness.ProcessSocietiePQA();
+                    this.classificationBusiness.ProcessClassification();
+                    this.paymentMethodBusiness.ProcessPaymentMethod();
+                    this.customerBusiness.ProcessCustomer();
+                    this.addressBusiness.ProcessAddress();
                     this.customerContactsBusiness.ProcessContacts();
-                    //this.paymentCondition.ProcessPaymentCondition();
+                    this.paymentCondition.ProcessPaymentCondition();
                     //this.partidasOpenBusiness.ProcessPartidasOpen();
                     //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
 

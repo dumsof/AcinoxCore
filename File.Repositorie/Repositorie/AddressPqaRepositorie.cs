@@ -23,7 +23,7 @@ namespace File.Repositorie.Repositorie
             this.configurationQuerySql = configurationQuerySql;
         }
 
-        public IEnumerable<AddressRepoEntitie> GetAddress()
+        public IEnumerable<AddressRepoEntitie> GetAddress(string idEmpresa)
         {
             List<AddressRepoEntitie> address;
 
@@ -32,7 +32,8 @@ namespace File.Repositorie.Repositorie
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
                 //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLCliente;
 
-                command.CommandText = @"SELECT	 LTRIM(STR( CS.id_cliente)) as codcliente 
+                command.CommandText = @$"SELECT DISTINCT	
+		                                         LTRIM(STR( CS.id_cliente)) as codcliente 
 		                                        ,LTRIM(STR(CS.ID_ClienteSucursal)) as coddireccion 
 		                                        ,'0' as tdireccion 
 		                                        ,CS.Calle+' '+CS.NumExterior+' ' as domicilio 
@@ -44,7 +45,9 @@ namespace File.Repositorie.Repositorie
 		                                        ,' ' as ind2 
 		                                        ,' ' as ind3
                                         FROM Corporativo.ClientesSucursales as CS
-                                        JOIN Corporativo.Paises as P on P.ID_Pais=CS.ID_Pais";
+                                        JOIN Corporativo.Paises as P on P.ID_Pais=CS.ID_Pais
+                                        JOIN Corporativo.ClientesCategoriasClientes CC ON CC.ID_Cliente=CS.ID_Cliente
+                                        WHERE CC.ID_Empresa={idEmpresa.Trim()}";
 
                 this.dbContext.Database.OpenConnection();
 

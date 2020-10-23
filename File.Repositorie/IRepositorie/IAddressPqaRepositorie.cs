@@ -5,6 +5,6 @@
 
     public interface IAddressPqaRepositorie
     {
-        public IEnumerable<AddressRepoEntitie> GetAddress();
+        public IEnumerable<AddressRepoEntitie> GetAddress(string idEmpresa);
     }
 }
