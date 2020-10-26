@@ -4,7 +4,7 @@ namespace File.Business.IBusiness
 {
     public interface IManagementFile
     {
-        public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas);
+        public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas, bool crearCsv = false);
 
         public bool CreateFileXml<T>(string nameFile, T datas, string nameFolderNitSocietie = "");
 

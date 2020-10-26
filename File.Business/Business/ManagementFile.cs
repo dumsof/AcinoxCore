@@ -19,20 +19,24 @@
         {
             this.logger = logger;
         }
-        public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas)
+        public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas, bool crearCsv = false)
         {
-            var path = $"{Utility.PathFolderGenerated}\\{nameFile}.csv";
-            this.DeleteFile(path);
-            using (StreamWriter sw = new StreamWriter(path, false, new UTF8Encoding(true)))
-            using (CsvWriter cw = new CsvWriter(sw, CultureInfo.CurrentCulture))
+            if (crearCsv)
             {
-                cw.WriteHeader<T>();
-                cw.NextRecord();
-                foreach (var data in datas)
+                var path = $"{Utility.PathFolderGenerated}\\{nameFile}.csv";
+                this.DeleteFile(path);
+                using (StreamWriter sw = new StreamWriter(path, false, new UTF8Encoding(true)))
+                using (CsvWriter cw = new CsvWriter(sw, CultureInfo.CurrentCulture))
                 {
-                    cw.WriteRecord<T>(data);
+                    cw.WriteHeader<T>();
                     cw.NextRecord();
+                    foreach (var data in datas)
+                    {
+                        cw.WriteRecord<T>(data);
+                        cw.NextRecord();
+                    }
                 }
+
             }
 
             return true;
@@ -50,7 +54,7 @@
                 this.CreateFolderSocietie(nameFolderNitSocietie);
                 path = $"{Utility.PathFolderGenerated}\\{nameFolderNitSocietie}\\{nameFile}.xml";
             }
-           
+
             this.DeleteFile(path);
 
             var serializer = new XmlSerializer(typeof(T));
