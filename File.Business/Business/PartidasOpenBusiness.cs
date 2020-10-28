@@ -2,10 +2,10 @@
 {
     using File.Business.IBusiness;
     using File.Entities.PartidasAbierta;
+    using File.Entities.sociedad;
     using File.Message;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -28,10 +28,15 @@
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessPartidasOpen()
+        public void ProcessPartidasOpen(SocietieEntitie societie, string nameFolderSocietie)
         {
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
-            var partidasOpen = this.GetPartidasOpen();
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie }));
+            var partidasOpen = this.GetPartidasOpen(societie.Cod);
+            this.GenerateFileXml(partidasOpen, nameFolderSocietie);
+        }
+
+        private void GenerateFileXml(IEnumerable<PartidasOpenEntitie> partidasOpen, string nameFolderSocietie)
+        {
             if (partidasOpen == null)
             {
                 this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
@@ -40,10 +45,10 @@
 
             this.managementFile.CreateFileCsv<PartidasOpenEntitie>(nameFileXml, partidasOpen);
             var partidasOpenXml = new PartidasOpen { PartidasAbiertas = partidasOpen.ToList() };
-            this.managementFile.CreateFileXml<PartidasOpen>(nameFileXml, partidasOpenXml);
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, partidasOpen?.Count() }));
+            this.managementFile.CreateFileXml<PartidasOpen>(nameFileXml, partidasOpenXml, nameFolderSocietie);
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, partidasOpen?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
@@ -52,12 +57,12 @@
             }
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml, DateTimeOffset.Now }));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml }));
         }
 
-        private IEnumerable<PartidasOpenEntitie> GetPartidasOpen()
+        private IEnumerable<PartidasOpenEntitie> GetPartidasOpen(string codEmpresa)
         {
-            var partidaOpen = this.partidaOpenPqaRepositorie.GetPartidasOpen();
+            var partidaOpen = this.partidaOpenPqaRepositorie.GetPartidasOpen(codEmpresa);
 
             return partidaOpen.Select(c => new PartidasOpenEntitie
             {

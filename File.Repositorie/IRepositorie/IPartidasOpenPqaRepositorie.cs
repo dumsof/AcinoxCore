@@ -5,6 +5,6 @@
 
     public interface IPartidasOpenPqaRepositorie
     {
-        IEnumerable<PartidasOpenRepoEntitie> GetPartidasOpen();
+        IEnumerable<PartidasOpenRepoEntitie> GetPartidasOpen(string codEmpresa);
     }
 }

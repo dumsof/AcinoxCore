@@ -71,7 +71,7 @@
                         this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
                         //this.customerContactsBusiness.ProcessContacts();
                         //this.paymentCondition.ProcessPaymentCondition();
-                        //this.partidasOpenBusiness.ProcessPartidasOpen();
+                        this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
                         //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
                     }
 
