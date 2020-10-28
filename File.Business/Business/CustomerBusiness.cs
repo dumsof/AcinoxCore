@@ -2,6 +2,8 @@
 {
     using File.Business.IBusiness;
     using File.Entities.cliente;
+    using File.Entities.sociedad;
+    using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
@@ -28,16 +30,12 @@
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessCustomer()
+        public void ProcessCustomer(SocietieEntitie societie)
         {
             logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
+            var customers = this.GetCustomers(societie.Cod);
+            this.GenerateFileXml(customers, societie.Cod);
 
-            var societies = this.societiePqaRepositorie.GetEmpresas();
-            foreach (var societie in societies)
-            {
-                var customers = this.GetCustomers(societie.Cod);
-                this.GenerateFileXml(customers, societie.Nif);
-            }
         }
 
         private void GenerateFileXml(IEnumerable<CustomerEntitie> customers, string nitSocietie)

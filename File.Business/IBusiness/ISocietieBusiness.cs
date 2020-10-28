@@ -1,9 +1,15 @@
-﻿namespace File.Business.IBusiness
+﻿
+
+namespace File.Business.IBusiness
 {
+    using File.Entities.sociedad;
+    using System.Collections.Generic;
+
     public interface ISocietieBusiness
     {
-        public void ProcessSocietie();
+        public IEnumerable<SocietieEntitie> GetEmpresas();
+       
 
-        public void ProcessSocietiePQA();
+        public void ProcessSocietie();
     }
 }

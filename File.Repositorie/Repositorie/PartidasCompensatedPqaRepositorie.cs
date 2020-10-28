@@ -92,7 +92,7 @@
                         Tdoc = registro.GetString(21),
                         Campoid = registro.GetString(22),
                         CodeJercicio = registro.GetString(23),
-                        NumDocOrigen = registro.GetDecimal(24)
+                        NumDocOrigen = registro.GetString(24)
                     }).ToList();
                 }
             }

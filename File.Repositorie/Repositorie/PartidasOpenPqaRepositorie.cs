@@ -1,71 +1,72 @@
 ﻿namespace File.Repositorie.Repositorie
 {
-    using File.Repositorie.DataAccessPqa;
     using File.Repositorie.EntitieRepositorie;
     using File.Repositorie.IRepositorie;
-    using File.Utility;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
 
-    public class PartidasOpenPqaRepositorie : IPartidasOpenPqaRepositorie, IDisposable
+    public class PartidasOpenPqaRepositorie : RepositorieBase, IPartidasOpenPqaRepositorie
     {
-        private readonly PQADbContext dbContext;
         private readonly IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql;
 
         public PartidasOpenPqaRepositorie(IOptions<ConfiguracionQuerySqlPqa> configurationQuerySql)
         {
-            this.dbContext = new PQADbContext();
             this.configurationQuerySql = configurationQuerySql;
         }
 
         public IEnumerable<PartidasOpenRepoEntitie> GetPartidasOpen()
         {
             List<PartidasOpenRepoEntitie> partidasOpen;
+            string consultaTemp = this.configurationQuerySql.Value.ConsultaSQLPartidasAbiertas;
+            string querySQL = @"SELECT DISTINCT
+		                                 codcli=CLI.RFC
+		                                ,ndoc=SerieDocumento+'-'+LTRIM(STR( NumeroDocumento))
+		                                ,nvcto=''
+		                                ,fchemi=(SELECT FORMAT (CA.FechaDocumento, 'yyyy-MM-dd'))
+		                                ,fchvcto=(SELECT FORMAT (CA.FechaVencimiento, 'yyyy-MM-dd'))
+		                                ,importe=CASE MO.CodigoMoneda
+				                                 WHEN  'USD' THEN  CA.TTotal
+				                                 ELSE  CAST((CA.TTotal/C.ValorCambio) AS DECIMAL (12,2))
+				                                 END
+		                                ,estado=CASE WHEN CA.FechaVencimiento>GETDATE() THEN
+							                                 0
+					                                 WHEN CA.FechaVencimiento<GETDATE() AND DATEADD(day,CA.DiasCredito,CA.FechaDocumento)<=GETDATE() THEN
+							                                 1
+					                                 ELSE
+							                                 2
+					                                 END
+		                                ,dotada=0
+		                                ,codvp=''
+		                                ,codcondp=LTRIM(STR(ISNULL(CP.ID_CondicionPago,0)))
+		                                ,codmondoc=MO.CodigoMoneda
+		                                ,impmondoc=CA.TTotal
+		                                ,ind1=''
+		                                ,ind2=''
+		                                ,ind3=''
+		                                ,ind4=''
+		                                ,ind5=''
+		                                ,ind6=''
+		                                ,ind7=''
+		                                ,ind8=''
+		                                ,ind9=''
+		                                ,tdoc=''
+		                                ,campoid=ISNULL(CLI.RFC,'')+'@#'+(SELECT FORMAT (CA.FechaDocumento, 'yyyy-MM-dd HH:MM:ss'))+'@#'+SerieDocumento+'-'+LTRIM(STR( NumeroDocumento))
+		                                ,codejercicio=''
+		                                ,numdocorigen=''
+                                  FROM [Facturacion].[CXCCargos] CA
+                                  JOIN Corporativo.ClientesSucursales SU ON SU.ID_ClienteSucursal=CA.ID_ClienteSucursal
+                                  JOIN Corporativo.Clientes CLI ON CLI.ID_Cliente=SU.ID_Cliente
+                                  JOIN [Corporativo].[Monedas] MO ON MO.ID_Moneda=CA.ID_Moneda
+                                  LEFT JOIN Corporativo.ValoresCambios C ON C.ID_Moneda=1  AND C.FechaCambio=CAST(CA.FechaDocumento AS date)
+                                  LEFT JOIN Corporativo.CondicionesPagos CP ON CP.Dias=CA.DiasCredito
+                                  WHERE CA.CondicionesPago='CREDITO' AND CA.TTotal>0";
 
-            using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
+            using (var result = this.GetAll(querySQL))
             {
-                command.CommandTimeout = Utility.ConnectionStringsTimeout;
-                //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasAbiertas;
-                command.CommandText = @"SELECT DISTINCT
-												 codcli=CLI.RFC
-												,ndoc=SerieDocumento+' '+LTRIM(STR( NumeroDocumento))
-												,nvcto=''
-												,fchemi='2014-01-02'
-												,fchvcto='2014-01-02'
-												,importe=0.0
-												,estado=2
-												,dotada=1
-												,codvp=''
-												,codcondp=''
-												,codmondoc=''
-												,impmondoc=0.0
-												,ind1=''
-												,ind2=''
-												,ind3=''
-												,ind4=''
-												,ind5=''
-												,ind6=''
-												,ind7=''
-												,ind8=''
-												,ind9=''
-												,tdoc=''
-												,campoid=''
-												,codejercicio=''
-												,numdocorigen=0.0
-										  FROM [Facturacion].[CXCCargos] CA
-										  JOIN Corporativo.ClientesSucursales SU ON SU.ID_ClienteSucursal=CA.ID_ClienteSucursal
-										  JOIN Corporativo.Clientes CLI ON CLI.ID_Cliente=SU.ID_Cliente";
-
-                this.dbContext.Database.OpenConnection();
-
-                using (var resultPartidasOpen = command.ExecuteReader())
-                {
-                    var enumerable = resultPartidasOpen.Cast<IDataRecord>();
-                    partidasOpen = enumerable.Select(registro =>
+                var enumResult = result.Cast<IDataRecord>();
+                partidasOpen = enumResult.Select(registro =>
                     new PartidasOpenRepoEntitie
                     {
                         CodCli = registro.GetString(0),
@@ -92,26 +93,11 @@
                         Tdoc = registro.GetString(21),
                         Campoid = registro.GetString(22),
                         CodeJercicio = registro.GetString(23),
-                        NumDocOrigen = registro.GetDecimal(24)
+                        NumDocOrigen = registro.GetString(24)
                     }).ToList();
-                }
             }
 
             return partidasOpen;
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                this.dbContext.Dispose();
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

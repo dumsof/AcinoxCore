@@ -26,6 +26,6 @@
         public string Tdoc { get; set; }
         public string Campoid { get; set; }
         public string CodeJercicio { get; set; }
-        public decimal NumDocOrigen { get; set; }
+        public string NumDocOrigen { get; set; }
     }
 }

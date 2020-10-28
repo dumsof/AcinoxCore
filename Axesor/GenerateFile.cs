@@ -60,15 +60,20 @@
             {
                 if (Utility.IsHourProced || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
-                    this.societieBusiness.ProcessSocietiePQA();
-                    this.classificationBusiness.ProcessClassification();
-                    this.paymentMethodBusiness.ProcessPaymentMethod();
-                    this.customerBusiness.ProcessCustomer();
-                    this.addressBusiness.ProcessAddress();
-                    this.customerContactsBusiness.ProcessContacts();
-                    this.paymentCondition.ProcessPaymentCondition();
-                    //this.partidasOpenBusiness.ProcessPartidasOpen();
-                    //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
+                    var societies = societieBusiness.GetEmpresas();
+                    foreach (var societie in societies)
+                    {
+                        //this.societieBusiness.ProcessSocietiePQA();
+                        //this.classificationBusiness.ProcessClassification();
+                        //this.paymentMethodBusiness.ProcessPaymentMethod();
+                        this.customerBusiness.ProcessCustomer(societie);
+                        //this.addressBusiness.ProcessAddress();
+                        //this.customerContactsBusiness.ProcessContacts();
+                        //this.paymentCondition.ProcessPaymentCondition();
+                        //this.partidasOpenBusiness.ProcessPartidasOpen();
+                        //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
+                    }
+
 
                     //this.managementFtp.UnloadAllFileFolderFtp();
                     //this.managementFile.MoveAllFileFolder();

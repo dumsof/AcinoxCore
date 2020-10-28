@@ -19,6 +19,7 @@
         {
             this.logger = logger;
         }
+
         public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas, bool crearCsv = false)
         {
             if (crearCsv)
@@ -36,7 +37,6 @@
                         cw.NextRecord();
                     }
                 }
-
             }
 
             return true;

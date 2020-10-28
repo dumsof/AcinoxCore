@@ -2,7 +2,7 @@
 {
     using System.Xml.Serialization;
 
-    public class Partidas 
+    public class Partidas
     {
         [XmlElement("codcli")]
         public string CodCli { get; set; }
@@ -77,6 +77,6 @@
         public string CodeJercicio { get; set; }
 
         [XmlElement("numdocorigen")]
-        public decimal NumDocOrigen { get; set; }
+        public string NumDocOrigen { get; set; }
     }
 }

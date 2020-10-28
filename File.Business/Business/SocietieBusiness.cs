@@ -34,36 +34,8 @@
 
         public void ProcessSocietie()
         {
-            logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
-
-            var societies = this.GetSocieties();
-            if (societies == null)
-            {
-                this.logger.LogInformation($"No existe información de las {nameFileXml}");
-                return;
-            }
-
-            this.managementFile.CreateFileCsv<SocietieEntitie>(nameFileXml, societies);
-            var societiesXml = new Societie { Sociedades = societies.ToList() };
-            this.managementFile.CreateFileXml<Societie>(nameFileXml, societiesXml);
-            logger.LogInformation($"Archivo [{nameFileXml}] con {societies.Count()} registros generado con éxito.");
-
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
-
-            if (resultValidatioWithXsd.Length > 0)
-            {
-                logger.LogWarning(resultValidatioWithXsd);
-                return;
-            }
-            logger.LogInformation($"La validación del XSD se realizo con éxito");
-
-            logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now} \n");
-        }
-
-        public void ProcessSocietiePQA()
-        {
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
-            var societies = this.GetSocietiesPqa();
+            var societies = this.GetEmpresas();
             if (societies == null)
             {
                 this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
@@ -87,22 +59,9 @@
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml, DateTimeOffset.Now }));
         }
 
-        private IEnumerable<SocietieEntitie> GetSocieties()
-        {
-            var empresa = this.societieRepositorie.GetEmpresas();
 
-            var societie = empresa.Select(c => new SocietieEntitie
-            {
-                Cod = c.Codigo,
-                Razons = c.Descripcion,
-                Nif = c.Nit,
-                CodMoneda = "01"
-            }).ToList();
 
-            return societie;
-        }
-
-        private IEnumerable<SocietieEntitie> GetSocietiesPqa()
+        public IEnumerable<SocietieEntitie> GetEmpresas()
         {
             var empresa = this.societiePqaRepositorie.GetEmpresas();
 
