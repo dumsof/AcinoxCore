@@ -65,7 +65,7 @@
                     {
                         string nameFolderSocietie = societie.Cod;
                         this.societieBusiness.ProcessSocietie(nameFolderSocietie);
-                        //this.classificationBusiness.ProcessClassification();
+                        this.classificationBusiness.ProcessClassification(societie, nameFolderSocietie);
                         //this.paymentMethodBusiness.ProcessPaymentMethod();
                         this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
                         this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);

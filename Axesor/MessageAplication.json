@@ -2,7 +2,7 @@
   "Message": [
     {
       "CodeMessage": 1,
-      "DescriptionMessage": "Inicio el proceso de [{0}]: {1}"
+      "DescriptionMessage": "Inicio el proceso de [{0}] sociedad código [{1}]."
     },
     {
       "CodeMessage": 2,
@@ -18,7 +18,7 @@
     },
     {
       "CodeMessage": 5,
-      "DescriptionMessage": "Finalizo el proceso de [{0}]: {1} \n"
+      "DescriptionMessage": "Finalizo el proceso de [{0}].\n"
     }
   ]
 }

@@ -5,6 +5,6 @@
 
     public interface IClassificationPqaRepositorie
     {
-        public IEnumerable<ClasificacionRepoEntitie> GetClassification();
+        public IEnumerable<ClasificacionRepoEntitie> GetClassification(string codEmpresa);
     }
 }

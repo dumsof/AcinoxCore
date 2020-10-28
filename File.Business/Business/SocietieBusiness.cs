@@ -30,7 +30,7 @@
 
         public void ProcessSocietie(string nameFolderSocietie)
         {
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie }));
             var societies = this.GetEmpresas();
             this.GenerateFileXml(societies, nameFolderSocietie);
         }
@@ -46,7 +46,7 @@
             this.managementFile.CreateFileCsv<SocietieEntitie>(nameFileXml, societies);
             var societiesXml = new Societie { Sociedades = societies.ToList() };
             this.managementFile.CreateFileXml<Societie>(nameFileXml, societiesXml, nameFolderSocietie);
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, societies?.Count() }));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, societies?.Count() }));
 
             var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
@@ -57,7 +57,7 @@
             }
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml, DateTimeOffset.Now }));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml}));
         }
 
         public IEnumerable<SocietieEntitie> GetEmpresas()

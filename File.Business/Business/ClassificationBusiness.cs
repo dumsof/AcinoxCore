@@ -2,6 +2,8 @@
 {
     using File.Business.IBusiness;
     using File.Entities.clasificacion;
+    using File.Entities.sociedad;
+    using File.Message;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using System;
@@ -12,49 +14,56 @@
     {
         private readonly ILogger<ClassificationBusiness> logger;
         private readonly IClassificationPqaRepositorie classificationRepositorie;
+        private readonly IMessageManagement messageManagement;
         private readonly IManagementFile managementFile;
         private readonly IValidationXsd validationXsd;
-        private const string nombreFileClassification = "clasifcriterios";
+        private const string nameFileXml = "clasifcriterios";
 
         public ClassificationBusiness(ILogger<ClassificationBusiness> logger, IClassificationPqaRepositorie classificationRepositorie,
-            IManagementFile managementFile, IValidationXsd validationXsd)
+            IMessageManagement messageManagement, IManagementFile managementFile, IValidationXsd validationXsd)
         {
             this.logger = logger;
             this.classificationRepositorie = classificationRepositorie;
+            this.messageManagement = messageManagement;
             this.managementFile = managementFile;
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessClassification()
+        public void ProcessClassification(SocietieEntitie societie, string nameFolderSocietie)
         {
-            logger.LogInformation($"Inicio el proceso de [{nombreFileClassification}]: {DateTimeOffset.Now}");
-            var classification = this.GetClassification();
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie}));
+            var classification = this.GetClassification(societie.Cod);
+            this.GenerateFileXml(classification, nameFolderSocietie);
+        }
+
+        private void GenerateFileXml(IEnumerable<ClassificationEntitie> classification, string nameFolderSocietie)
+        {
             if (classification == null)
             {
-                this.logger.LogInformation($"No existe información de los {nombreFileClassification} \n");
+                this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
                 return;
             }
 
-            this.managementFile.CreateFileCsv<ClassificationEntitie>(nombreFileClassification, classification);
+            this.managementFile.CreateFileCsv<ClassificationEntitie>(nameFileXml, classification);
             var societiesXml = new Classification { CritElem = classification.ToList() };
-            this.managementFile.CreateFileXml<Classification>(nombreFileClassification, societiesXml);
-            logger.LogInformation($"Archivo [{nombreFileClassification}] con {classification.Count()} registros generado con éxito.");
+            this.managementFile.CreateFileXml<Classification>(nameFileXml, societiesXml, nameFolderSocietie);
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, classification?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nombreFileClassification}.xsd", $"{nombreFileClassification}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
                 logger.LogWarning(resultValidatioWithXsd);
                 return;
             }
-            logger.LogInformation($"La validación del XSD se realizo con éxito");
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation($"Finalizo el proceso de [{nombreFileClassification}]: {DateTimeOffset.Now} \n");
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml}));
         }
 
-        private IEnumerable<ClassificationEntitie> GetClassification()
+        private IEnumerable<ClassificationEntitie> GetClassification(string codEmpresa)
         {
-            var classification = this.classificationRepositorie.GetClassification();
+            var classification = this.classificationRepositorie.GetClassification(codEmpresa);
 
             return classification.Select(c => new ClassificationEntitie
             {
