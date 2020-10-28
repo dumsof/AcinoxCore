@@ -11,31 +11,32 @@
 
     public class SocietieBusiness : ISocietieBusiness
     {
-        private readonly ISocietieRepositorie societieRepositorie;
         private readonly ISocietiePqaRepositorie societiePqaRepositorie;
         private readonly IMessageManagement messageManagement;
         private readonly IManagementFile managementFile;
-        private readonly IManagementFtp managementFtp;
         private readonly IValidationXsd validationXsd;
         private readonly ILogger<SocietieBusiness> logger;
         private const string nameFileXml = "sociedades";
 
-        public SocietieBusiness(ILogger<SocietieBusiness> logger, ISocietieRepositorie societieRepositorie, ISocietiePqaRepositorie societiePqaRepositorie,
-         IMessageManagement messageManagement, IManagementFile managementFile, IManagementFtp managementFtp, IValidationXsd validationXsd)
+        public SocietieBusiness(ILogger<SocietieBusiness> logger, ISocietiePqaRepositorie societiePqaRepositorie,
+         IMessageManagement messageManagement, IManagementFile managementFile, IValidationXsd validationXsd)
         {
             this.logger = logger;
-            this.societieRepositorie = societieRepositorie;
             this.societiePqaRepositorie = societiePqaRepositorie;
             this.messageManagement = messageManagement;
             this.managementFile = managementFile;
-            this.managementFtp = managementFtp;
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessSocietie()
+        public void ProcessSocietie(string nameFolderSocietie)
         {
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
             var societies = this.GetEmpresas();
+            this.GenerateFileXml(societies, nameFolderSocietie);
+        }
+
+        private void GenerateFileXml(IEnumerable<SocietieEntitie> societies, string nameFolderSocietie)
+        {
             if (societies == null)
             {
                 this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
@@ -44,10 +45,10 @@
 
             this.managementFile.CreateFileCsv<SocietieEntitie>(nameFileXml, societies);
             var societiesXml = new Societie { Sociedades = societies.ToList() };
-            this.managementFile.CreateFileXml<Societie>(nameFileXml, societiesXml);
+            this.managementFile.CreateFileXml<Societie>(nameFileXml, societiesXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, societies?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
@@ -58,8 +59,6 @@
 
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml, DateTimeOffset.Now }));
         }
-
-
 
         public IEnumerable<SocietieEntitie> GetEmpresas()
         {

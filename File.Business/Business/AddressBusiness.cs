@@ -15,31 +15,30 @@
         private readonly ILogger<AddressBusiness> logger;
         private readonly IAddressPqaRepositorie addressRepositorie;
         private readonly IMessageManagement messageManagement;
-        private readonly ISocietiePqaRepositorie societiePqaRepositorie;
+
         private readonly IManagementFile managementFile;
         private readonly IValidationXsd validationXsd;
         private const string nameFileXml = "direcciones";
 
-        public AddressBusiness(ILogger<AddressBusiness> logger, IAddressPqaRepositorie addressRepositorie, IMessageManagement messageManagement,
-            ISocietiePqaRepositorie societiePqaRepositorie, IManagementFile managementFile, IValidationXsd validationXsd)
+        public AddressBusiness(ILogger<AddressBusiness> logger, IAddressPqaRepositorie addressRepositorie,
+            IMessageManagement messageManagement, IManagementFile managementFile, IValidationXsd validationXsd)
         {
             this.logger = logger;
             this.addressRepositorie = addressRepositorie;
             this.messageManagement = messageManagement;
-            this.societiePqaRepositorie = societiePqaRepositorie;
             this.managementFile = managementFile;
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessAddress(SocietieEntitie societie, string nameFileSocietie)
+        public void ProcessAddress(SocietieEntitie societie, string nameFolderSocietie)
         {
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
             var addres = this.GetAddress(societie.Cod);
-            this.GenerateFileXml(addres, nameFileSocietie);
+            this.GenerateFileXml(addres, nameFolderSocietie);
         }
 
-        private void GenerateFileXml(IEnumerable<AddressEntitie> addres, string nitSocietie)
-        {           
+        private void GenerateFileXml(IEnumerable<AddressEntitie> addres, string nameFolderSocietie)
+        {
             if (addres == null)
             {
                 this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
@@ -48,10 +47,10 @@
 
             this.managementFile.CreateFileCsv<AddressEntitie>(nameFileXml, addres);
             var addressXml = new Address { Direccion = addres.ToList() };
-            this.managementFile.CreateFileXml<Address>(nameFileXml, addressXml, nitSocietie);
+            this.managementFile.CreateFileXml<Address>(nameFileXml, addressXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, addres?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nitSocietie}\\{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {

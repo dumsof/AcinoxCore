@@ -10,6 +10,6 @@ namespace File.Business.IBusiness
         public IEnumerable<SocietieEntitie> GetEmpresas();
        
 
-        public void ProcessSocietie();
+        public void ProcessSocietie(string nameFolderSocietie);
     }
 }

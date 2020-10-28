@@ -16,30 +16,28 @@
         private readonly ILogger<CustomerBusiness> logger;
         private readonly ICustomerPqaRepositorie customerRepositorie;
         private readonly IMessageManagement messageManagement;
-        private readonly ISocietiePqaRepositorie societiePqaRepositorie;
         private readonly IManagementFile managementFile;
         private readonly IValidationXsd validationXsd;
         private const string nameFileXml = "clientes";
 
-        public CustomerBusiness(ILogger<CustomerBusiness> logger, ICustomerPqaRepositorie customerRepositorie, IMessageManagement messageManagement,
-            ISocietiePqaRepositorie societiePqaRepositorie, IManagementFile managementFile, IValidationXsd validationXsd)
+        public CustomerBusiness(ILogger<CustomerBusiness> logger, ICustomerPqaRepositorie customerRepositorie,
+            IMessageManagement messageManagement, IManagementFile managementFile, IValidationXsd validationXsd)
         {
             this.logger = logger;
             this.customerRepositorie = customerRepositorie;
             this.messageManagement = messageManagement;
-            this.societiePqaRepositorie = societiePqaRepositorie;
             this.managementFile = managementFile;
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessCustomer(SocietieEntitie societie, string nameFileSocietie)
+        public void ProcessCustomer(SocietieEntitie societie, string nameFolderSocietie)
         {
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
             var customers = this.GetCustomers(societie.Cod);
-            this.GenerateFileXml(customers, nameFileSocietie);
+            this.GenerateFileXml(customers, nameFolderSocietie);
         }
 
-        private void GenerateFileXml(IEnumerable<CustomerEntitie> customers, string nitSocietie)
+        private void GenerateFileXml(IEnumerable<CustomerEntitie> customers, string nameFolderSocietie)
         {
             if (customers == null)
             {
@@ -49,10 +47,10 @@
 
             this.managementFile.CreateFileCsv<CustomerEntitie>(nameFileXml, customers);
             var customerXml = new Customer { Clientes = customers.ToList() };
-            this.managementFile.CreateFileXml<Customer>(nameFileXml, customerXml, nitSocietie);
+            this.managementFile.CreateFileXml<Customer>(nameFileXml, customerXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, customers?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nitSocietie}\\{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {

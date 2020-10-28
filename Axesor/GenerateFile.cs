@@ -63,11 +63,12 @@
                     var societies = societieBusiness.GetEmpresas();
                     foreach (var societie in societies)
                     {
-                        //this.societieBusiness.ProcessSocietiePQA();
+                        string nameFolderSocietie = societie.Cod;
+                        this.societieBusiness.ProcessSocietie(nameFolderSocietie);
                         //this.classificationBusiness.ProcessClassification();
                         //this.paymentMethodBusiness.ProcessPaymentMethod();
-                        this.customerBusiness.ProcessCustomer(societie, societie.Cod);
-                        this.addressBusiness.ProcessAddress(societie, societie.Cod);
+                        this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
+                        this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
                         //this.customerContactsBusiness.ProcessContacts();
                         //this.paymentCondition.ProcessPaymentCondition();
                         //this.partidasOpenBusiness.ProcessPartidasOpen();
