@@ -75,7 +75,6 @@
                         //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
                     }
 
-
                     //this.managementFtp.UnloadAllFileFolderFtp();
                     //this.managementFile.MoveAllFileFolder();
                     _logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");

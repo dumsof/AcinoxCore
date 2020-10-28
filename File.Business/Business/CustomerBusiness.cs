@@ -7,7 +7,6 @@
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -32,7 +31,7 @@
 
         public void ProcessCustomer(SocietieEntitie societie, string nameFolderSocietie)
         {
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie}));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie }));
             var customers = this.GetCustomers(societie.Cod);
             this.GenerateFileXml(customers, nameFolderSocietie);
         }
@@ -59,7 +58,7 @@
             }
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml}));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml }));
         }
 
         private IEnumerable<CustomerEntitie> GetCustomers(string idEmpresa)

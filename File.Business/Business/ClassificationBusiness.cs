@@ -6,7 +6,6 @@
     using File.Message;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -31,7 +30,7 @@
 
         public void ProcessClassification(SocietieEntitie societie, string nameFolderSocietie)
         {
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie}));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie }));
             var classification = this.GetClassification(societie.Cod);
             this.GenerateFileXml(classification, nameFolderSocietie);
         }
@@ -58,7 +57,7 @@
             }
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml}));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml }));
         }
 
         private IEnumerable<ClassificationEntitie> GetClassification(string codEmpresa)

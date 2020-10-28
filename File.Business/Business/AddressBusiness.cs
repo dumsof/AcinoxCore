@@ -6,7 +6,6 @@
     using File.Message;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -32,7 +31,7 @@
 
         public void ProcessAddress(SocietieEntitie societie, string nameFolderSocietie)
         {
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie}));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie }));
             var addres = this.GetAddress(societie.Cod);
             this.GenerateFileXml(addres, nameFolderSocietie);
         }
