@@ -2,6 +2,8 @@
 {
     using File.Business.IBusiness;
     using File.Entities.direccion;
+    using File.Entities.sociedad;
+    using File.Message;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using System;
@@ -12,46 +14,42 @@
     {
         private readonly ILogger<AddressBusiness> logger;
         private readonly IAddressPqaRepositorie addressRepositorie;
+        private readonly IMessageManagement messageManagement;
         private readonly ISocietiePqaRepositorie societiePqaRepositorie;
         private readonly IManagementFile managementFile;
         private readonly IValidationXsd validationXsd;
         private const string nameFileXml = "direcciones";
 
-        public AddressBusiness(ILogger<AddressBusiness> logger, IAddressPqaRepositorie addressRepositorie,
+        public AddressBusiness(ILogger<AddressBusiness> logger, IAddressPqaRepositorie addressRepositorie, IMessageManagement messageManagement,
             ISocietiePqaRepositorie societiePqaRepositorie, IManagementFile managementFile, IValidationXsd validationXsd)
         {
             this.logger = logger;
             this.addressRepositorie = addressRepositorie;
+            this.messageManagement = messageManagement;
             this.societiePqaRepositorie = societiePqaRepositorie;
             this.managementFile = managementFile;
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessAddress()
+        public void ProcessAddress(SocietieEntitie societie, string nameFileSocietie)
         {
-            logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
-
-            var societies = this.societiePqaRepositorie.GetEmpresas();
-            foreach (var societie in societies)
-            {
-                var addres = this.GetAddress(societie.Cod);
-                this.GenerateFileXml(addres, societie.Nif);
-            }
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
+            var addres = this.GetAddress(societie.Cod);
+            this.GenerateFileXml(addres, nameFileSocietie);
         }
 
         private void GenerateFileXml(IEnumerable<AddressEntitie> addres, string nitSocietie)
-        {
-            logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
+        {           
             if (addres == null)
             {
-                this.logger.LogInformation($"No existe información de los {nameFileXml}");
+                this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
                 return;
             }
 
             this.managementFile.CreateFileCsv<AddressEntitie>(nameFileXml, addres);
             var addressXml = new Address { Direccion = addres.ToList() };
             this.managementFile.CreateFileXml<Address>(nameFileXml, addressXml, nitSocietie);
-            logger.LogInformation($"Archivo [{nameFileXml}] con {addres.Count()} registros generado con éxito.");
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, addres?.Count() }));
 
             var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nitSocietie}\\{nameFileXml}.xml");
 
@@ -60,9 +58,9 @@
                 logger.LogWarning(resultValidatioWithXsd);
                 return;
             }
-            logger.LogInformation($"La validación del XSD se realizo con éxito");
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now} \n");
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml, DateTimeOffset.Now }));
         }
 
         private IEnumerable<AddressEntitie> GetAddress(string idEmpresa)

@@ -4,6 +4,6 @@
 
     public interface ICustomerBusiness
     {
-        public void ProcessCustomer(SocietieEntitie societie);
+        public void ProcessCustomer(SocietieEntitie societie, string nameFileSocietie);
     }
 }

@@ -66,8 +66,8 @@
                         //this.societieBusiness.ProcessSocietiePQA();
                         //this.classificationBusiness.ProcessClassification();
                         //this.paymentMethodBusiness.ProcessPaymentMethod();
-                        this.customerBusiness.ProcessCustomer(societie);
-                        //this.addressBusiness.ProcessAddress();
+                        this.customerBusiness.ProcessCustomer(societie, societie.Cod);
+                        this.addressBusiness.ProcessAddress(societie, societie.Cod);
                         //this.customerContactsBusiness.ProcessContacts();
                         //this.paymentCondition.ProcessPaymentCondition();
                         //this.partidasOpenBusiness.ProcessPartidasOpen();
