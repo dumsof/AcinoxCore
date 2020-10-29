@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace File.Business.IBusiness
+﻿namespace File.Business.IBusiness
 {
+    using System.Collections.Generic;
+
     public interface IManagementFile
     {
         public bool CreateFileCsv<T>(string nameFile, IEnumerable<T> datas, bool crearCsv = false);
@@ -12,6 +12,6 @@ namespace File.Business.IBusiness
 
         public void MoveFileUpLoadFtp(string nameFileWithExtension);
 
-        public bool MoveAllFileFolder();
+        public bool MoveAllFileFolder(string nameFolderSocietie);
     }
 }

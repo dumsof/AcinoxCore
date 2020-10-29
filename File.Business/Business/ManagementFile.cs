@@ -75,6 +75,15 @@
             }
         }
 
+        private void CreateFolderSocietieProcessed(string nameFolderSocietie)
+        {
+            string pathFolderSocietie = $"{Utility.PathFolderProcessed}//{nameFolderSocietie}";
+            if (!Directory.Exists(pathFolderSocietie))
+            {
+                Directory.CreateDirectory(pathFolderSocietie);
+            }
+        }
+
         public void CreatedPathFile()
         {
             if (!Directory.Exists(Utility.PathFolderGenerated))
@@ -102,18 +111,19 @@
             File.Move($"{pathFileGenerated}\\{nameFileWithExtension}", $"{pathFileProcessed}\\{nameFileWithExtension}");
         }
 
-        public bool MoveAllFileFolder()
+        public bool MoveAllFileFolder(string nameFolderSocietie)
         {
-            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\");
+            this.CreateFolderSocietieProcessed(nameFolderSocietie);
+            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\");
             string[] extensioFile = Utility.ExtesionFiles?.Split(";");
             FileInfo[] files = directorio.EnumerateFiles().Where(c => extensioFile.Contains(c.Extension.ToLower())).ToArray();
             foreach (var file in files)
             {
-                this.DeleteFile($"{Utility.PathFolderProcessed}\\{file.Name}");
-                Directory.Move($"{Utility.PathFolderGenerated}\\{file.Name}", $"{Utility.PathFolderProcessed}\\{file.Name}");
+                this.DeleteFile($"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{file.Name}");
+                Directory.Move($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{file.Name}", $"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{file.Name}");
             }
 
-            this.logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.");
+            this.logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.\n");
 
             return true;
         }
