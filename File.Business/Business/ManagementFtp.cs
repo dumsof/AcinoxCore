@@ -34,18 +34,18 @@
             return true;
         }
 
-        public bool UnloadAllFileFolderFtp()
+        public bool UnloadAllFileFolderFtp(string nameFolderSocietie)
         {
-            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\");
+            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\");
             string[] extensioFile = configFtp.Value.TiposArchivoEnviarFtp?.Split(";");
 
             FileInfo[] files = directorio.EnumerateFiles().Where(c => extensioFile.Contains(c.Extension.ToLower())).ToArray();
 
-            using (FtpClient ftp = new FtpClient(configFtp.Value.ServidorFtp, new NetworkCredential { UserName = configFtp.Value.UsuarioFtp, Password = configFtp.Value.PasswordFtp }))
+            using (FtpClient ftp = new FtpClient($"{configFtp.Value.ServidorFtp}", new NetworkCredential { UserName = configFtp.Value.UsuarioFtp, Password = configFtp.Value.PasswordFtp }))
             {
-                ftp.UploadFiles(files, $"{configFtp.Value.RutaCarpetaServidorFtp}", FtpRemoteExists.Overwrite);
+                ftp.UploadFiles(files, $"{nameFolderSocietie}", FtpRemoteExists.Overwrite);
             }
-            this.logger.LogInformation($"Los archivos generados fueron enviados por [FTP] con éxito.");
+            this.logger.LogInformation($"Los archivos generados fueron enviados por [FTP] con éxito.\n");
             return true;
         }
     }

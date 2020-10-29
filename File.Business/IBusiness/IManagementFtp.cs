@@ -4,6 +4,6 @@
     {
         public bool UnloadFileFtp(string nameFileExtension);
 
-        public bool UnloadAllFileFolderFtp();
+        public bool UnloadAllFileFolderFtp(string nameFolderSocietie);
     }
 }
