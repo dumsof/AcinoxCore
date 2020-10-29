@@ -24,7 +24,7 @@
                 command.CommandText = querySQL;
                 this.dbContext.Database.OpenConnection();
 
-                return command.ExecuteReader();               
+                return command.ExecuteReader();
             }
         }
 

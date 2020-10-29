@@ -69,7 +69,7 @@
                         this.paymentMethodBusiness.ProcessPaymentMethod(societie, nameFolderSocietie);
                         this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
                         this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
-                        /////this.customerContactsBusiness.ProcessContacts();
+                        this.customerContactsBusiness.ProcessContacts(societie, nameFolderSocietie);
                         this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
                         this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
                         //this.partidasCompensatedBusiness.ProcessPartidasCompensated();

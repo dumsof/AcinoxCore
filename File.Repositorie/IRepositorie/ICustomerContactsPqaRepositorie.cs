@@ -5,6 +5,6 @@
 
     public interface ICustomerContactsPqaRepositorie
     {
-        public IEnumerable<CustomerContactsRepoEntitie> GetContacts();
+        public IEnumerable<CustomerContactsRepoEntitie> GetContacts(string idEmpresa);
     }
 }
