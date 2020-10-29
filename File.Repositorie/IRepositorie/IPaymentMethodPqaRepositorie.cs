@@ -5,6 +5,6 @@
 
     public interface IPaymentMethodPqaRepositorie
     {
-        public IEnumerable<PaymentMethodRepoEntitie> GetPaymentMethods();
+        public IEnumerable<PaymentMethodRepoEntitie> GetPaymentMethods(string idEmpresa);
     }
 }

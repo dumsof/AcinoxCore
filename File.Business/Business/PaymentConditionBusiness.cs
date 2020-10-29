@@ -2,11 +2,11 @@
 {
     using File.Business.IBusiness;
     using File.Entities.CondicionesPago;
+    using File.Entities.sociedad;
     using File.Message;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -29,10 +29,15 @@
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessPaymentCondition()
+        public void ProcessPaymentCondition(SocietieEntitie societie, string nameFolderSocietie)
         {
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, DateTimeOffset.Now }));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie }));
             var paymentCondition = this.GetPaymentCondition();
+            this.GenerateFileXml(paymentCondition, nameFolderSocietie);
+        }
+
+        private void GenerateFileXml(IEnumerable<PaymentConditionEntitie> paymentCondition, string nameFolderSocietie)
+        {
             if (paymentCondition == null)
             {
                 this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
@@ -41,10 +46,10 @@
 
             this.managementFile.CreateFileCsv<PaymentConditionEntitie>(nameFileXml, paymentCondition);
             var paymentConditionXml = new PaymentCondition { CondicionesPago = paymentCondition.ToList() };
-            this.managementFile.CreateFileXml<PaymentCondition>(nameFileXml, paymentConditionXml);
+            this.managementFile.CreateFileXml<PaymentCondition>(nameFileXml, paymentConditionXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, paymentCondition?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
@@ -53,7 +58,7 @@
             }
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml, DateTimeOffset.Now }));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml }));
         }
 
         private IEnumerable<PaymentConditionEntitie> GetPaymentCondition()

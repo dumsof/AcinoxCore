@@ -2,6 +2,8 @@
 {
     using File.Business.IBusiness;
     using File.Entities.formapago;
+    using File.Entities.sociedad;
+    using File.Message;
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using System;
@@ -12,49 +14,56 @@
     {
         private readonly ILogger<PaymentMethodBusiness> logger;
         private readonly IPaymentMethodPqaRepositorie paymentMethodRepositorie;
+        private readonly IMessageManagement messageManagement;
         private readonly IManagementFile managementFile;
         private readonly IValidationXsd validationXsd;
         private const string nameFileXml = "viaspago";
 
         public PaymentMethodBusiness(ILogger<PaymentMethodBusiness> logger, IPaymentMethodPqaRepositorie paymentMethodRepositorie,
-            IManagementFile managementFile, IValidationXsd validationXsd)
+            IMessageManagement messageManagement, IManagementFile managementFile, IValidationXsd validationXsd)
         {
             this.logger = logger;
             this.paymentMethodRepositorie = paymentMethodRepositorie;
+            this.messageManagement = messageManagement;
             this.managementFile = managementFile;
             this.validationXsd = validationXsd;
         }
 
-        public void ProcessPaymentMethod()
+        public void ProcessPaymentMethod(SocietieEntitie societie, string nameFolderSocietie)
         {
-            logger.LogInformation($"Inicio el proceso de [{nameFileXml}]: {DateTimeOffset.Now}");
-            var paymentMethod = this.GetPaymentMethods();
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, nameFolderSocietie }));
+            var paymentMethod = this.GetPaymentMethods(societie.Cod);
+            this.GenerateFileXml(paymentMethod, nameFolderSocietie);
+        }
+
+        private void GenerateFileXml(IEnumerable<PaymentMethodEntitie> paymentMethod, string nameFolderSocietie)
+        {
             if (paymentMethod == null)
             {
-                this.logger.LogInformation($"No existe información de los {nameFileXml}");
+                this.logger.LogInformation(this.messageManagement.GetMessage(MessageType.NoExitsInformation, new object[] { nameFileXml }));
                 return;
             }
 
             this.managementFile.CreateFileCsv<PaymentMethodEntitie>(nameFileXml, paymentMethod);
             var paymentMethodXml = new PaymentMethod { Via = paymentMethod.ToList() };
-            this.managementFile.CreateFileXml<PaymentMethod>(nameFileXml, paymentMethodXml);
-            logger.LogInformation($"Archivo [{nameFileXml}] con {paymentMethod.Count()} registros generado con éxito.");
+            this.managementFile.CreateFileXml<PaymentMethod>(nameFileXml, paymentMethodXml, nameFolderSocietie);
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, paymentMethod?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
                 logger.LogWarning(resultValidatioWithXsd);
                 return;
             }
-            logger.LogInformation($"La validación del XSD se realizo con éxito");
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.ValidationXSDSuccess));
 
-            logger.LogInformation($"Finalizo el proceso de [{nameFileXml}]: {DateTimeOffset.Now} \n");
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.FinishedProcess, new object[] { nameFileXml }));
         }
 
-        private IEnumerable<PaymentMethodEntitie> GetPaymentMethods()
+        private IEnumerable<PaymentMethodEntitie> GetPaymentMethods(string idEmpresa)
         {
-            var paymentMethod = this.paymentMethodRepositorie.GetPaymentMethods();
+            var paymentMethod = this.paymentMethodRepositorie.GetPaymentMethods(idEmpresa);
 
             var dato = paymentMethod.Select(c => new PaymentMethodEntitie
             {

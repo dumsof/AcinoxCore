@@ -64,14 +64,14 @@
                     foreach (var societie in societies)
                     {
                         string nameFolderSocietie = societie.Cod;
-                        this.societieBusiness.ProcessSocietie(nameFolderSocietie);
-                        this.classificationBusiness.ProcessClassification(societie, nameFolderSocietie);
-                        //this.paymentMethodBusiness.ProcessPaymentMethod();
-                        this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
-                        this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
-                        //this.customerContactsBusiness.ProcessContacts();
-                        //this.paymentCondition.ProcessPaymentCondition();
-                        this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
+                        //this.societieBusiness.ProcessSocietie(nameFolderSocietie);
+                        //this.classificationBusiness.ProcessClassification(societie, nameFolderSocietie);
+                        //this.paymentMethodBusiness.ProcessPaymentMethod(societie, nameFolderSocietie);
+                        //this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
+                        //this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
+                        /////this.customerContactsBusiness.ProcessContacts();
+                        this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
+                        //this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
                         //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
                     }
 
