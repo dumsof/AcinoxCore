@@ -20,7 +20,7 @@
         {
             List<ClasificacionRepoEntitie> classification;
             var querySql = string.Format(this.configurationQuerySql.Value.ConsultaSQLClasificacion, codEmpresa);
-            using (var resultClassification = this.GetAll(querySql))
+            using (var resultClassification = this.GetAllExecuteReader(querySql))
             {
                 var enumerable = resultClassification.Cast<IDataRecord>();
                 classification = enumerable.Select(registro =>

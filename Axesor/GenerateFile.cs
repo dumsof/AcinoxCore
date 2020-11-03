@@ -72,7 +72,7 @@
                         this.customerContactsBusiness.ProcessContacts(societie, nameFolderSocietie);
                         this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
                         this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
-                        //this.partidasCompensatedBusiness.ProcessPartidasCompensated();
+                        this.partidasCompensatedBusiness.ProcessPartidasCompensated(societie, nameFolderSocietie);
                         this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
                         this.managementFile.MoveAllFileFolder(nameFolderSocietie);
                     }

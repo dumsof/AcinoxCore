@@ -63,7 +63,7 @@
                                   LEFT JOIN Corporativo.CondicionesPagos CP ON CP.Dias=CA.DiasCredito
                                   WHERE CA.CondicionesPago='CREDITO' AND CA.TTotal>0  AND CLI.ID_Empresa={codEmpresa}";
 
-            using (var result = this.GetAll(querySQL))
+            using (var result = this.GetAllExecuteReader(querySQL))
             {
                 var enumResult = result.Cast<IDataRecord>();
                 partidasOpen = enumResult.Select(registro =>

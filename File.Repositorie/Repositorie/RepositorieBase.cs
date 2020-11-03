@@ -16,14 +16,13 @@
             this.dbContext = new PQADbContext();
         }
 
-        public DbDataReader GetAll(string querySQL)
+        public DbDataReader GetAllExecuteReader(string querySQL)
         {
             using (var command = this.dbContext.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandTimeout = Utility.ConnectionStringsTimeout;
                 command.CommandText = querySQL;
                 this.dbContext.Database.OpenConnection();
-
                 return command.ExecuteReader();
             }
         }

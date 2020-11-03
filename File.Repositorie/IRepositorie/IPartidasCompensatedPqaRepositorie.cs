@@ -5,6 +5,6 @@
 
     public interface IPartidasCompensatedPqaRepositorie
     {
-        IEnumerable<PartidasCompensatedRepoEntitie> GetPartidasCompensated();
+        IEnumerable<PartidasCompensatedRepoEntitie> GetPartidasCompensated(string idEmpresa);
     }
 }

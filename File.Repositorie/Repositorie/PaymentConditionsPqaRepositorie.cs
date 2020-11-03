@@ -19,7 +19,7 @@
         public IEnumerable<PaymentConditionRepoEntitie> GetPaymentConditions()
         {
             List<PaymentConditionRepoEntitie> paymentCondition;
-            using (var result = this.GetAll(this.configurationQuerySql.Value.ConsultaSQLCondicionPago))
+            using (var result = this.GetAllExecuteReader(this.configurationQuerySql.Value.ConsultaSQLCondicionPago))
             {
                 var enumerable = result.Cast<IDataRecord>();
                 paymentCondition = enumerable.Select(registro =>

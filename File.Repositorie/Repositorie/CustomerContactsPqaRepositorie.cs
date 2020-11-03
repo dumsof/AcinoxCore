@@ -44,7 +44,7 @@
                             INNER JOIN Corporativo.ClientesCategoriasClientes C ON C.ID_Cliente=t3.ID_Cliente
                             WHERE C.ID_Empresa={0}";
 
-            using (var resultAddress = this.GetAll(string.Format(querySql, idEmpresa)))
+            using (var resultAddress = this.GetAllExecuteReader(string.Format(querySql, idEmpresa)))
             {
                 var enumerable = resultAddress.Cast<IDataRecord>();
                 customers = enumerable.Select(registro =>

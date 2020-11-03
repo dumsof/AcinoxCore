@@ -20,7 +20,7 @@
         {
             List<PaymentMethodRepoEntitie> paymentMethod;
 
-            using (var resultCustomer = this.GetAll(string.Format(this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro, idEmpresa)))
+            using (var resultCustomer = this.GetAllExecuteReader(string.Format(this.configurationQuerySql.Value.ConsultaSQLFormasPagoCobro, idEmpresa)))
             {
                 var enumerable = resultCustomer.Cast<IDataRecord>();
                 paymentMethod = enumerable.Select(registro =>

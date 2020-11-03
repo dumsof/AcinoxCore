@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace File.Business.IBusiness
+﻿namespace File.Business.IBusiness
 {
+    using File.Entities.sociedad;
+
     public interface IPartidasCompensatedBusiness
     {
-        public void ProcessPartidasCompensated();
+        public void ProcessPartidasCompensated(SocietieEntitie societie, string nameFolderSocietie);
     }
 }

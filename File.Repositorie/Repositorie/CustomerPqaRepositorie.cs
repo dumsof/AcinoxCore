@@ -22,7 +22,7 @@
 
             string querySql = this.configurationQuerySql.Value.ConsultaSQLCliente.Replace("{0}", idEmpresa);
 
-            using (var resultCustomer = this.GetAll(querySql))
+            using (var resultCustomer = this.GetAllExecuteReader(querySql))
             {
                 var enumerable = resultCustomer.Cast<IDataRecord>();
                 customers = enumerable.Select(registro =>

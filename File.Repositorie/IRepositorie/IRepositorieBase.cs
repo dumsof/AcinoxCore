@@ -4,6 +4,6 @@
 
     public interface IRepositorieBase
     {
-        DbDataReader GetAll(string querySQL);
+        DbDataReader GetAllExecuteReader(string querySQL);
     }
 }

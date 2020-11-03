@@ -19,7 +19,7 @@
         public IEnumerable<EmpresasRepoEntitie> GetEmpresas()
         {
             List<EmpresasRepoEntitie> societie;
-            using (var resultSocietie = this.GetAll(this.configurationQuerySql.Value.ConsultaSQLSociedad))
+            using (var resultSocietie = this.GetAllExecuteReader(this.configurationQuerySql.Value.ConsultaSQLSociedad))
             {
                 var enumerable = resultSocietie.Cast<IDataRecord>();
                 societie = enumerable.Select(registro =>

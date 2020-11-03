@@ -22,7 +22,7 @@
 
             var querySql = string.Format(this.configurationQuerySql.Value.ConsultaSQLDireccion, idEmpresa);
 
-            using (var resultAddress = this.GetAll(querySql))
+            using (var resultAddress = this.GetAllExecuteReader(querySql))
             {
                 var enumerable = resultAddress.Cast<IDataRecord>();
                 address = enumerable.Select(registro =>
