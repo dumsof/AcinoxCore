@@ -11,6 +11,6 @@
     "ConsultaSQLPartidasCompensadas": "",
     "ConsultaSQLPartidasAnuladas": "",
     "ConsultaSQLSaldosNoFacturados": "",
-    "ConsultaSQLResumenVentas": ""
+    "ConsultaSQLResumenVentas": "SELECT LTRIM(STR(C.ID_Cliente)) AS codcli ,YEAR(CC.FechaDocumento) AS anio ,MONTH(CC.FechaDocumento) AS mes\t,SUM(CC.Importe) AS importe\tFROM Corporativo.Clientes C INNER JOIN Corporativo.ClientesSucursales CS ON CS.ID_Cliente = C.ID_Cliente INNER JOIN Facturacion.CXCCargos CC ON CC.ID_ClienteSucursal = CS.ID_ClienteSucursal WHERE C.ID_Empresa={0} GROUP BY YEAR(CC.FechaDocumento), MONTH(CC.FechaDocumento), C.ID_Cliente ORDER BY C.ID_Cliente, YEAR(CC.FechaDocumento), MONTH(CC.FechaDocumento)"
   }
 }

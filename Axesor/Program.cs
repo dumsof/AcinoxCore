@@ -55,6 +55,7 @@
                     services.AddSingleton<IPartidasOpenPqaRepositorie, PartidasOpenPqaRepositorie>();
                     services.AddSingleton<IPartidasCompensatedPqaRepositorie, PartidasCompensatedPqaRepositorie>();
                     services.AddSingleton<IPaymentConditionsPqaRepositorie, PaymentConditionsPqaRepositorie>();
+                    services.AddSingleton<ISaleSummaryPqaRepositorie, SaleSummaryPqaRepositorie>();
 
                     services.AddSingleton<ISocietieBusiness, SocietieBusiness>();
                     services.AddSingleton<IClassificationBusiness, ClassificationBusiness>();
@@ -65,6 +66,7 @@
                     services.AddSingleton<IPartidasOpenBusiness, PartidasOpenBusiness>();
                     services.AddSingleton<IPartidasCompensatedBusiness, PartidasCompensatedBusiness>();
                     services.AddSingleton<IPaymentConditionBusiness, PaymentConditionBusiness>();
+                    services.AddSingleton<ISaleSummaryBusiness, SaleSummaryBusiness>();
 
                     services.AddSingleton<IManagementFile, ManagementFile>();
                     services.AddSingleton<IManagementFtp, ManagementFtp>();

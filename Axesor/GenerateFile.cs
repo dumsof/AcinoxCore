@@ -22,6 +22,7 @@
         private readonly IPartidasCompensatedBusiness partidasCompensatedBusiness;
         private readonly IPartidasOpenBusiness partidasOpenBusiness;
         private readonly IPaymentConditionBusiness paymentCondition;
+        private readonly ISaleSummaryBusiness saleSummaryBusiness;
         private readonly IManagementFile managementFile;
         private readonly IManagementFtp managementFtp;
 
@@ -29,7 +30,7 @@
             ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, ICustomerBusiness customerBusiness,
             IAddressBusiness addressBusiness, IPaymentMethodBusiness paymentMethodBusiness, ICustomerContactsBusiness customerContactsBusiness,
             IPartidasCompensatedBusiness partidasCompensatedBusiness, IPartidasOpenBusiness partidasOpenBusiness, IPaymentConditionBusiness paymentCondition,
-            IManagementFile managementFile, IManagementFtp managementFtp)
+            ISaleSummaryBusiness saleSummaryBusiness, IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;
             this.configHoraProceso = configHoraProceso;
@@ -42,6 +43,7 @@
             this.partidasCompensatedBusiness = partidasCompensatedBusiness;
             this.partidasOpenBusiness = partidasOpenBusiness;
             this.paymentCondition = paymentCondition;
+            this.saleSummaryBusiness = saleSummaryBusiness;
             this.managementFile = managementFile;
             this.managementFtp = managementFtp;
         }
@@ -64,15 +66,16 @@
                     foreach (var societie in societies)
                     {
                         string nameFolderSocietie = societie.Cod;
-                        this.societieBusiness.ProcessSocietie(nameFolderSocietie);
-                        this.classificationBusiness.ProcessClassification(societie, nameFolderSocietie);
-                        this.paymentMethodBusiness.ProcessPaymentMethod(societie, nameFolderSocietie);
-                        this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
-                        this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
-                        this.customerContactsBusiness.ProcessContacts(societie, nameFolderSocietie);
-                        this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
-                        this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
-                        this.partidasCompensatedBusiness.ProcessPartidasCompensated(societie, nameFolderSocietie);
+                        //this.societieBusiness.ProcessSocietie(nameFolderSocietie);
+                        //this.classificationBusiness.ProcessClassification(societie, nameFolderSocietie);
+                        //this.paymentMethodBusiness.ProcessPaymentMethod(societie, nameFolderSocietie);
+                        //this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
+                        //this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
+                        //this.customerContactsBusiness.ProcessContacts(societie, nameFolderSocietie);
+                        //this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
+                        //this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
+                        //this.partidasCompensatedBusiness.ProcessPartidasCompensated(societie, nameFolderSocietie);
+                        this.saleSummaryBusiness.ProcessSaleSummary(societie, nameFolderSocietie);
                         //this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
                         //this.managementFile.MoveAllFileFolder(nameFolderSocietie);
                     }
