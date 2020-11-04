@@ -2,7 +2,7 @@
 
 namespace File.Entities.PartidasCompensada
 {
-    public class PartidasCompensatedEntitie 
+    public class PartidasCompensatedEntitie
     {
         [XmlElement("codcli")]
         public string CodCli { get; set; }
@@ -26,7 +26,7 @@ namespace File.Entities.PartidasCompensada
         public decimal Importe { get; set; }
 
         [XmlElement("marca")]
-        public string Marca { get; set; }        
+        public string Marca { get; set; }
 
         [XmlElement("impmondoc")]
         public decimal ImpMonDoc { get; set; }
@@ -78,6 +78,5 @@ namespace File.Entities.PartidasCompensada
 
         [XmlElement("numdocorigen")]
         public string NumDocOrigen { get; set; }
-
     }
 }

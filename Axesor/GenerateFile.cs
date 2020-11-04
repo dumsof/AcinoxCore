@@ -73,8 +73,8 @@
                         this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
                         this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
                         this.partidasCompensatedBusiness.ProcessPartidasCompensated(societie, nameFolderSocietie);
-                        this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
-                        this.managementFile.MoveAllFileFolder(nameFolderSocietie);
+                        //this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
+                        //this.managementFile.MoveAllFileFolder(nameFolderSocietie);
                     }
 
                     _logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");

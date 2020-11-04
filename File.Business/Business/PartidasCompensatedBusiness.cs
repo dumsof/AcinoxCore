@@ -89,8 +89,8 @@
                 Campoid = c.Campoid,
                 CodeJercicio = c.CodeJercicio,
                 NumDocCobro = c.NumDocCobro,
-                NumDocOrigen = c.NumDocOrigen
-
+                NumDocOrigen = c.NumDocOrigen,
+                CodEjercicioComp = c.CodEjercicioComp
             }).ToList();
         }
     }

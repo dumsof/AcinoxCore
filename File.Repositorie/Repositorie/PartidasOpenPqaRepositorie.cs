@@ -61,7 +61,7 @@
                                   JOIN [Corporativo].[Monedas] MO ON MO.ID_Moneda=CA.ID_Moneda
                                   LEFT JOIN Corporativo.ValoresCambios C ON C.ID_Moneda=1  AND C.FechaCambio=CAST(CA.FechaDocumento AS date)
                                   LEFT JOIN Corporativo.CondicionesPagos CP ON CP.Dias=CA.DiasCredito
-                                  WHERE CA.CondicionesPago='CREDITO' AND CA.TTotal>0  AND CLI.ID_Empresa={codEmpresa}";
+                                  WHERE ISNULL(CA.Saldada,'')='' AND CA.TTotal>0  AND CLI.ID_Empresa={codEmpresa}";
 
             using (var result = this.GetAllExecuteReader(querySQL))
             {
