@@ -24,36 +24,44 @@
 			List<PartidasCompensatedRepoEntitie> partidasCompensated;
 
 			//command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasCompensadas;
-			var querySql = @"SELECT DISTINCT
-												 codcli=CLI.RFC
-												,ndoc=SerieDocumento+' '+LTRIM(STR( NumeroDocumento))
-												,nvcto=''
-												,fchemi='2014-01-02'
-												,fchvcto='2014-01-02'
-												,importe=0.0
-												,estado=2
-												,dotada=1
-												,codvp=''
-												,codcondp=''
-												,codmondoc=''
-												,impmondoc=0.0
-												,ind1=''
-												,ind2=''
-												,ind3=''
-												,ind4=''
-												,ind5=''
-												,ind6=''
-												,ind7=''
-												,ind8=''
-												,ind9=''
-												,tdoc=''
-												,campoid=''
-												,codejercicio=''
-												,numdocorigen=0.0
-										  FROM [Facturacion].[CXCCargos] CA
-										  JOIN Corporativo.ClientesSucursales SU ON SU.ID_ClienteSucursal=CA.ID_ClienteSucursal
-										  JOIN Corporativo.Clientes CLI ON CLI.ID_Cliente=SU.ID_Cliente
-										  WHERE CLI.ID_Empresa={0}";
+			var querySql = @"SELECT	LTRIM(STR(C.ID_Cliente)) AS codcli
+								,CONCAT(CC.SerieDocumento, '-', CC.NumeroDocumento) AS ndoc
+								,'' AS nvcto 
+								,CONVERT(VARCHAR,CC.FechaDocumento,23) AS fchemi
+								,CONVERT(VARCHAR,CC.FechaVencimiento,23) AS fchvcto
+								,CC.Saldada AS fchcomp
+								,CASE M.CodigoMoneda
+								WHEN 'USD'
+								THEN ROUND(F.Ttotal,2) ELSE (SELECT ValorCambio FROM Corporativo.ValoresCambios WHERE FechaCambio = CONVERT(DATE,F.FechaCFD,23)) * F.Ttotal
+								END AS importe 
+								,CONCAT(CONVERT(VARCHAR,GETDATE(),112), '@#', CC.SerieDocumento, '@#', CC.NumeroDocumento) AS marca
+								,F.Ttotal AS impmondoc		
+								,M.CodigoMoneda AS codmondoc			
+								,F.MetodoPago AS ind1 
+								,'' AS ind2
+								,'' AS ind3
+								,'' AS ind4
+								,'' AS ind5
+								,'' AS ind6
+								,'' AS ind7
+								,'' AS ind8
+								,'' AS ind9
+								,F.EfectoCFD AS tdoc 
+								,'' AS campoid 
+								,'' AS codejercicio
+								,'' AS codejerciciocomp
+								,'' AS numdoccobro 
+								,'' AS numdocorigen
+								--,ca.ID_CXCCargo 
+								--,cc.ID_CXCCargo 
+							FROM Facturacion.CXCAbonos CA
+							INNER JOIN Facturacion.CXCCargos CC ON CC.ID_CXCCargo = CA.ID_CXCCargo
+							INNER JOIN Corporativo.ClientesSucursales SC ON SC.ID_ClienteSucursal = CC.ID_ClienteSucursal
+							INNER JOIN Corporativo.Clientes C ON C.ID_Cliente = SC.ID_Cliente
+							INNER JOIN Corporativo.Monedas M ON M.ID_Moneda = CC.ID_Moneda
+							INNER JOIN Facturacion.CFD F ON F.ID_CFD = CC.ID_CFD
+							WHERE CC.Saldada IS NOT NULL AND C.ID_Empresa={0}
+							ORDER BY C.ID_Cliente ASC";
 
 			using (var resultPartidasCompensated = this.GetAllExecuteReader(string.Format(querySql, idEmpresa)))
 			{
