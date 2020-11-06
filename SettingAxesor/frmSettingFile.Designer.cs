@@ -35,6 +35,8 @@
             this.txtMinutos = new System.Windows.Forms.TextBox();
             this.txtHoraEjecucion = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtBaseDato = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtTimeOut = new System.Windows.Forms.TextBox();
             this.txtContrasenia = new System.Windows.Forms.TextBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
@@ -44,8 +46,7 @@
             this.txtNombreServidor = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtBaseDato = new System.Windows.Forms.TextBox();
+            this.BtnCerrarFormulario = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +55,7 @@
             // 
             this.BtnSaveSetting.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnSaveSetting.ForeColor = System.Drawing.Color.Green;
-            this.BtnSaveSetting.Location = new System.Drawing.Point(32, 394);
+            this.BtnSaveSetting.Location = new System.Drawing.Point(32, 449);
             this.BtnSaveSetting.Name = "BtnSaveSetting";
             this.BtnSaveSetting.Size = new System.Drawing.Size(169, 29);
             this.BtnSaveSetting.TabIndex = 2;
@@ -70,7 +71,7 @@
             this.groupBox1.Controls.Add(this.txtHoraEjecucion);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.Color.Navy;
-            this.groupBox1.Location = new System.Drawing.Point(32, 238);
+            this.groupBox1.Location = new System.Drawing.Point(32, 284);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(392, 125);
             this.groupBox1.TabIndex = 3;
@@ -124,10 +125,26 @@
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox2.Location = new System.Drawing.Point(32, 39);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(392, 193);
+            this.groupBox2.Size = new System.Drawing.Size(392, 205);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Configuración Conexión Datos";
+            // 
+            // txtBaseDato
+            // 
+            this.txtBaseDato.Location = new System.Drawing.Point(172, 65);
+            this.txtBaseDato.Name = "txtBaseDato";
+            this.txtBaseDato.Size = new System.Drawing.Size(214, 25);
+            this.txtBaseDato.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(24, 69);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(107, 19);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Base de Datos:";
             // 
             // txtTimeOut
             // 
@@ -135,7 +152,7 @@
             this.txtTimeOut.Location = new System.Drawing.Point(172, 156);
             this.txtTimeOut.Name = "txtTimeOut";
             this.txtTimeOut.Size = new System.Drawing.Size(88, 25);
-            this.txtTimeOut.TabIndex = 1;
+            this.txtTimeOut.TabIndex = 5;
             // 
             // txtContrasenia
             // 
@@ -143,14 +160,14 @@
             this.txtContrasenia.Name = "txtContrasenia";
             this.txtContrasenia.PasswordChar = '*';
             this.txtContrasenia.Size = new System.Drawing.Size(214, 25);
-            this.txtContrasenia.TabIndex = 1;
+            this.txtContrasenia.TabIndex = 4;
             // 
             // txtUsuario
             // 
             this.txtUsuario.Location = new System.Drawing.Point(172, 94);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(214, 25);
-            this.txtUsuario.TabIndex = 1;
+            this.txtUsuario.TabIndex = 3;
             // 
             // label6
             // 
@@ -198,34 +215,31 @@
             // groupBox3
             // 
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.groupBox3.Location = new System.Drawing.Point(430, 39);
+            this.groupBox3.Location = new System.Drawing.Point(480, 45);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(392, 175);
+            this.groupBox3.Size = new System.Drawing.Size(392, 187);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuración Conexión FTP";
             // 
-            // label7
+            // BtnCerrarFormulario
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 69);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(107, 19);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Base de Datos:";
-            // 
-            // txtBaseDato
-            // 
-            this.txtBaseDato.Location = new System.Drawing.Point(172, 65);
-            this.txtBaseDato.Name = "txtBaseDato";
-            this.txtBaseDato.Size = new System.Drawing.Size(214, 25);
-            this.txtBaseDato.TabIndex = 1;
+            this.BtnCerrarFormulario.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.BtnCerrarFormulario.ForeColor = System.Drawing.Color.Red;
+            this.BtnCerrarFormulario.Location = new System.Drawing.Point(626, 448);
+            this.BtnCerrarFormulario.Name = "BtnCerrarFormulario";
+            this.BtnCerrarFormulario.Size = new System.Drawing.Size(146, 29);
+            this.BtnCerrarFormulario.TabIndex = 5;
+            this.BtnCerrarFormulario.Text = "Cerrar Setting";
+            this.BtnCerrarFormulario.UseVisualStyleBackColor = true;
+            this.BtnCerrarFormulario.Click += new System.EventHandler(this.BtnCerrarFormulario_Click);
             // 
             // frmSettingFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 477);
+            this.ClientSize = new System.Drawing.Size(934, 522);
+            this.Controls.Add(this.BtnCerrarFormulario);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -262,6 +276,7 @@
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.TextBox txtBaseDato;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button BtnCerrarFormulario;
     }
 }
 

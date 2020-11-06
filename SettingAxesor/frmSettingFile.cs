@@ -40,7 +40,7 @@ namespace SettingAxesor
             try
             {
                 this.SaveSetting();
-                MessageBox.Show("Configuración guardada con exito.","Guardar Configuración",MessageBoxButtons.OK ,MessageBoxIcon.Information);
+                MessageBox.Show("Configuración guardada con éxito.", "Guardar Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace SettingAxesor
         {
             if (this.ValoresJson == null)
             {
-                MessageBox.Show("No se pudo cargar la configuración, por favor verifique.","Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("No se pudo cargar la configuración, por favor verifique.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             this.txtNombreServidor.Text = this.ValoresJson[configuracionDato][keyNombreServidor];
@@ -89,10 +89,26 @@ namespace SettingAxesor
         private void SaveSetting()
         {
             this.ValoresJson[configuracionEjecucion][keyHora24] = this.txtHoraEjecucion.Text;
-            this.ValoresJson[configuracionEjecucion][keyMinuto60] = this.txtMinutos.Text;           
-            
+            this.ValoresJson[configuracionEjecucion][keyMinuto60] = this.txtMinutos.Text;
+
             string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
             File.WriteAllText(fileSetting, output);
+        }
+
+        private void BtnCerrarFormulario_Click(object sender, EventArgs e)
+        {
+            const string message = "¿Está seguro de cerrar la aplicación de configuración.?";
+            const string caption = "Cerrar Formulario";
+            var result = MessageBox.Show(message, caption,
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+
+            // If the no button was pressed ...
+            if (result == DialogResult.Yes)
+            {
+                // cancel the closure of the form.
+                this.Close();
+            }
         }
     }
 }
