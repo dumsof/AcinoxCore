@@ -46,9 +46,11 @@
             this.txtNombreServidor = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.BtnCerrarFormulario = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnSaveSetting
@@ -214,13 +216,23 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox3.Location = new System.Drawing.Point(480, 45);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(392, 187);
+            this.groupBox3.Size = new System.Drawing.Size(422, 187);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuración Conexión FTP";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(128, 19);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Nombre Servidor";
             // 
             // BtnCerrarFormulario
             // 
@@ -244,6 +256,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnSaveSetting);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "frmSettingFile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -253,6 +266,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -277,6 +292,7 @@
         private System.Windows.Forms.TextBox txtBaseDato;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button BtnCerrarFormulario;
+        private System.Windows.Forms.Label label8;
     }
 }
 
