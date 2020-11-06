@@ -34,6 +34,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtMinutos = new System.Windows.Forms.TextBox();
             this.txtHoraEjecucion = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,9 +58,9 @@
             this.groupBox1.Controls.Add(this.txtMinutos);
             this.groupBox1.Controls.Add(this.txtHoraEjecucion);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.groupBox1.Location = new System.Drawing.Point(32, 199);
+            this.groupBox1.Location = new System.Drawing.Point(32, 183);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(570, 125);
+            this.groupBox1.Size = new System.Drawing.Size(392, 125);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cofiguración Hora Ejecución";
@@ -85,25 +87,49 @@
             // 
             this.txtMinutos.Location = new System.Drawing.Point(116, 78);
             this.txtMinutos.Name = "txtMinutos";
-            this.txtMinutos.Size = new System.Drawing.Size(125, 25);
+            this.txtMinutos.Size = new System.Drawing.Size(62, 25);
             this.txtMinutos.TabIndex = 1;
             // 
             // txtHoraEjecucion
             // 
             this.txtHoraEjecucion.Location = new System.Drawing.Point(116, 47);
             this.txtHoraEjecucion.Name = "txtHoraEjecucion";
-            this.txtHoraEjecucion.Size = new System.Drawing.Size(125, 25);
+            this.txtHoraEjecucion.Size = new System.Drawing.Size(62, 25);
             this.txtHoraEjecucion.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.groupBox2.Location = new System.Drawing.Point(32, 39);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(392, 125);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Configuración Conexión Datos";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.groupBox3.Location = new System.Drawing.Point(430, 39);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(392, 125);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Configuración Conexión FTP";
             // 
             // frmSettingFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(858, 450);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnSaveSetting);
+            this.MaximizeBox = false;
             this.Name = "frmSettingFile";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Configuración Crear Archivo Axesor";
             this.Load += new System.EventHandler(this.frmSettingFile_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -118,6 +144,8 @@
         private System.Windows.Forms.TextBox txtHoraEjecucion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }
 
