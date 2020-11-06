@@ -66,15 +66,15 @@
                     foreach (var societie in societies)
                     {
                         string nameFolderSocietie = societie.Cod;
-                        //this.societieBusiness.ProcessSocietie(nameFolderSocietie);
-                        //this.classificationBusiness.ProcessClassification(societie, nameFolderSocietie);
-                        //this.paymentMethodBusiness.ProcessPaymentMethod(societie, nameFolderSocietie);
-                        //this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
-                        //this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
-                        //this.customerContactsBusiness.ProcessContacts(societie, nameFolderSocietie);
-                        //this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
-                        //this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
-                        //this.partidasCompensatedBusiness.ProcessPartidasCompensated(societie, nameFolderSocietie);
+                        this.societieBusiness.ProcessSocietie(nameFolderSocietie);
+                        this.classificationBusiness.ProcessClassification(societie, nameFolderSocietie);
+                        this.paymentMethodBusiness.ProcessPaymentMethod(societie, nameFolderSocietie);
+                        this.customerBusiness.ProcessCustomer(societie, nameFolderSocietie);
+                        this.addressBusiness.ProcessAddress(societie, nameFolderSocietie);
+                        this.customerContactsBusiness.ProcessContacts(societie, nameFolderSocietie);
+                        this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
+                        this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
+                        this.partidasCompensatedBusiness.ProcessPartidasCompensated(societie, nameFolderSocietie);
                         this.saleSummaryBusiness.ProcessSaleSummary(societie, nameFolderSocietie);
                         //this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
                         //this.managementFile.MoveAllFileFolder(nameFolderSocietie);
