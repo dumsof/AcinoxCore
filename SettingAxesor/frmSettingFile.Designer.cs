@@ -310,7 +310,7 @@
             // 
             this.BtnCerrarFormulario.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnCerrarFormulario.ForeColor = System.Drawing.Color.Red;
-            this.BtnCerrarFormulario.Location = new System.Drawing.Point(626, 448);
+            this.BtnCerrarFormulario.Location = new System.Drawing.Point(750, 449);
             this.BtnCerrarFormulario.Name = "BtnCerrarFormulario";
             this.BtnCerrarFormulario.Size = new System.Drawing.Size(146, 29);
             this.BtnCerrarFormulario.TabIndex = 5;
