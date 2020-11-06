@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>dotnet-Acinox-B7F6F3BC-C50F-4C24-8D2C-F7E870E6BC04</UserSecretsId>
+    <ApplicationIcon>Basic-Files.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

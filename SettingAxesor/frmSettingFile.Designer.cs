@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettingFile));
             this.BtnSaveSetting = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -68,7 +69,7 @@
             this.BtnSaveSetting.Name = "BtnSaveSetting";
             this.BtnSaveSetting.Size = new System.Drawing.Size(169, 29);
             this.BtnSaveSetting.TabIndex = 2;
-            this.BtnSaveSetting.Text = "Save Setting";
+            this.BtnSaveSetting.Text = "Guardar Setting";
             this.BtnSaveSetting.UseVisualStyleBackColor = true;
             this.BtnSaveSetting.Click += new System.EventHandler(this.BtnSaveSetting_Click);
             // 
@@ -85,7 +86,7 @@
             this.groupBox1.Size = new System.Drawing.Size(392, 125);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Cofiguración Hora Ejecución";
+            this.groupBox1.Text = "Configuración Hora de Ejecución";
             // 
             // label2
             // 
@@ -328,6 +329,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnSaveSetting);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmSettingFile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
