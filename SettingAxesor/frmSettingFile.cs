@@ -81,14 +81,14 @@
             this.txtPassawordFtp.Text = this.ValoresJson[configuracionFTP][keyPasswordFtp];
             this.txtTipoArchivoFtp.Text = this.ValoresJson[configuracionFTP][keyTiposArchivoEnviarFtp];           
 
-            this.txtHoraEjecucion.Text = this.ValoresJson[configuracionEjecucion][keyHora24];
-            this.txtMinutos.Text = this.ValoresJson[configuracionEjecucion][keyMinuto60];
+            this.nudHoraEjecucion.Value = this.ValoresJson[configuracionEjecucion][keyHora24];            
+            this.nupMinutos.Value = this.ValoresJson[configuracionEjecucion][keyMinuto60];
         }
 
         private void SaveSetting()
         {
-            this.ValoresJson[configuracionEjecucion][keyHora24] = this.txtHoraEjecucion.Text;
-            this.ValoresJson[configuracionEjecucion][keyMinuto60] = this.txtMinutos.Text;
+            this.ValoresJson[configuracionEjecucion][keyHora24] = this.nudHoraEjecucion.Value;            
+            this.ValoresJson[configuracionEjecucion][keyMinuto60] = this.nupMinutos.Value;
 
             string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
             File.WriteAllText(fileSetting, output);

@@ -31,10 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettingFile));
             this.BtnSaveSetting = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nudHoraEjecucion = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtMinutos = new System.Windows.Forms.TextBox();
-            this.txtHoraEjecucion = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtBaseDato = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -56,9 +55,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.BtnCerrarFormulario = new System.Windows.Forms.Button();
+            this.nupMinutos = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHoraEjecucion)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupMinutos)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnSaveSetting
@@ -75,10 +77,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.nupMinutos);
+            this.groupBox1.Controls.Add(this.nudHoraEjecucion);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtMinutos);
-            this.groupBox1.Controls.Add(this.txtHoraEjecucion);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.Color.Navy;
             this.groupBox1.Location = new System.Drawing.Point(32, 284);
@@ -87,6 +89,28 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configuración Hora de Ejecución";
+            // 
+            // nudHoraEjecucion
+            // 
+            this.nudHoraEjecucion.Location = new System.Drawing.Point(116, 47);
+            this.nudHoraEjecucion.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.nudHoraEjecucion.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudHoraEjecucion.Name = "nudHoraEjecucion";
+            this.nudHoraEjecucion.Size = new System.Drawing.Size(88, 25);
+            this.nudHoraEjecucion.TabIndex = 3;
+            this.nudHoraEjecucion.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label2
             // 
@@ -105,20 +129,6 @@
             this.label1.Size = new System.Drawing.Size(67, 19);
             this.label1.TabIndex = 2;
             this.label1.Text = "Hora 24:";
-            // 
-            // txtMinutos
-            // 
-            this.txtMinutos.Location = new System.Drawing.Point(116, 78);
-            this.txtMinutos.Name = "txtMinutos";
-            this.txtMinutos.Size = new System.Drawing.Size(62, 25);
-            this.txtMinutos.TabIndex = 1;
-            // 
-            // txtHoraEjecucion
-            // 
-            this.txtHoraEjecucion.Location = new System.Drawing.Point(116, 47);
-            this.txtHoraEjecucion.Name = "txtHoraEjecucion";
-            this.txtHoraEjecucion.Size = new System.Drawing.Size(62, 25);
-            this.txtHoraEjecucion.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -318,6 +328,18 @@
             this.BtnCerrarFormulario.UseVisualStyleBackColor = true;
             this.BtnCerrarFormulario.Click += new System.EventHandler(this.BtnCerrarFormulario_Click);
             // 
+            // nupMinutos
+            // 
+            this.nupMinutos.Location = new System.Drawing.Point(116, 84);
+            this.nupMinutos.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.nupMinutos.Name = "nupMinutos";
+            this.nupMinutos.Size = new System.Drawing.Size(88, 25);
+            this.nupMinutos.TabIndex = 3;
+            // 
             // frmSettingFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -337,10 +359,12 @@
             this.Load += new System.EventHandler(this.frmSettingFile_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHoraEjecucion)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupMinutos)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -348,8 +372,6 @@
         #endregion
         private System.Windows.Forms.Button BtnSaveSetting;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtMinutos;
-        private System.Windows.Forms.TextBox txtHoraEjecucion;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -373,6 +395,8 @@
         private System.Windows.Forms.TextBox txtTipoArchivoFtp;
         private System.Windows.Forms.TextBox txtPassawordFtp;
         private System.Windows.Forms.TextBox txtUsuarioFtp;
+        private System.Windows.Forms.NumericUpDown nudHoraEjecucion;
+        private System.Windows.Forms.NumericUpDown nupMinutos;
     }
 }
 
