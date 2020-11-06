@@ -46,6 +46,13 @@
             this.txtNombreServidor = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtTipoArchivoFtp = new System.Windows.Forms.TextBox();
+            this.txtPassawordFtp = new System.Windows.Forms.TextBox();
+            this.txtUsuarioFtp = new System.Windows.Forms.TextBox();
+            this.txtNombreServidorFtp = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.BtnCerrarFormulario = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -136,7 +143,7 @@
             // 
             this.txtBaseDato.Location = new System.Drawing.Point(172, 65);
             this.txtBaseDato.Name = "txtBaseDato";
-            this.txtBaseDato.Size = new System.Drawing.Size(214, 25);
+            this.txtBaseDato.Size = new System.Drawing.Size(171, 25);
             this.txtBaseDato.TabIndex = 2;
             // 
             // label7
@@ -161,14 +168,14 @@
             this.txtContrasenia.Location = new System.Drawing.Point(172, 125);
             this.txtContrasenia.Name = "txtContrasenia";
             this.txtContrasenia.PasswordChar = '*';
-            this.txtContrasenia.Size = new System.Drawing.Size(214, 25);
+            this.txtContrasenia.Size = new System.Drawing.Size(152, 25);
             this.txtContrasenia.TabIndex = 4;
             // 
             // txtUsuario
             // 
             this.txtUsuario.Location = new System.Drawing.Point(172, 94);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(214, 25);
+            this.txtUsuario.Size = new System.Drawing.Size(171, 25);
             this.txtUsuario.TabIndex = 3;
             // 
             // label6
@@ -216,6 +223,13 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.txtTipoArchivoFtp);
+            this.groupBox3.Controls.Add(this.txtPassawordFtp);
+            this.groupBox3.Controls.Add(this.txtUsuarioFtp);
+            this.groupBox3.Controls.Add(this.txtNombreServidorFtp);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox3.Location = new System.Drawing.Point(480, 45);
@@ -225,14 +239,71 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuración Conexión FTP";
             // 
+            // txtTipoArchivoFtp
+            // 
+            this.txtTipoArchivoFtp.Enabled = false;
+            this.txtTipoArchivoFtp.Location = new System.Drawing.Point(162, 125);
+            this.txtTipoArchivoFtp.Name = "txtTipoArchivoFtp";
+            this.txtTipoArchivoFtp.Size = new System.Drawing.Size(155, 25);
+            this.txtTipoArchivoFtp.TabIndex = 1;
+            // 
+            // txtPassawordFtp
+            // 
+            this.txtPassawordFtp.Location = new System.Drawing.Point(162, 94);
+            this.txtPassawordFtp.Name = "txtPassawordFtp";
+            this.txtPassawordFtp.PasswordChar = '*';
+            this.txtPassawordFtp.Size = new System.Drawing.Size(165, 25);
+            this.txtPassawordFtp.TabIndex = 1;
+            // 
+            // txtUsuarioFtp
+            // 
+            this.txtUsuarioFtp.Location = new System.Drawing.Point(162, 63);
+            this.txtUsuarioFtp.Name = "txtUsuarioFtp";
+            this.txtUsuarioFtp.Size = new System.Drawing.Size(189, 25);
+            this.txtUsuarioFtp.TabIndex = 1;
+            // 
+            // txtNombreServidorFtp
+            // 
+            this.txtNombreServidorFtp.Location = new System.Drawing.Point(162, 31);
+            this.txtNombreServidorFtp.Name = "txtNombreServidorFtp";
+            this.txtNombreServidorFtp.Size = new System.Drawing.Size(254, 25);
+            this.txtNombreServidorFtp.TabIndex = 1;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(20, 125);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(109, 19);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Tipo Archivos :";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(20, 94);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(92, 19);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Contraseña :";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(20, 63);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(68, 19);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Usuario :";
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(20, 31);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(128, 19);
+            this.label8.Size = new System.Drawing.Size(136, 19);
             this.label8.TabIndex = 0;
-            this.label8.Text = "Nombre Servidor";
+            this.label8.Text = "Nombre Servidor :";
             // 
             // BtnCerrarFormulario
             // 
@@ -293,6 +364,13 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button BtnCerrarFormulario;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtNombreServidorFtp;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtTipoArchivoFtp;
+        private System.Windows.Forms.TextBox txtPassawordFtp;
+        private System.Windows.Forms.TextBox txtUsuarioFtp;
     }
 }
 

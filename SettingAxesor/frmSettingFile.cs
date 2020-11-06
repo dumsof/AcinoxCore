@@ -1,32 +1,29 @@
-﻿
-
-namespace SettingAxesor
+﻿namespace SettingAxesor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Drawing;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Forms;
     using Newtonsoft.Json;
+    using System;
+    using System.IO;
+    using System.Windows.Forms;
 
     public partial class frmSettingFile : Form
     {
-        string fileSetting = "appsettings.json";
-        string configuracionDato = "ConnectionStringsSQlServer";
-        string keyNombreServidor = "NombreServidor";
-        string keyBaseDato = "NombreBaseDato";
-        string keyUsuario = "UsuarioBaseDato";
-        string keyPassawordDataBase = "PasswordUsuarioBaseDato";
-        string keyTimeOut = "Timeout";
+        private string fileSetting = "appsettings.json";
+        private string configuracionDato = "ConnectionStringsSQlServer";
+        private string keyNombreServidor = "NombreServidor";
+        private string keyBaseDato = "NombreBaseDato";
+        private string keyUsuario = "UsuarioBaseDato";
+        private string keyPassawordDataBase = "PasswordUsuarioBaseDato";
+        private string keyTimeOut = "Timeout";
 
-        string configuracionEjecucion = "ConfiguracionHoraEjecucionProceso";
-        string keyHora24 = "Hora24";
-        string keyMinuto60 = "Minuto60";
+        private string configuracionFTP = "ConfiguracionFtp";
+        private string keyServidorFtp = "ServidorFtp";
+        private string keyUsuarioFtp = "UsuarioFtp";
+        private string keyPasswordFtp = "PasswordFtp";
+        private string keyTiposArchivoEnviarFtp = "TiposArchivoEnviarFtp";
+
+        private string configuracionEjecucion = "ConfiguracionHoraEjecucionProceso";
+        private string keyHora24 = "Hora24";
+        private string keyMinuto60 = "Minuto60";
         public dynamic ValoresJson { get; set; }
 
         public frmSettingFile()
@@ -36,7 +33,6 @@ namespace SettingAxesor
 
         private void BtnSaveSetting_Click(object sender, EventArgs e)
         {
-
             try
             {
                 this.SaveSetting();
@@ -54,7 +50,6 @@ namespace SettingAxesor
             {
                 this.LoadValoresJson();
                 this.LoadValueControl();
-
             }
             catch (Exception ex)
             {
@@ -81,9 +76,13 @@ namespace SettingAxesor
             this.txtContrasenia.Text = this.ValoresJson[configuracionDato][keyPassawordDataBase];
             this.txtTimeOut.Text = this.ValoresJson[configuracionDato][keyTimeOut];
 
+            this.txtNombreServidorFtp.Text = this.ValoresJson[configuracionFTP][keyServidorFtp];
+            this.txtUsuarioFtp.Text = this.ValoresJson[configuracionFTP][keyUsuarioFtp];
+            this.txtPassawordFtp.Text = this.ValoresJson[configuracionFTP][keyPasswordFtp];
+            this.txtTipoArchivoFtp.Text = this.ValoresJson[configuracionFTP][keyTiposArchivoEnviarFtp];           
+
             this.txtHoraEjecucion.Text = this.ValoresJson[configuracionEjecucion][keyHora24];
             this.txtMinutos.Text = this.ValoresJson[configuracionEjecucion][keyMinuto60];
-
         }
 
         private void SaveSetting()
