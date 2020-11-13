@@ -1,7 +1,7 @@
-﻿using System.Xml.Serialization;
-
-namespace File.Entities.PartidasCompensada
+﻿namespace File.Entities.PartidasCompensada
 {
+    using System.Xml.Serialization;
+
     public class PartidasCompensatedEntitie
     {
         [XmlElement("codcli")]

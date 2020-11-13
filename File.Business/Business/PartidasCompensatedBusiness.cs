@@ -46,7 +46,7 @@
             this.managementFile.CreateFileCsv<PartidasCompensatedEntitie>(nameFileXml, partidasCompensated);
             var partidasCompensatedXml = new PartidasCompensated { PartidasCompensadas = partidasCompensated.ToList() };
             this.managementFile.CreateFileXml<PartidasCompensated>(nameFileXml, partidasCompensatedXml, nameFolderSocietie);
-            logger.LogInformation(this.messageManagement.GetMessage(MessageType.InicioProcessGeneradFile, new object[] { nameFileXml, partidasCompensated?.Count() }));
+            logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, partidasCompensated?.Count() }));
 
             var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
 

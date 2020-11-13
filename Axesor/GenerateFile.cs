@@ -22,6 +22,7 @@
         private readonly IPartidasCompensatedBusiness partidasCompensatedBusiness;
         private readonly IPartidasOpenBusiness partidasOpenBusiness;
         private readonly IPaymentConditionBusiness paymentCondition;
+        private readonly IPartidasCompensatedCanceledBusiness partidasCompensatedCanceled;
         private readonly ISaleSummaryBusiness saleSummaryBusiness;
         private readonly IManagementFile managementFile;
         private readonly IManagementFtp managementFtp;
@@ -30,6 +31,7 @@
             ISocietieBusiness societieBusiness, IClassificationBusiness classificationBusiness, ICustomerBusiness customerBusiness,
             IAddressBusiness addressBusiness, IPaymentMethodBusiness paymentMethodBusiness, ICustomerContactsBusiness customerContactsBusiness,
             IPartidasCompensatedBusiness partidasCompensatedBusiness, IPartidasOpenBusiness partidasOpenBusiness, IPaymentConditionBusiness paymentCondition,
+            IPartidasCompensatedCanceledBusiness partidasCompensatedCanceled,
             ISaleSummaryBusiness saleSummaryBusiness, IManagementFile managementFile, IManagementFtp managementFtp)
         {
             _logger = logger;
@@ -43,6 +45,7 @@
             this.partidasCompensatedBusiness = partidasCompensatedBusiness;
             this.partidasOpenBusiness = partidasOpenBusiness;
             this.paymentCondition = paymentCondition;
+            this.partidasCompensatedCanceled = partidasCompensatedCanceled;
             this.saleSummaryBusiness = saleSummaryBusiness;
             this.managementFile = managementFile;
             this.managementFtp = managementFtp;
@@ -75,6 +78,7 @@
                         this.paymentCondition.ProcessPaymentCondition(societie, nameFolderSocietie);
                         this.partidasOpenBusiness.ProcessPartidasOpen(societie, nameFolderSocietie);
                         this.partidasCompensatedBusiness.ProcessPartidasCompensated(societie, nameFolderSocietie);
+                        this.partidasCompensatedCanceled.ProcessPartidasCompensatedCanceled(societie, nameFolderSocietie);
                         this.saleSummaryBusiness.ProcessSaleSummary(societie, nameFolderSocietie);
                         //this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
                         //this.managementFile.MoveAllFileFolder(nameFolderSocietie);

@@ -39,6 +39,9 @@
     <None Update="xsd\partcomps.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="xsd\partcompsinv.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="xsd\sociedades.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
