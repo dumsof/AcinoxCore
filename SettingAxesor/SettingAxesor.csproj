@@ -19,11 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ISetting\" />
-    <Folder Include="Setting\" />
+    <Folder Include="AxesorCrossCutting\Entitie\" />
+    <Folder Include="AxesorCrossCutting\Utility\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 

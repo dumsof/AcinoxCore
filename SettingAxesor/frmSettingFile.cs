@@ -1,6 +1,7 @@
 ﻿namespace SettingAxesor
 {
     using Newtonsoft.Json;
+    using SettingAxesor.AxesorBusiness.IBusiness;
     using System;
     using System.IO;
     using System.Windows.Forms;
@@ -24,11 +25,14 @@
         private string configuracionEjecucion = "ConfiguracionHoraEjecucionProceso";
         private string keyHora24 = "Hora24";
         private string keyMinuto60 = "Minuto60";
+        private readonly IConfigurationBusiness configurationBusiness;
+
         public dynamic ValoresJson { get; set; }
 
-        public frmSettingFile()
+        public frmSettingFile(IConfigurationBusiness configurationBusiness)
         {
             InitializeComponent();
+            this.configurationBusiness = configurationBusiness;
         }
 
         private void BtnSaveSetting_Click(object sender, EventArgs e)
