@@ -39,6 +39,8 @@
         {
             try
             {
+                bool result = this.configurationBusiness.VerifyConnection();
+
                 this.SaveSetting();
                 MessageBox.Show("Configuración guardada con éxito.", "Guardar Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -83,15 +85,15 @@
             this.txtNombreServidorFtp.Text = this.ValoresJson[configuracionFTP][keyServidorFtp];
             this.txtUsuarioFtp.Text = this.ValoresJson[configuracionFTP][keyUsuarioFtp];
             this.txtPassawordFtp.Text = this.ValoresJson[configuracionFTP][keyPasswordFtp];
-            this.txtTipoArchivoFtp.Text = this.ValoresJson[configuracionFTP][keyTiposArchivoEnviarFtp];           
+            this.txtTipoArchivoFtp.Text = this.ValoresJson[configuracionFTP][keyTiposArchivoEnviarFtp];
 
-            this.nudHoraEjecucion.Text = this.ValoresJson[configuracionEjecucion][keyHora24];            
+            this.nudHoraEjecucion.Text = this.ValoresJson[configuracionEjecucion][keyHora24];
             this.nupMinutos.Text = this.ValoresJson[configuracionEjecucion][keyMinuto60];
         }
 
         private void SaveSetting()
         {
-            this.ValoresJson[configuracionEjecucion][keyHora24] = this.nudHoraEjecucion.Text;            
+            this.ValoresJson[configuracionEjecucion][keyHora24] = this.nudHoraEjecucion.Text;
             this.ValoresJson[configuracionEjecucion][keyMinuto60] = this.nupMinutos.Text;
 
             string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);

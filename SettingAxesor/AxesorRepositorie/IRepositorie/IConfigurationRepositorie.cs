@@ -6,6 +6,6 @@ namespace SettingAxesor.AxesorRepositorie.IRepositorie
 {
     public interface IConfigurationRepositorie
     {
-        bool ProbarConexionBaseDato();
+        bool VerifyConnection();
     }
 }

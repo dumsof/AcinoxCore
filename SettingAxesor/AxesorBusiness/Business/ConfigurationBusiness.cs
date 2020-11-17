@@ -11,10 +11,17 @@
         {
             this.repositorie = repositorie;
         }
-        public bool ProbarConexionBaseDato()
+        public bool VerifyConnection()
         {
-
-            return this.repositorie.ProbarConexionBaseDato();
+            try
+            {
+                return this.repositorie.VerifyConnection();
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
     }
 }

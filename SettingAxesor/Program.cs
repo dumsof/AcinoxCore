@@ -8,6 +8,7 @@ namespace SettingAxesor
     using SettingAxesor.AxesorRepositorie.Repositorie;
     using System;
     using System.Windows.Forms;
+    using SettingAxesor.AxesorCrossCutting.Utilities;
 
     internal static class Program
     {
@@ -20,6 +21,8 @@ namespace SettingAxesor
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Utility.CofigurationJson();
+            Utility.CofigurationSQL();
 
             var builder = new HostBuilder()
                 .ConfigureServices((hostContext, services) =>

@@ -2,6 +2,6 @@
 {
     public interface IConfigurationBusiness
     {
-        bool ProbarConexionBaseDato();
+        bool VerifyConnection();
     }
 }
