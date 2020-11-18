@@ -9,6 +9,9 @@ namespace SettingAxesor
     using System;
     using System.Windows.Forms;
     using SettingAxesor.AxesorCrossCutting.Utilities;
+    using Serilog;
+    using Microsoft.Extensions.Logging;
+    using Serilog.Events;
 
     internal static class Program
     {
@@ -23,6 +26,7 @@ namespace SettingAxesor
             Application.SetCompatibleTextRenderingDefault(false);
             Utility.CofigurationJson();
             Utility.CofigurationSQL();
+            ConfiguracionSeriLog();
 
             var builder = new HostBuilder()
                 .ConfigureServices((hostContext, services) =>
@@ -30,7 +34,11 @@ namespace SettingAxesor
                     services.AddSingleton<frmSettingFile>();
                     services.AddScoped<IConfigurationBusiness, ConfigurationBusiness>();
                     services.AddSingleton<IConfigurationRepositorie, ConfigurationRepositorie>();
-                    //services.AddLogging(configure => configure.AddConsole());
+                    services.AddLogging(x =>
+                    {
+                        
+                        //To Do: sirilog
+                    });
                 });
             var host = builder.Build();
             using (var serviceScope = host.Services.CreateScope())
@@ -44,14 +52,19 @@ namespace SettingAxesor
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    MessageBox.Show(ex.Message, "Error Aplication");
                 }
             }
+        }
 
-            //DUM: injectar servicios
-            //var services = new ServiceCollection();
-            //ConfigureServices(services);
-
-            //Application.Run(new frmSettingFile());
+        private static void ConfiguracionSeriLog()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                 .WriteTo.File($"{Utility.PathAplication}\\LogSettingFilesAxesor.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
 
         private static void ConfigureServices(ServiceCollection services)

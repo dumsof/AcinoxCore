@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SettingAxesor.AxesorRepositorie.IRepositorie
+﻿namespace SettingAxesor.AxesorRepositorie.IRepositorie
 {
+    using SettingAxesor.AxesorCrossCutting.Entitie;
+
     public interface IConfigurationRepositorie
     {
-        bool VerifyConnection();
+        bool VerifyConnection(ConnectionStringsServerDataBaseEntitie serverDataBaseEntitie);
     }
 }

@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using SettingAxesor.AxesorBusiness.IBusiness;
+    using SettingAxesor.AxesorCrossCutting.Entitie;
     using System;
     using System.IO;
     using System.Windows.Forms;
@@ -39,8 +40,6 @@
         {
             try
             {
-                bool result = this.configurationBusiness.VerifyConnection();
-
                 this.SaveSetting();
                 MessageBox.Show("Configuración guardada con éxito.", "Guardar Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -114,6 +113,53 @@
                 // cancel the closure of the form.
                 this.Close();
             }
+        }
+
+        private void BtnProbarConexionBaseDato_Click(object sender, EventArgs e)
+        {
+            string message = this.ValidateFieldDataBase();
+            if (!string.IsNullOrEmpty(message))
+            {
+                MessageBox.Show(message, "Validación Conexión Base de Dato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool result = this.configurationBusiness.VerifyConnection(this.LoadDataDataBase());
+        }
+
+        private ConnectionStringsServerDataBaseEntitie LoadDataDataBase()
+        {
+
+            return new ConnectionStringsServerDataBaseEntitie
+            {
+                NombreServidor = this.txtNombreServidor.Text.Trim(),
+                NombreBaseDato = this.txtBaseDato.Text.Trim(),
+                UsuarioBaseDato = this.txtUsuario.Text.Trim(),
+                PasswordUsuarioBaseDato = this.txtContrasenia.Text.Trim(),
+                TimeOut = this.txtTimeOut.Text.Trim()
+            };
+        }
+
+        private string ValidateFieldDataBase()
+        {
+            string message = string.Empty;
+            if (string.IsNullOrEmpty(this.txtNombreServidor.Text.Trim()))
+            {
+                message = "* El campo nombre del servidor es requerido, por favor verifique.";
+            }
+            if (string.IsNullOrEmpty(this.txtBaseDato.Text.Trim()))
+            {
+                message += Environment.NewLine + "* El campo Base de Dato es requerido, por favor verifique.";
+            }
+            if (string.IsNullOrEmpty(this.txtUsuario.Text.Trim()))
+            {
+                message += Environment.NewLine + "* El campo Usuario es requerido, por favor verifique.";
+            }
+            if (string.IsNullOrEmpty(this.txtContrasenia.Text.Trim()))
+            {
+                message += Environment.NewLine + "* El campo Contraseña es requerido, por favor verifique.";
+            }
+            return message;
         }
     }
 }

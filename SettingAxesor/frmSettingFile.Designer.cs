@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettingFile));
             this.BtnSaveSetting = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nupMinutos = new System.Windows.Forms.NumericUpDown();
             this.nudHoraEjecucion = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,19 +56,20 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.BtnCerrarFormulario = new System.Windows.Forms.Button();
-            this.nupMinutos = new System.Windows.Forms.NumericUpDown();
+            this.BtnProbarConexionBaseDato = new System.Windows.Forms.Button();
+            this.BtnProbarConexionFtp = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupMinutos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHoraEjecucion)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupMinutos)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnSaveSetting
             // 
             this.BtnSaveSetting.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnSaveSetting.ForeColor = System.Drawing.Color.Green;
-            this.BtnSaveSetting.Location = new System.Drawing.Point(32, 449);
+            this.BtnSaveSetting.Location = new System.Drawing.Point(32, 483);
             this.BtnSaveSetting.Name = "BtnSaveSetting";
             this.BtnSaveSetting.Size = new System.Drawing.Size(169, 29);
             this.BtnSaveSetting.TabIndex = 2;
@@ -83,12 +85,24 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.ForeColor = System.Drawing.Color.Navy;
-            this.groupBox1.Location = new System.Drawing.Point(32, 284);
+            this.groupBox1.Location = new System.Drawing.Point(32, 307);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(392, 125);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configuración Hora de Ejecución";
+            // 
+            // nupMinutos
+            // 
+            this.nupMinutos.Location = new System.Drawing.Point(116, 84);
+            this.nupMinutos.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.nupMinutos.Name = "nupMinutos";
+            this.nupMinutos.Size = new System.Drawing.Size(88, 25);
+            this.nupMinutos.TabIndex = 3;
             // 
             // nudHoraEjecucion
             // 
@@ -245,7 +259,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.groupBox3.Location = new System.Drawing.Point(480, 45);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(422, 187);
+            this.groupBox3.Size = new System.Drawing.Size(422, 199);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuración Conexión FTP";
@@ -320,7 +334,7 @@
             // 
             this.BtnCerrarFormulario.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnCerrarFormulario.ForeColor = System.Drawing.Color.Red;
-            this.BtnCerrarFormulario.Location = new System.Drawing.Point(750, 449);
+            this.BtnCerrarFormulario.Location = new System.Drawing.Point(750, 483);
             this.BtnCerrarFormulario.Name = "BtnCerrarFormulario";
             this.BtnCerrarFormulario.Size = new System.Drawing.Size(146, 29);
             this.BtnCerrarFormulario.TabIndex = 5;
@@ -328,23 +342,36 @@
             this.BtnCerrarFormulario.UseVisualStyleBackColor = true;
             this.BtnCerrarFormulario.Click += new System.EventHandler(this.BtnCerrarFormulario_Click);
             // 
-            // nupMinutos
+            // BtnProbarConexionBaseDato
             // 
-            this.nupMinutos.Location = new System.Drawing.Point(116, 84);
-            this.nupMinutos.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.nupMinutos.Name = "nupMinutos";
-            this.nupMinutos.Size = new System.Drawing.Size(88, 25);
-            this.nupMinutos.TabIndex = 3;
+            this.BtnProbarConexionBaseDato.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.BtnProbarConexionBaseDato.ForeColor = System.Drawing.Color.Green;
+            this.BtnProbarConexionBaseDato.Location = new System.Drawing.Point(32, 260);
+            this.BtnProbarConexionBaseDato.Name = "BtnProbarConexionBaseDato";
+            this.BtnProbarConexionBaseDato.Size = new System.Drawing.Size(260, 29);
+            this.BtnProbarConexionBaseDato.TabIndex = 6;
+            this.BtnProbarConexionBaseDato.Text = "Probar Conexión Base de Datos";
+            this.BtnProbarConexionBaseDato.UseVisualStyleBackColor = true;
+            this.BtnProbarConexionBaseDato.Click += new System.EventHandler(this.BtnProbarConexionBaseDato_Click);
+            // 
+            // BtnProbarConexionFtp
+            // 
+            this.BtnProbarConexionFtp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.BtnProbarConexionFtp.ForeColor = System.Drawing.Color.Green;
+            this.BtnProbarConexionFtp.Location = new System.Drawing.Point(480, 260);
+            this.BtnProbarConexionFtp.Name = "BtnProbarConexionFtp";
+            this.BtnProbarConexionFtp.Size = new System.Drawing.Size(260, 29);
+            this.BtnProbarConexionFtp.TabIndex = 6;
+            this.BtnProbarConexionFtp.Text = "Probar Conexión FTP";
+            this.BtnProbarConexionFtp.UseVisualStyleBackColor = true;
             // 
             // frmSettingFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 522);
+            this.ClientSize = new System.Drawing.Size(934, 535);
+            this.Controls.Add(this.BtnProbarConexionFtp);
+            this.Controls.Add(this.BtnProbarConexionBaseDato);
             this.Controls.Add(this.BtnCerrarFormulario);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -359,12 +386,12 @@
             this.Load += new System.EventHandler(this.frmSettingFile_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupMinutos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHoraEjecucion)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupMinutos)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -397,6 +424,8 @@
         private System.Windows.Forms.TextBox txtUsuarioFtp;
         private System.Windows.Forms.NumericUpDown nudHoraEjecucion;
         private System.Windows.Forms.NumericUpDown nupMinutos;
+        private System.Windows.Forms.Button BtnProbarConexionBaseDato;
+        private System.Windows.Forms.Button BtnProbarConexionFtp;
     }
 }
 
