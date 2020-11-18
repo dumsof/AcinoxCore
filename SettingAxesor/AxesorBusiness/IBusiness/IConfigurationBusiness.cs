@@ -11,7 +11,7 @@
 
         bool SaveConfigurationDataBase(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie);
 
-        bool SaveConfigurationFtp(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie);
+        bool SaveConfigurationFtp(ConfiguracionFtpEntitie configuracionFtp);
 
         bool SaveConfigurationHours(ConfiguracionHoraEjecucionProcesoEntitie configuracionHoraEjecucion);
 

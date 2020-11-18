@@ -1,12 +1,14 @@
 ﻿namespace SettingAxesor.AxesorBusiness.Business
 {
+    using AxesorCrossCutting.Utilities;
+    using FluentFTP;
     using Newtonsoft.Json;
     using SettingAxesor.AxesorBusiness.IBusiness;
     using SettingAxesor.AxesorCrossCutting.Entitie;
     using SettingAxesor.AxesorRepositorie.IRepositorie;
-    using System.IO;
-    using AxesorCrossCutting.Utilities;
     using System;
+    using System.IO;
+    using System.Net;
 
     public class ConfigurationBusiness : IConfigurationBusiness
     {
@@ -37,6 +39,7 @@
             this.LoadValoresJson();
             this.repositorie = repositorie;
         }
+
         public bool VerifyConnection(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
         {
             try
@@ -47,20 +50,21 @@
             {
                 return false;
             }
-
         }
 
         public bool VerifyConnectionFtp(ConfiguracionFtpEntitie configuracionFtp)
         {
             try
             {
-                return true;
+                using (FtpClient ftp = new FtpClient($"{configuracionFtp.ServidorFtp}", new NetworkCredential { UserName = configuracionFtp.UsuarioFtp, Password = configuracionFtp.PasswordFtp }))
+                {
+                    return ftp.IsConnected;
+                }
             }
             catch
             {
                 return false;
             }
-
         }
 
         public bool SaveConfigurationDataBase(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
@@ -75,17 +79,12 @@
             return true;
         }
 
-        public bool SaveConfigurationFtp(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
-        {
-
-            return true;
-        }
-
         public bool SaveConfigurationFtp(ConfiguracionFtpEntitie configuracionFtp)
         {
             this.ValoresJson[configuracionEjecucion][keyServidorFtp] = configuracionFtp.ServidorFtp;
             this.ValoresJson[configuracionEjecucion][keyUsuarioFtp] = configuracionFtp.UsuarioFtp;
             this.ValoresJson[configuracionEjecucion][keyPasswordFtp] = configuracionFtp.PasswordFtp;
+            this.ValoresJson[configuracionEjecucion][keyPasswordFtp] = configuracionFtp.TipoArchivoFtp;
             string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
             File.WriteAllText(fileSetting, output);
 
@@ -127,7 +126,6 @@
             };
             return new Tuple<ConfiguracionStringsServerDataBaseEntitie, ConfiguracionFtpEntitie, ConfiguracionHoraEjecucionProcesoEntitie>(dataBase, ftp, hours);
         }
-
 
         private void LoadValoresJson()
         {
