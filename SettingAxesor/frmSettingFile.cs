@@ -1,31 +1,12 @@
 ﻿namespace SettingAxesor
 {
-    using Newtonsoft.Json;
     using SettingAxesor.AxesorBusiness.IBusiness;
     using SettingAxesor.AxesorCrossCutting.Entitie;
     using System;
-    using System.IO;
     using System.Windows.Forms;
 
     public partial class frmSettingFile : Form
     {
-        private string fileSetting = "appsettings.json";
-        private string configuracionDato = "ConnectionStringsSQlServer";
-        private string keyNombreServidor = "NombreServidor";
-        private string keyBaseDato = "NombreBaseDato";
-        private string keyUsuario = "UsuarioBaseDato";
-        private string keyPassawordDataBase = "PasswordUsuarioBaseDato";
-        private string keyTimeOut = "Timeout";
-
-        private string configuracionFTP = "ConfiguracionFtp";
-        private string keyServidorFtp = "ServidorFtp";
-        private string keyUsuarioFtp = "UsuarioFtp";
-        private string keyPasswordFtp = "PasswordFtp";
-        private string keyTiposArchivoEnviarFtp = "TiposArchivoEnviarFtp";
-
-        private string configuracionEjecucion = "ConfiguracionHoraEjecucionProceso";
-        private string keyHora24 = "Hora24";
-        private string keyMinuto60 = "Minuto60";
         private readonly IConfigurationBusiness configurationBusiness;
 
         public dynamic ValoresJson { get; set; }
@@ -40,7 +21,15 @@
         {
             try
             {
-                this.SaveSetting();
+                string message = this.ValidateFieldDataBase();
+                message += Environment.NewLine + this.ValidateFieldFtp();
+                message += Environment.NewLine + this.ValidateFieldHoursMinuted();
+                if (!string.IsNullOrEmpty(message.Trim()))
+                {
+                    MessageBox.Show(message, "Validación Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.configurationBusiness.SaveConfigurationHours(this.LoadDataHoursMinuted());
                 MessageBox.Show("Configuración guardada con éxito.", "Guardar Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -53,50 +42,35 @@
         {
             try
             {
-                this.LoadValoresJson();
                 this.LoadValueControl();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error guardar configuración: " + ex.Message);
+                MessageBox.Show("Error cargar configuración: " + ex.Message);
             }
-        }
-
-        private void LoadValoresJson()
-        {
-            string json = File.ReadAllText(fileSetting);
-            this.ValoresJson = JsonConvert.DeserializeObject(json);
         }
 
         private void LoadValueControl()
         {
-            if (this.ValoresJson == null)
+            var dataConfiguration = this.configurationBusiness.LoadValueControl();
+            if (dataConfiguration == null)
             {
                 MessageBox.Show("No se pudo cargar la configuración, por favor verifique.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            this.txtNombreServidor.Text = this.ValoresJson[configuracionDato][keyNombreServidor];
-            this.txtBaseDato.Text = this.ValoresJson[configuracionDato][keyBaseDato];
-            this.txtUsuario.Text = this.ValoresJson[configuracionDato][keyUsuario];
-            this.txtContrasenia.Text = this.ValoresJson[configuracionDato][keyPassawordDataBase];
-            this.txtTimeOut.Text = this.ValoresJson[configuracionDato][keyTimeOut];
+            this.txtNombreServidor.Text = dataConfiguration.Item1.NombreServidor;
+            this.txtBaseDato.Text = dataConfiguration.Item1.NombreBaseDato;
+            this.txtUsuario.Text = dataConfiguration.Item1.UsuarioBaseDato;
+            this.txtContrasenia.Text = dataConfiguration.Item1.PasswordUsuarioBaseDato;
+            this.txtTimeOut.Text = dataConfiguration.Item1.TimeOut;
 
-            this.txtNombreServidorFtp.Text = this.ValoresJson[configuracionFTP][keyServidorFtp];
-            this.txtUsuarioFtp.Text = this.ValoresJson[configuracionFTP][keyUsuarioFtp];
-            this.txtPassawordFtp.Text = this.ValoresJson[configuracionFTP][keyPasswordFtp];
-            this.txtTipoArchivoFtp.Text = this.ValoresJson[configuracionFTP][keyTiposArchivoEnviarFtp];
+            this.txtNombreServidorFtp.Text = dataConfiguration.Item2.ServidorFtp;
+            this.txtUsuarioFtp.Text = dataConfiguration.Item2.UsuarioFtp;
+            this.txtPassawordFtp.Text = dataConfiguration.Item2.PasswordFtp;
+            this.txtTipoArchivoFtp.Text = dataConfiguration.Item2.TipoArchivoFtp;
 
-            this.nudHoraEjecucion.Text = this.ValoresJson[configuracionEjecucion][keyHora24];
-            this.nupMinutos.Text = this.ValoresJson[configuracionEjecucion][keyMinuto60];
-        }
-
-        private void SaveSetting()
-        {
-            this.ValoresJson[configuracionEjecucion][keyHora24] = this.nudHoraEjecucion.Text;
-            this.ValoresJson[configuracionEjecucion][keyMinuto60] = this.nupMinutos.Text;
-
-            string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
-            File.WriteAllText(fileSetting, output);
+            this.nudHoraEjecucion.Text = dataConfiguration.Item3.Hora24;
+            this.nupMinutos.Text = dataConfiguration.Item3.Minuto60;
         }
 
         private void BtnCerrarFormulario_Click(object sender, EventArgs e)
@@ -123,20 +97,47 @@
                 MessageBox.Show(message, "Validación Conexión Base de Dato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             bool result = this.configurationBusiness.VerifyConnection(this.LoadDataDataBase());
+            if (result)
+            {
+                // BtnProbarConexionBaseDato.ForeColor=Color
+                MessageBox.Show("La conexión se realizo con éxito", "Conexión Base de Dato Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No se pudo conectar al servidor de base de datos, por favor verifique.", "Conexión Base de Dato Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private ConnectionStringsServerDataBaseEntitie LoadDataDataBase()
+        private ConfiguracionStringsServerDataBaseEntitie LoadDataDataBase()
         {
-
-            return new ConnectionStringsServerDataBaseEntitie
+            return new ConfiguracionStringsServerDataBaseEntitie
             {
                 NombreServidor = this.txtNombreServidor.Text.Trim(),
                 NombreBaseDato = this.txtBaseDato.Text.Trim(),
                 UsuarioBaseDato = this.txtUsuario.Text.Trim(),
                 PasswordUsuarioBaseDato = this.txtContrasenia.Text.Trim(),
                 TimeOut = this.txtTimeOut.Text.Trim()
+            };
+        }
+
+        private ConfiguracionFtpEntitie LoadDataFtp()
+        {
+            return new ConfiguracionFtpEntitie
+            {
+                ServidorFtp = this.txtNombreServidorFtp.Text.Trim(),
+                UsuarioFtp = this.txtUsuarioFtp.Text.Trim(),
+                PasswordFtp = this.txtPassawordFtp.Text.Trim(),
+                TipoArchivoFtp = this.txtTipoArchivoFtp.Text.Trim()
+            };
+        }
+
+        private ConfiguracionHoraEjecucionProcesoEntitie LoadDataHoursMinuted()
+        {
+            return new ConfiguracionHoraEjecucionProcesoEntitie
+            {
+                Hora24 = this.nudHoraEjecucion.Text.Trim(),
+                Minuto60 = this.nupMinutos.Text.Trim()
             };
         }
 
@@ -159,6 +160,40 @@
             {
                 message += Environment.NewLine + "* El campo Contraseña es requerido, por favor verifique.";
             }
+            return message;
+        }
+
+        private string ValidateFieldFtp()
+        {
+            string message = string.Empty;
+            if (string.IsNullOrEmpty(this.txtNombreServidorFtp.Text.Trim()))
+            {
+                message = "* El campo nombre del servidor ftp es requerido, por favor verifique.";
+            }
+            if (string.IsNullOrEmpty(this.txtUsuarioFtp.Text.Trim()))
+            {
+                message += Environment.NewLine + "* El campo usuario ftp es requerido, por favor verifique.";
+            }
+            if (string.IsNullOrEmpty(this.txtPassawordFtp.Text.Trim()))
+            {
+                message += Environment.NewLine + "* El campo password ftp requerido, por favor verifique.";
+            }
+
+            return message;
+        }
+
+        private string ValidateFieldHoursMinuted()
+        {
+            string message = string.Empty;
+            if (string.IsNullOrEmpty(this.nudHoraEjecucion.Text.Trim()))
+            {
+                message = "* El campo horas es requerido, por favor verifique.";
+            }
+            if (string.IsNullOrEmpty(this.nupMinutos.Text.Trim()))
+            {
+                message += Environment.NewLine + "* El campo minuto es requerido, por favor verifique.";
+            }
+
             return message;
         }
     }

@@ -7,14 +7,14 @@
 
     public class ConfigurationRepositorie : IConfigurationRepositorie
     {
-        public bool VerifyConnection(ConnectionStringsServerDataBaseEntitie serverDataBaseEntitie)
+        public bool VerifyConnection(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
         {
             SqlConnection cnn;
             string connetionString = Utility.ConnectionStringsSQLServer;
 
             connetionString = string.Format(connetionString, serverDataBaseEntitie.NombreServidor,
                 serverDataBaseEntitie.UsuarioBaseDato, serverDataBaseEntitie.PasswordUsuarioBaseDato,
-                serverDataBaseEntitie.ConexionBaseDato, serverDataBaseEntitie.TimeOut);
+                serverDataBaseEntitie.NombreBaseDato, serverDataBaseEntitie.TimeOut);
 
             cnn = new SqlConnection(connetionString);
             cnn.Open();

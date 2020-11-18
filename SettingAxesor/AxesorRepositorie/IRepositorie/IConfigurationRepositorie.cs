@@ -4,6 +4,6 @@
 
     public interface IConfigurationRepositorie
     {
-        bool VerifyConnection(ConnectionStringsServerDataBaseEntitie serverDataBaseEntitie);
+        bool VerifyConnection(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie);
     }
 }

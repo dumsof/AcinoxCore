@@ -1,6 +1,6 @@
 ﻿namespace SettingAxesor.AxesorCrossCutting.Entitie
 {
-    public class ConnectionStringsServerDataBaseEntitie
+    public class ConfiguracionStringsServerDataBaseEntitie
     {
         public string ConexionBaseDato { get; set; }
         public string NombreServidor { get; set; }

@@ -6,6 +6,7 @@
     using SettingAxesor.AxesorRepositorie.IRepositorie;
     using System.IO;
     using AxesorCrossCutting.Utilities;
+    using System;
 
     public class ConfigurationBusiness : IConfigurationBusiness
     {
@@ -36,7 +37,7 @@
             this.LoadValoresJson();
             this.repositorie = repositorie;
         }
-        public bool VerifyConnection(ConnectionStringsServerDataBaseEntitie serverDataBaseEntitie)
+        public bool VerifyConnection(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
         {
             try
             {
@@ -46,10 +47,23 @@
             {
                 return false;
             }
-            
+
         }
 
-        public bool SaveConfigurationDataBase(ConnectionStringsServerDataBaseEntitie serverDataBaseEntitie)
+        public bool VerifyConnectionFtp(ConfiguracionFtpEntitie configuracionFtp)
+        {
+            try
+            {
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool SaveConfigurationDataBase(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
         {
             this.ValoresJson[configuracionEjecucion][keyNombreServidor] = serverDataBaseEntitie.NombreServidor;
             this.ValoresJson[configuracionEjecucion][keyBaseDato] = serverDataBaseEntitie.NombreBaseDato;
@@ -61,11 +75,17 @@
             return true;
         }
 
-        public bool SaveConfigurationFtp(ConfiguracionFtp configuracionFtp )
+        public bool SaveConfigurationFtp(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
+        {
+
+            return true;
+        }
+
+        public bool SaveConfigurationFtp(ConfiguracionFtpEntitie configuracionFtp)
         {
             this.ValoresJson[configuracionEjecucion][keyServidorFtp] = configuracionFtp.ServidorFtp;
             this.ValoresJson[configuracionEjecucion][keyUsuarioFtp] = configuracionFtp.UsuarioFtp;
-            this.ValoresJson[configuracionEjecucion][keyPasswordFtp] = configuracionFtp.PasswordFtp;           
+            this.ValoresJson[configuracionEjecucion][keyPasswordFtp] = configuracionFtp.PasswordFtp;
             string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
             File.WriteAllText(fileSetting, output);
 
@@ -82,7 +102,31 @@
             return true;
         }
 
-        
+        public Tuple<ConfiguracionStringsServerDataBaseEntitie, ConfiguracionFtpEntitie, ConfiguracionHoraEjecucionProcesoEntitie> LoadValueControl()
+        {
+            var dataBase = new ConfiguracionStringsServerDataBaseEntitie
+            {
+                NombreServidor = this.ValoresJson[configuracionDato][keyNombreServidor],
+                NombreBaseDato = this.ValoresJson[configuracionDato][keyBaseDato],
+                UsuarioBaseDato = this.ValoresJson[configuracionDato][keyUsuario],
+                PasswordUsuarioBaseDato = this.ValoresJson[configuracionDato][keyPassawordDataBase],
+                TimeOut = this.ValoresJson[configuracionDato][keyTimeOut]
+            };
+
+            var ftp = new ConfiguracionFtpEntitie
+            {
+                ServidorFtp = this.ValoresJson[configuracionFTP][keyServidorFtp],
+                UsuarioFtp = this.ValoresJson[configuracionFTP][keyUsuarioFtp],
+                PasswordFtp = this.ValoresJson[configuracionFTP][keyPasswordFtp],
+                TipoArchivoFtp = this.ValoresJson[configuracionFTP][keyTiposArchivoEnviarFtp],
+            };
+            var hours = new ConfiguracionHoraEjecucionProcesoEntitie
+            {
+                Hora24 = this.ValoresJson[configuracionEjecucion][keyHora24],
+                Minuto60 = this.ValoresJson[configuracionEjecucion][keyMinuto60]
+            };
+            return new Tuple<ConfiguracionStringsServerDataBaseEntitie, ConfiguracionFtpEntitie, ConfiguracionHoraEjecucionProcesoEntitie>(dataBase, ftp, hours);
+        }
 
 
         private void LoadValoresJson()
