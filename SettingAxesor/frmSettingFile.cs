@@ -109,6 +109,26 @@
             }
         }
 
+        private void BtnProbarConexionFtp_Click(object sender, EventArgs e)
+        {
+            string message = this.ValidateFieldFtp();
+            if (!string.IsNullOrEmpty(message))
+            {
+                MessageBox.Show(message, "Validación Conexión Ftp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            bool result = this.configurationBusiness.VerifyConnectionFtp(this.LoadDataFtp());
+            if (result)
+            {
+                // BtnProbarConexionBaseDato.ForeColor=Color
+                MessageBox.Show("La conexión se realizo con éxito", "Conexión FTP Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No se pudo conectar al servidor FTP, por favor verifique.", "Conexión FTP Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private ConfiguracionStringsServerDataBaseEntitie LoadDataDataBase()
         {
             return new ConfiguracionStringsServerDataBaseEntitie
@@ -196,5 +216,7 @@
 
             return message;
         }
+
+        
     }
 }

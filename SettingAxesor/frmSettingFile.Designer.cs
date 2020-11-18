@@ -364,6 +364,7 @@
             this.BtnProbarConexionFtp.TabIndex = 6;
             this.BtnProbarConexionFtp.Text = "Probar Conexión FTP";
             this.BtnProbarConexionFtp.UseVisualStyleBackColor = true;
+            this.BtnProbarConexionFtp.Click += new System.EventHandler(this.BtnProbarConexionFtp_Click);
             // 
             // frmSettingFile
             // 

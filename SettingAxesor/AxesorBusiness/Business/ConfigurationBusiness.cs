@@ -56,10 +56,14 @@
         {
             try
             {
-                using (FtpClient ftp = new FtpClient($"{configuracionFtp.ServidorFtp}", new NetworkCredential { UserName = configuracionFtp.UsuarioFtp, Password = configuracionFtp.PasswordFtp }))
-                {
-                    return ftp.IsConnected;
-                }
+                bool conecction = false;
+                FtpClient ftp = new FtpClient($"{configuracionFtp.ServidorFtp}", new NetworkCredential { UserName = configuracionFtp.UsuarioFtp, Password = configuracionFtp.PasswordFtp });
+                
+                conecction = ftp.IsConnected;
+                //ftp.Disconnect();
+                //ftp.Dispose();
+
+                return conecction;
             }
             catch
             {
