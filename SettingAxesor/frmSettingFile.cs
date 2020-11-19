@@ -3,6 +3,7 @@
     using SettingAxesor.AxesorBusiness.IBusiness;
     using SettingAxesor.AxesorCrossCutting.Entitie;
     using System;
+    using System.Drawing;
     using System.Windows.Forms;
 
     public partial class frmSettingFile : Form
@@ -29,6 +30,8 @@
                     MessageBox.Show(message, "Validación Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                this.configurationBusiness.SaveConfigurationDataBase(this.LoadDataDataBase());
+                this.configurationBusiness.SaveConfigurationFtp(this.LoadDataFtp());
                 this.configurationBusiness.SaveConfigurationHours(this.LoadDataHoursMinuted());
                 MessageBox.Show("Configuración guardada con éxito.", "Guardar Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -100,11 +103,12 @@
             bool result = this.configurationBusiness.VerifyConnection(this.LoadDataDataBase());
             if (result)
             {
-                // BtnProbarConexionBaseDato.ForeColor=Color
-                MessageBox.Show("La conexión se realizo con éxito", "Conexión Base de Dato Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BtnProbarConexionBaseDato.ForeColor = Color.Green;
+                MessageBox.Show("La conexión al servidor de base de datos se realizo con éxito", "Conexión Base de Dato Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
+                BtnProbarConexionBaseDato.ForeColor = Color.Red;
                 MessageBox.Show("No se pudo conectar al servidor de base de datos, por favor verifique.", "Conexión Base de Dato Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -120,11 +124,12 @@
             bool result = this.configurationBusiness.VerifyConnectionFtp(this.LoadDataFtp());
             if (result)
             {
-                // BtnProbarConexionBaseDato.ForeColor=Color
-                MessageBox.Show("La conexión se realizo con éxito", "Conexión FTP Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BtnProbarConexionFtp.ForeColor = Color.Green;
+                MessageBox.Show("La conexión al servidor FTP se realizo con éxito", "Conexión FTP Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
+                BtnProbarConexionFtp.ForeColor = Color.Red;
                 MessageBox.Show("No se pudo conectar al servidor FTP, por favor verifique.", "Conexión FTP Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -217,6 +222,6 @@
             return message;
         }
 
-        
+
     }
 }

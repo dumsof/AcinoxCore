@@ -56,14 +56,11 @@
         {
             try
             {
-                bool conecction = false;
-                FtpClient ftp = new FtpClient($"{configuracionFtp.ServidorFtp}", new NetworkCredential { UserName = configuracionFtp.UsuarioFtp, Password = configuracionFtp.PasswordFtp });
-                
-                conecction = ftp.IsConnected;
-                //ftp.Disconnect();
-                //ftp.Dispose();
-
-                return conecction;
+                using (FtpClient ftp = new FtpClient($"{configuracionFtp.ServidorFtp}", new NetworkCredential { UserName = configuracionFtp.UsuarioFtp, Password = configuracionFtp.PasswordFtp }))
+                {
+                    ftp.Connect();
+                    return ftp.IsConnected;
+                };
             }
             catch
             {
@@ -73,10 +70,10 @@
 
         public bool SaveConfigurationDataBase(ConfiguracionStringsServerDataBaseEntitie serverDataBaseEntitie)
         {
-            this.ValoresJson[configuracionEjecucion][keyNombreServidor] = serverDataBaseEntitie.NombreServidor;
-            this.ValoresJson[configuracionEjecucion][keyBaseDato] = serverDataBaseEntitie.NombreBaseDato;
-            this.ValoresJson[configuracionEjecucion][keyUsuario] = serverDataBaseEntitie.UsuarioBaseDato;
-            this.ValoresJson[configuracionEjecucion][keyPassawordDataBase] = serverDataBaseEntitie.PasswordUsuarioBaseDato;
+            this.ValoresJson[configuracionDato][keyNombreServidor] = serverDataBaseEntitie.NombreServidor;
+            this.ValoresJson[configuracionDato][keyBaseDato] = serverDataBaseEntitie.NombreBaseDato;
+            this.ValoresJson[configuracionDato][keyUsuario] = serverDataBaseEntitie.UsuarioBaseDato;
+            this.ValoresJson[configuracionDato][keyPassawordDataBase] = serverDataBaseEntitie.PasswordUsuarioBaseDato;
             string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
             File.WriteAllText(fileSetting, output);
 
@@ -85,10 +82,10 @@
 
         public bool SaveConfigurationFtp(ConfiguracionFtpEntitie configuracionFtp)
         {
-            this.ValoresJson[configuracionEjecucion][keyServidorFtp] = configuracionFtp.ServidorFtp;
-            this.ValoresJson[configuracionEjecucion][keyUsuarioFtp] = configuracionFtp.UsuarioFtp;
-            this.ValoresJson[configuracionEjecucion][keyPasswordFtp] = configuracionFtp.PasswordFtp;
-            this.ValoresJson[configuracionEjecucion][keyPasswordFtp] = configuracionFtp.TipoArchivoFtp;
+            this.ValoresJson[configuracionFTP][keyServidorFtp] = configuracionFtp.ServidorFtp;
+            this.ValoresJson[configuracionFTP][keyUsuarioFtp] = configuracionFtp.UsuarioFtp;
+            this.ValoresJson[configuracionFTP][keyPasswordFtp] = configuracionFtp.PasswordFtp;
+            this.ValoresJson[configuracionFTP][keyPasswordFtp] = configuracionFtp.TipoArchivoFtp;
             string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
             File.WriteAllText(fileSetting, output);
 
