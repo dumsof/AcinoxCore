@@ -24,8 +24,8 @@ namespace SettingAxesor
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Utility.CofigurationJson();
-            Utility.CofigurationSQL();
+
+            Utility.CofigurationJson();          
             ConfiguracionSeriLog();
 
             var builder = new HostBuilder()
