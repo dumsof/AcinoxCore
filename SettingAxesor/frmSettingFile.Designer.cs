@@ -167,6 +167,7 @@
             // txtBaseDato
             // 
             this.txtBaseDato.Location = new System.Drawing.Point(172, 65);
+            this.txtBaseDato.MaxLength = 50;
             this.txtBaseDato.Name = "txtBaseDato";
             this.txtBaseDato.Size = new System.Drawing.Size(171, 25);
             this.txtBaseDato.TabIndex = 2;
@@ -184,6 +185,7 @@
             // 
             this.txtTimeOut.Enabled = false;
             this.txtTimeOut.Location = new System.Drawing.Point(172, 156);
+            this.txtTimeOut.MaxLength = 5;
             this.txtTimeOut.Name = "txtTimeOut";
             this.txtTimeOut.Size = new System.Drawing.Size(88, 25);
             this.txtTimeOut.TabIndex = 5;
@@ -191,6 +193,7 @@
             // txtContrasenia
             // 
             this.txtContrasenia.Location = new System.Drawing.Point(172, 125);
+            this.txtContrasenia.MaxLength = 25;
             this.txtContrasenia.Name = "txtContrasenia";
             this.txtContrasenia.PasswordChar = '*';
             this.txtContrasenia.Size = new System.Drawing.Size(152, 25);
@@ -199,6 +202,7 @@
             // txtUsuario
             // 
             this.txtUsuario.Location = new System.Drawing.Point(172, 94);
+            this.txtUsuario.MaxLength = 50;
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(171, 25);
             this.txtUsuario.TabIndex = 3;
@@ -233,6 +237,7 @@
             // txtNombreServidor
             // 
             this.txtNombreServidor.Location = new System.Drawing.Point(172, 34);
+            this.txtNombreServidor.MaxLength = 50;
             this.txtNombreServidor.Name = "txtNombreServidor";
             this.txtNombreServidor.Size = new System.Drawing.Size(214, 25);
             this.txtNombreServidor.TabIndex = 1;
@@ -268,6 +273,7 @@
             // 
             this.txtTipoArchivoFtp.Enabled = false;
             this.txtTipoArchivoFtp.Location = new System.Drawing.Point(162, 125);
+            this.txtTipoArchivoFtp.MaxLength = 50;
             this.txtTipoArchivoFtp.Name = "txtTipoArchivoFtp";
             this.txtTipoArchivoFtp.Size = new System.Drawing.Size(155, 25);
             this.txtTipoArchivoFtp.TabIndex = 1;
@@ -275,6 +281,7 @@
             // txtPassawordFtp
             // 
             this.txtPassawordFtp.Location = new System.Drawing.Point(162, 94);
+            this.txtPassawordFtp.MaxLength = 25;
             this.txtPassawordFtp.Name = "txtPassawordFtp";
             this.txtPassawordFtp.PasswordChar = '*';
             this.txtPassawordFtp.Size = new System.Drawing.Size(165, 25);
@@ -283,6 +290,7 @@
             // txtUsuarioFtp
             // 
             this.txtUsuarioFtp.Location = new System.Drawing.Point(162, 63);
+            this.txtUsuarioFtp.MaxLength = 50;
             this.txtUsuarioFtp.Name = "txtUsuarioFtp";
             this.txtUsuarioFtp.Size = new System.Drawing.Size(189, 25);
             this.txtUsuarioFtp.TabIndex = 1;
@@ -290,6 +298,7 @@
             // txtNombreServidorFtp
             // 
             this.txtNombreServidorFtp.Location = new System.Drawing.Point(162, 31);
+            this.txtNombreServidorFtp.MaxLength = 50;
             this.txtNombreServidorFtp.Name = "txtNombreServidorFtp";
             this.txtNombreServidorFtp.Size = new System.Drawing.Size(254, 25);
             this.txtNombreServidorFtp.TabIndex = 1;
