@@ -24,8 +24,8 @@
         public static string PathAppSetting
         {
             get
-            {               
-                string pathFile = PathAplication.Replace(nameFolderReplace,nameFolderAppSetting);
+            {
+                string pathFile = PathAplication.Replace(nameFolderReplace, nameFolderAppSetting);
                 return pathFile;
             }
         }
@@ -34,16 +34,9 @@
         {
             get
             {
-                //string connectionStringsSQLServer = ;
-                //string nameServer = Configuration.GetSection("ConnectionStringsSQlServer:NombreServidor").Value;
-                //string userDataBase = Configuration.GetSection("ConnectionStringsSQlServer:UsuarioBaseDato").Value;
-                //string password = Configuration.GetSection("ConnectionStringsSQlServer:PasswordUsuarioBaseDato").Value;
-                //string nameDataBase = Configuration.GetSection("ConnectionStringsSQlServer:NombreBaseDato").Value;
-                //string timeOut = Configuration.GetSection("ConnectionStringsSQlServer:Timeout").Value;
-
-                return Configuration.GetSection("ConnectionStringsSQlServer:ConexionBaseDato").Value; //string.Format(connectionStringsSQLServer, nameServer, userDataBase, password, nameDataBase, timeOut);
+                return Configuration.GetSection("ConnectionStringsSQlServer:ConexionBaseDato").Value;
             }
-        }       
+        }
 
         public static void CofigurationJson()
         {
@@ -74,7 +67,6 @@
             var builder = new ConfigurationBuilder()
            .SetBasePath(PathAppSetting)
            .AddJsonFile($"{nameFileConfigJson}.json", optional: true, reloadOnChange: true);
-
             return builder.Build();
         }
     }
