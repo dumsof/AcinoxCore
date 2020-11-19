@@ -74,8 +74,7 @@
             this.ValoresJson[configuracionDato][keyBaseDato] = serverDataBaseEntitie.NombreBaseDato;
             this.ValoresJson[configuracionDato][keyUsuario] = serverDataBaseEntitie.UsuarioBaseDato;
             this.ValoresJson[configuracionDato][keyPassawordDataBase] = serverDataBaseEntitie.PasswordUsuarioBaseDato;
-            string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
-            File.WriteAllText(fileSetting, output);
+            this.SaveAppSetting();
 
             return true;
         }
@@ -86,8 +85,7 @@
             this.ValoresJson[configuracionFTP][keyUsuarioFtp] = configuracionFtp.UsuarioFtp;
             this.ValoresJson[configuracionFTP][keyPasswordFtp] = configuracionFtp.PasswordFtp;
             this.ValoresJson[configuracionFTP][keyPasswordFtp] = configuracionFtp.TipoArchivoFtp;
-            string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
-            File.WriteAllText(fileSetting, output);
+            this.SaveAppSetting();
 
             return true;
         }
@@ -96,8 +94,7 @@
         {
             this.ValoresJson[configuracionEjecucion][keyHora24] = configuracionHoraEjecucion.Hora24;
             this.ValoresJson[configuracionEjecucion][keyMinuto60] = configuracionHoraEjecucion.Minuto60;
-            string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
-            File.WriteAllText(fileSetting, output);
+            this.SaveAppSetting();
 
             return true;
         }
@@ -132,6 +129,12 @@
         {
             string json = File.ReadAllText($"{Utility.PathAppSetting}//{fileSetting}");
             this.ValoresJson = JsonConvert.DeserializeObject(json);
+        }
+
+        private void SaveAppSetting()
+        {
+            string output = JsonConvert.SerializeObject(this.ValoresJson, Formatting.Indented);
+            File.WriteAllText($"{Utility.PathAppSetting}//{fileSetting}", output);
         }
     }
 }

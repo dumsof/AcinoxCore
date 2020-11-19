@@ -9,7 +9,7 @@
 
         public static IConfigurationRoot ConfigurationMessage { get; set; }
 
-        private static string nameFolderReplace = "ServicioAxesorInstall";
+        private static string nameFolderReplace = "AxesorSetting";
 
         private static string nameFolderAppSetting = "AxesorArchivoFtp";
 
