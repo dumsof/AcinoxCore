@@ -6,10 +6,11 @@
     public static class Utility
     {
         public static IConfigurationRoot Configuration { get; set; }
-        public static IConfigurationRoot ConfigurationSql { get; set; }
 
         public static IConfigurationRoot ConfigurationMessage { get; set; }
+
         private static string nameFolderReplace = "ServicioAxesorInstall";
+
         private static string nameFolderAppSetting = "AxesorArchivoFtp";
 
         public static string PathAplication
@@ -43,14 +44,6 @@
             if (Configuration == null)
             {
                 Configuration = GetBuilder("appsettings");
-            }
-        }
-
-        public static void CofigurationSQL()
-        {
-            if (ConfigurationSql == null)
-            {
-                ConfigurationSql = GetBuilder("consultasSQLPqa");
             }
         }
 
