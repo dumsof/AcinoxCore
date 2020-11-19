@@ -21,40 +21,40 @@
             List<PartidasOpenRepoEntitie> partidasOpen;
             //string consultaTemp = this.configurationQuerySql.Value.ConsultaSQLPartidasAbiertas;
             string querySQL = @$"SELECT DISTINCT
-		                                 codcli=CLI.RFC
-		                                ,ndoc=SerieDocumento+'-'+LTRIM(STR( NumeroDocumento)) 
-		                                ,nvcto=''
-		                                ,fchemi=(SELECT FORMAT (CA.FechaDocumento, 'yyyy-MM-dd'))
-		                                ,fchvcto=(SELECT FORMAT (CA.FechaVencimiento, 'yyyy-MM-dd'))
-		                                ,importe=CASE MO.CodigoMoneda 
-				                                    WHEN  'USD' THEN  CF.TTotal - CF.ImportePagado
-				                                    ELSE  CAST((CF.TTotal - CF.ImportePagado/C.ValorCambio) AS DECIMAL (12,2))
-				                                    END
-		                                ,estado=CASE WHEN CA.FechaVencimiento>GETDATE() THEN 
-							                                '0' 
-					                                    WHEN CA.FechaVencimiento<GETDATE() AND DATEADD(day,CA.DiasCredito,CA.FechaDocumento)<=GETDATE() THEN
-							                                '1'
-					                                    ELSE
-							                                '2'
-					                                    END
-		                                ,dotada=0
-		                                ,codvp=''
-		                                ,codcondp=LTRIM(STR(ISNULL(CP.ID_CondicionPago,0)))
-		                                ,codmondoc=MO.CodigoMoneda
-		                                ,impmondoc=CF.TTotal
-		                                ,ind1=''
-		                                ,ind2=''
-		                                ,ind3=''
-		                                ,ind4=''
-		                                ,ind5=''
-		                                ,ind6=''
-		                                ,ind7=''
-		                                ,ind8=''
-		                                ,ind9=''
-		                                ,tdoc=''
-		                                ,campoid=ISNULL(CLI.RFC,'')+'@#'+(SELECT FORMAT (CA.FechaDocumento, 'yyyy-MM-dd HH:MM:ss'))+'@#'+SerieDocumento+'-'+LTRIM(STR( NumeroDocumento)) 
-		                                ,codejercicio=''
-		                                ,numdocorigen=''	
+                                         codcli=CLI.RFC
+                                        ,ndoc=SerieDocumento+'-'+LTRIM(STR( NumeroDocumento)) 
+                                        ,nvcto=''
+                                        ,fchemi=(SELECT FORMAT (CA.FechaDocumento, 'yyyy-MM-dd'))
+                                        ,fchvcto=(SELECT FORMAT (CA.FechaVencimiento, 'yyyy-MM-dd'))
+                                        ,importe=CASE MO.CodigoMoneda 
+                                                    WHEN  'USD' THEN  CF.TTotal - CF.ImportePagado
+                                                    ELSE  CAST((CF.TTotal - CF.ImportePagado/C.ValorCambio) AS DECIMAL (12,2))
+                                                    END
+                                        ,estado=CASE WHEN CA.FechaVencimiento>GETDATE() THEN 
+                                                            0 
+                                                        WHEN CA.FechaVencimiento<GETDATE() AND DATEADD(day,CA.DiasCredito,CA.FechaDocumento)<=GETDATE() THEN
+                                                            1
+                                                        ELSE
+                                                            2
+                                                        END
+                                        ,dotada=0
+                                        ,codvp=''
+                                        ,codcondp=LTRIM(STR(ISNULL(CP.ID_CondicionPago,0)))
+                                        ,codmondoc=MO.CodigoMoneda
+                                        ,impmondoc=CF.TTotal
+                                        ,ind1=''
+                                        ,ind2=''
+                                        ,ind3=''
+                                        ,ind4=''
+                                        ,ind5=''
+                                        ,ind6=''
+                                        ,ind7=''
+                                        ,ind8=''
+                                        ,ind9=''
+                                        ,tdoc=''
+                                        ,campoid=ISNULL(CLI.RFC,'')+'@#'+(SELECT FORMAT (CA.FechaDocumento, 'yyyy-MM-dd HH:MM:ss'))+'@#'+SerieDocumento+'-'+LTRIM(STR( NumeroDocumento)) 
+                                        ,codejercicio=''
+                                        ,numdocorigen=''	
                                     FROM [Facturacion].[CXCCargos] CA
                                     JOIN [Facturacion].[CFD] CF ON CF.ID_CFD=CA.ID_CFD
                                     JOIN Corporativo.ClientesSucursales SU ON SU.ID_ClienteSucursal=CA.ID_ClienteSucursal

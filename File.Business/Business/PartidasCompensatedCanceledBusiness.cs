@@ -62,9 +62,10 @@
 
         private IEnumerable<PartidasCompensatedCanceledEntitie> GetPartidasOpen(string idEmpresa)
         {
-            var partidaOpen = this.partidaCompensatedCanceledPqaRepositorie.GetPartidasCompensatedCanceled(idEmpresa);
+            var partidaOpen = this.partidaCompensatedCanceledPqaRepositorie.GetPartidasCompensatedCanceled(idEmpresa);           
 
             return partidaOpen
+                .Where(c => c.FchCreacion != string.Empty)
                 .Select(c => new PartidasCompensatedCanceledEntitie
                 {
                     NumCobro = c.NumCobro,

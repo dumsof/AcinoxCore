@@ -24,7 +24,20 @@
             List<PartidasCompensatedCanceledRepoEntitie> partidasCompensatedCanceled;
 
             //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasCompensadas;
-            var querySql = @"SELECT	'1111','2020-11-13','2020-11-13'";
+            var querySql = @$" SELECT DISTINCT
+		                        numcobro=CA.SerieDocumento+'-'+LTRIM(STR( CA.NumeroDocumento)) 
+		                        ,fchinv=(SELECT FORMAT (CA.FechaDocumento, 'yyyy-MM-dd'))
+		                        ,fchcreacion=ISNULL((SELECT TOP 1 FORMAT (CX.FechaDocumento, 'yyyy-MM-dd') 
+						                        FROM Facturacion.CXCCargos CX 
+						                        WHERE CX.TTotal<0 AND CX.ID_CXCCargoCancelo IS NOT NULL AND CX.ID_ClienteSucursal=CA.ID_ClienteSucursal AND CX.SerieDocumento=CA.SerieDocumento AND CX.NumeroDocumento=CA.NumeroDocumento
+						                        ORDER BY CX.FechaDocumento DESC),'')   
+                         FROM Facturacion.CXCCargos CA
+                         JOIN Corporativo.ClientesSucursales SU ON SU.ID_ClienteSucursal=CA.ID_ClienteSucursal
+                         JOIN Corporativo.Clientes CLI ON CLI.ID_Cliente=SU.ID_Cliente
+                         WHERE ID_CXCCargoCancelo IS NOT NULL 
+                         AND (CA.FechaDocumento BETWEEN DATEADD(MONTH,-36,GETDATE()) AND GETDATE())
+                         AND CA.TTotal>0 AND CLI.ID_Empresa={idEmpresa.Trim()}
+                         ORDER BY fchinv DESC";
 
             using (var resultPartidasCompensated = this.GetAllExecuteReader(string.Format(querySql, idEmpresa)))
             {
