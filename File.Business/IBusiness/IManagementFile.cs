@@ -13,5 +13,7 @@
         public void MoveFileUpLoadFtp(string nameFileWithExtension);
 
         public bool MoveAllFileFolder(string nameFolderSocietie);
+
+        bool DeleteFolderGenerated(string nameFolderSocietie);
     }
 }

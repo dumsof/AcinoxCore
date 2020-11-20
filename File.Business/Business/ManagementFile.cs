@@ -115,16 +115,29 @@
         public bool MoveAllFileFolder(string nameFolderSocietie)
         {
             this.CreateFolderSocietieProcessed(nameFolderSocietie);
-            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\");
+            string pathFullLoadColaGenerated = $"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{Utility.DateTimeProces}";
+            string pathFullLoadColaProcessed = $"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{Utility.DateTimeProces}";
+            DirectoryInfo directorio = new DirectoryInfo($"{pathFullLoadColaGenerated}");
             string[] extensioFile = Utility.ExtesionFiles?.Split(";");
             FileInfo[] files = directorio.EnumerateFiles().Where(c => extensioFile.Contains(c.Extension.ToLower())).ToArray();
             foreach (var file in files)
             {
-                this.DeleteFile($"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{Utility.DateTimeProces}\\{file.Name}");
-                Directory.Move($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{Utility.DateTimeProces}\\{file.Name}", $"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{Utility.DateTimeProces}\\{file.Name}");
+                this.DeleteFile($"{pathFullLoadColaProcessed}\\{file.Name}");
+                Directory.Move($"{pathFullLoadColaGenerated}\\{file.Name}", $"{pathFullLoadColaProcessed}\\{file.Name}");
             }
 
             this.logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.\n");
+
+            return true;
+        }
+
+        public bool DeleteFolderGenerated(string nameFolderSocietie)
+        {
+            string pathFullLoadColaGenerated = $"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{Utility.DateTimeProces}";
+            if (Directory.Exists(pathFullLoadColaGenerated))
+            {
+                Directory.Delete(pathFullLoadColaGenerated);
+            }
 
             return true;
         }

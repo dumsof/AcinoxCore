@@ -85,6 +85,7 @@
                         this.saleSummaryBusiness.ProcessSaleSummary(societie, nameFolderSocietie);
                         //this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
                         //this.managementFile.MoveAllFileFolder(nameFolderSocietie);
+                        //this.managementFile.DeleteFolderGenerated(nameFolderSocietie);
                     }
                     this.logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");
                     Log.CloseAndFlush();
