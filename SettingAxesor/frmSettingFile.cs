@@ -4,6 +4,7 @@
     using SettingAxesor.AxesorCrossCutting.Entitie;
     using System;
     using System.Drawing;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     public partial class frmSettingFile : Form
@@ -92,7 +93,7 @@
             }
         }
 
-        private void BtnProbarConexionBaseDato_Click(object sender, EventArgs e)
+        private async void BtnProbarConexionBaseDato_Click(object sender, EventArgs e)
         {
             string message = this.ValidateFieldDataBase();
             if (!string.IsNullOrEmpty(message))
@@ -100,20 +101,18 @@
                 MessageBox.Show(message, "Validación Conexión Base de Dato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            bool result = this.configurationBusiness.VerifyConnection(this.LoadDataDataBase());
-            if (result)
-            {
-                BtnProbarConexionBaseDato.ForeColor = Color.Green;
-                MessageBox.Show("La conexión al servidor de base de datos se realizo con éxito", "Conexión Base de Dato Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                BtnProbarConexionBaseDato.ForeColor = Color.Red;
-                MessageBox.Show("No se pudo conectar al servidor de base de datos, por favor verifique.", "Conexión Base de Dato Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            this.DisabledButton(false);
+            BtnProbarConexionBaseDato.Text = "Espere...";
+            Task<bool> oTask = new Task<bool>(() => this.configurationBusiness.VerifyConnection(this.LoadDataDataBase()));
+            oTask.Start();
+            await oTask;
+            bool result = Convert.ToBoolean(oTask.Result);
+            this.DisabledButton(true);
+            BtnProbarConexionBaseDato.Text = "Probar Conexión Base de Datos";
+            this.MessageTestConecction(result, "base de datos", "Base de Datos", BtnProbarConexionBaseDato);
         }
 
-        private void BtnProbarConexionFtp_Click(object sender, EventArgs e)
+        private async void BtnProbarConexionFtp_Click(object sender, EventArgs e)
         {
             string message = this.ValidateFieldFtp();
             if (!string.IsNullOrEmpty(message))
@@ -121,17 +120,15 @@
                 MessageBox.Show(message, "Validación Conexión Ftp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            bool result = this.configurationBusiness.VerifyConnectionFtp(this.LoadDataFtp());
-            if (result)
-            {
-                BtnProbarConexionFtp.ForeColor = Color.Green;
-                MessageBox.Show("La conexión al servidor FTP se realizo con éxito", "Conexión FTP Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                BtnProbarConexionFtp.ForeColor = Color.Red;
-                MessageBox.Show("No se pudo conectar al servidor FTP, por favor verifique.", "Conexión FTP Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            this.DisabledButton(false);
+            BtnProbarConexionFtp.Text = "Espere...";
+            Task<bool> oTask = new Task<bool>(() => this.configurationBusiness.VerifyConnectionFtp(this.LoadDataFtp()));
+            oTask.Start();
+            await oTask;
+            bool result = Convert.ToBoolean(oTask.Result);
+            this.DisabledButton(true);
+            BtnProbarConexionFtp.Text = "Probar Conexión FTP";
+            this.MessageTestConecction(result, "FTP", "FTP", BtnProbarConexionFtp);
         }
 
         private ConfiguracionStringsServerDataBaseEntitie LoadDataDataBase()
@@ -164,6 +161,14 @@
                 Hora24 = this.nudHoraEjecucion.Text.Trim(),
                 Minuto60 = this.nupMinutos.Text.Trim()
             };
+        }
+
+        private void DisabledButton(bool estado)
+        {
+            this.BtnCerrarFormulario.Enabled = estado;
+            this.BtnProbarConexionBaseDato.Enabled = estado;
+            this.BtnProbarConexionFtp.Enabled = estado;
+            this.BtnSaveSetting.Enabled = estado;
         }
 
         private string ValidateFieldDataBase()
@@ -220,6 +225,20 @@
             }
 
             return message;
+        }
+
+        private void MessageTestConecction(bool result, string message, string caption, Button btn)
+        {
+            if (result)
+            {
+                btn.ForeColor = Color.Green;
+                MessageBox.Show($"La conexión al servidor de {message} se realizo con éxito", $"Conexión {caption} Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                btn.ForeColor = Color.Red;
+                MessageBox.Show($"No se ha podido conectar al servidor de {message}, por favor verifique.", $"Conexión {caption} Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
