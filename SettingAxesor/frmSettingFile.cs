@@ -109,7 +109,7 @@
             bool result = Convert.ToBoolean(oTask.Result);
             this.DisabledButton(true);
             BtnProbarConexionBaseDato.Text = "Probar Conexión Base de Datos";
-            this.MessageTestConecction(result, "base de datos", "Base de Datos", BtnProbarConexionBaseDato);
+            this.MessageTestConecction(result, "de base de datos", "Base de Datos", BtnProbarConexionBaseDato);
         }
 
         private async void BtnProbarConexionFtp_Click(object sender, EventArgs e)
@@ -232,12 +232,12 @@
             if (result)
             {
                 btn.ForeColor = Color.Green;
-                MessageBox.Show($"La conexión al servidor de {message} se realizo con éxito", $"Conexión {caption} Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"La conexión al servidor {message} se realizo con éxito", $"Conexión {caption} Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 btn.ForeColor = Color.Red;
-                MessageBox.Show($"No se ha podido conectar al servidor de {message}, por favor verifique.", $"Conexión {caption} Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"No se ha podido conectar al servidor {message}, por favor verifique.", $"Conexión {caption} Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
