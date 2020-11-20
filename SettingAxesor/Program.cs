@@ -33,13 +33,8 @@ namespace SettingAxesor
                 {
                     services.AddSingleton<frmSettingFile>();
                     services.AddScoped<IConfigurationBusiness, ConfigurationBusiness>();
-                    services.AddSingleton<IConfigurationRepositorie, ConfigurationRepositorie>();
-                    services.AddLogging(x =>
-                    {
-                        
-                        //To Do: sirilog
-                    });
-                });
+                    services.AddSingleton<IConfigurationRepositorie, ConfigurationRepositorie>();                  
+                }).UseSerilog();
             var host = builder.Build();
             using (var serviceScope = host.Services.CreateScope())
             {
@@ -48,11 +43,16 @@ namespace SettingAxesor
                 {
                     var form = serv.GetRequiredService<frmSettingFile>();
                     Application.Run(form);
+                    Log.Information("Inicio Aplicación Setting");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
-                    MessageBox.Show(ex.Message, "Error Aplication");
+                    Log.Fatal(ex, "Hay un problema al iniciar la aplicación setting axesor, por favor verifique.");
+                    MessageBox.Show("Error Aplication");
+                }
+                finally
+                {
+                    Log.CloseAndFlush();
                 }
             }
         }

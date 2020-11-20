@@ -2,6 +2,7 @@
 {
     using AxesorCrossCutting.Utilities;
     using FluentFTP;
+    using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using SettingAxesor.AxesorBusiness.IBusiness;
     using SettingAxesor.AxesorCrossCutting.Entitie;
@@ -29,14 +30,15 @@
         private string configuracionEjecucion = "ConfiguracionHoraEjecucionProceso";
         private string keyHora24 = "Hora24";
         private string keyMinuto60 = "Minuto60";
-
+        private readonly ILogger<ConfigurationBusiness> logger;
         private readonly IConfigurationRepositorie repositorie;
 
         private dynamic ValoresJson { get; set; }
 
-        public ConfigurationBusiness(IConfigurationRepositorie repositorie)
+        public ConfigurationBusiness(ILogger<ConfigurationBusiness> logger, IConfigurationRepositorie repositorie)
         {
             this.LoadValoresJson();
+            this.logger = logger;
             this.repositorie = repositorie;
         }
 
@@ -46,8 +48,9 @@
             {
                 return this.repositorie.VerifyConnection(serverDataBaseEntitie);
             }
-            catch
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Error conexión servidor Base de Datos");
                 return false;
             }
         }
@@ -62,8 +65,9 @@
                     return ftp.IsConnected;
                 };
             }
-            catch
+            catch (Exception ex)
             {
+                logger.LogError(ex, "Error conexión servidor FTP");
                 return false;
             }
         }
