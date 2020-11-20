@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Serilog;
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -57,6 +58,7 @@
             //DUM: se inicia las variables
             this.logger.LogInformation("Servicio Iniciado..\n");
             this.managementFile.CreatedPathFile();
+            Utility.DateTimeProces = string.Format("{0:yyyyMMdd.HHmm}", DateTime.Now);
             await base.StartAsync(cancellationToken);
         }
 

@@ -36,14 +36,14 @@
 
         public bool UnloadAllFileFolderFtp(string nameFolderSocietie)
         {
-            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\");
+            DirectoryInfo directorio = new DirectoryInfo($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{Utility.DateTimeProces}\\");
             string[] extensioFile = configFtp.Value.TiposArchivoEnviarFtp?.Split(";");
 
             FileInfo[] files = directorio.EnumerateFiles().Where(c => extensioFile.Contains(c.Extension.ToLower())).ToArray();
 
             using (FtpClient ftp = new FtpClient($"{configFtp.Value.ServidorFtp}", new NetworkCredential { UserName = configFtp.Value.UsuarioFtp, Password = configFtp.Value.PasswordFtp }))
             {
-                ftp.UploadFiles(files, $"{nameFolderSocietie}", FtpRemoteExists.Overwrite);
+                ftp.UploadFiles(files, $"{nameFolderSocietie}\\{Utility.DateTimeProces}", FtpRemoteExists.Overwrite);
             }
             this.logger.LogInformation($"Los archivos generados fueron enviados por [FTP] con éxito.\n");
             return true;

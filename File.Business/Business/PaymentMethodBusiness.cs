@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Linq;
+    using File.Utility;
 
     public class PaymentMethodBusiness : IPaymentMethodBusiness
     {
@@ -48,7 +49,7 @@
             this.managementFile.CreateFileXml<PaymentMethod>(nameFileXml, paymentMethodXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, paymentMethod?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{Utility.DateTimeProces}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {

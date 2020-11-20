@@ -4,6 +4,7 @@
     using File.Business.IBusiness;
     using File.Utility;
     using Microsoft.Extensions.Logging;
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
@@ -52,7 +53,7 @@
             else
             {
                 this.CreateFolderSocietie(nameFolderNitSocietie);
-                path = $"{Utility.PathFolderGenerated}\\{nameFolderNitSocietie}\\{nameFile}.xml";
+                path = $"{Utility.PathFolderGenerated}\\{nameFolderNitSocietie}\\{Utility.DateTimeProces}\\{nameFile}.xml";
             }
 
             this.DeleteFile(path);
@@ -68,7 +69,7 @@
 
         private void CreateFolderSocietie(string nameFolderSocietie)
         {
-            string pathFolderSocietie = $"{Utility.PathFolderGenerated}//{nameFolderSocietie}";
+            string pathFolderSocietie = $"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{Utility.DateTimeProces}";
             if (!Directory.Exists(pathFolderSocietie))
             {
                 Directory.CreateDirectory(pathFolderSocietie);
@@ -77,7 +78,7 @@
 
         private void CreateFolderSocietieProcessed(string nameFolderSocietie)
         {
-            string pathFolderSocietie = $"{Utility.PathFolderProcessed}//{nameFolderSocietie}";
+            string pathFolderSocietie = $"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{Utility.DateTimeProces}";
             if (!Directory.Exists(pathFolderSocietie))
             {
                 Directory.CreateDirectory(pathFolderSocietie);
@@ -119,8 +120,8 @@
             FileInfo[] files = directorio.EnumerateFiles().Where(c => extensioFile.Contains(c.Extension.ToLower())).ToArray();
             foreach (var file in files)
             {
-                this.DeleteFile($"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{file.Name}");
-                Directory.Move($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{file.Name}", $"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{file.Name}");
+                this.DeleteFile($"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{Utility.DateTimeProces}\\{file.Name}");
+                Directory.Move($"{Utility.PathFolderGenerated}\\{nameFolderSocietie}\\{Utility.DateTimeProces}\\{file.Name}", $"{Utility.PathFolderProcessed}\\{nameFolderSocietie}\\{Utility.DateTimeProces}\\{file.Name}");
             }
 
             this.logger.LogInformation($"Los archivos se movieron a la carpeta de [ArchivosProcesado] con éxito.\n");

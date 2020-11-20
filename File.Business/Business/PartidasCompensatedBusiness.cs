@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Linq;
+    using File.Utility;
 
     public class PartidasCompensatedBusiness : IPartidasCompensatedBusiness
     {
@@ -48,7 +49,7 @@
             this.managementFile.CreateFileXml<PartidasCompensated>(nameFileXml, partidasCompensatedXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, partidasCompensated?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{Utility.DateTimeProces}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {

@@ -6,6 +6,7 @@
     using File.Repositorie.IRepositorie;
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
+    using File.Utility;
     using System.Linq;
 
     public class SocietieBusiness : ISocietieBusiness
@@ -47,7 +48,7 @@
             this.managementFile.CreateFileXml<Societie>(nameFileXml, societiesXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, societies?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{Utility.DateTimeProces}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {

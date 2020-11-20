@@ -68,6 +68,12 @@
             }
         }
 
+        public static string DateTimeProces
+        {
+            set;
+            get;
+        }
+
         public static bool IsHourProced
         {
             get

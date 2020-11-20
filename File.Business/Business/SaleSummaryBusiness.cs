@@ -5,6 +5,7 @@
     using File.Entities.sociedad;
     using File.Message;
     using File.Repositorie.IRepositorie;
+    using File.Utility;
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Linq;
@@ -49,7 +50,7 @@
             this.managementFile.CreateFileXml<SaleSummary>(nameFileXml, saleSummaryXml, nameFolderSocietie);
             logger.LogInformation(this.messageManagement.GetMessage(MessageType.CountFileGenerad, new object[] { nameFileXml, saleSumary?.Count() }));
 
-            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{nameFileXml}.xml");
+            var resultValidatioWithXsd = this.validationXsd.ValidationShemaXml($"{nameFileXml}.xsd", $"{nameFolderSocietie}\\{Utility.DateTimeProces}\\{nameFileXml}.xml");
 
             if (resultValidatioWithXsd.Length > 0)
             {
@@ -70,7 +71,6 @@
                 Anio = c.Anio,
                 Mes = c.Mes,
                 Importe = c.Importe
-
             }).ToList();
 
             return dato;
