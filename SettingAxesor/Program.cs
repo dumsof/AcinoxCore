@@ -40,13 +40,14 @@ namespace SettingAxesor
                 var serv = serviceScope.ServiceProvider;
                 try
                 {
+                    Log.Information("Inicio correctamente la Aplicación Setting\n");
                     var form = serv.GetRequiredService<frmSettingFile>();
                     Application.Run(form);
-                    Log.Information("Inicio Aplicación Setting");
+                    Log.Information("Finalizo correctamente la Aplicación Setting\n");
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal(ex, "Hay un problema al iniciar la aplicación setting axesor, por favor verifique.");
+                    Log.Fatal(ex, "Hay un problema al iniciar la aplicación setting axesor, por favor verifique.\n");
                     MessageBox.Show("Error Aplication");
                 }
                 finally
@@ -62,14 +63,8 @@ namespace SettingAxesor
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-                 .WriteTo.File($"{Utility.PathAplication}\\LogSettingFilesAxesor.txt", rollingInterval: RollingInterval.Day)
+                 .WriteTo.File($"{Utility.PathAplication}\\Logs\\LogSettingFilesAxesor.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
-        }
-
-        private static void ConfigureServices(ServiceCollection services)
-        {
-            //services.AddLogging(c)
-            //services.a
         }
     }
 }
