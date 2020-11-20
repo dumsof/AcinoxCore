@@ -68,12 +68,12 @@
             // BtnSaveSetting
             // 
             this.BtnSaveSetting.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnSaveSetting.ForeColor = System.Drawing.Color.Green;
+            this.BtnSaveSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BtnSaveSetting.Location = new System.Drawing.Point(32, 483);
             this.BtnSaveSetting.Name = "BtnSaveSetting";
             this.BtnSaveSetting.Size = new System.Drawing.Size(169, 29);
             this.BtnSaveSetting.TabIndex = 2;
-            this.BtnSaveSetting.Text = "Guardar Setting";
+            this.BtnSaveSetting.Text = "Guardar";
             this.BtnSaveSetting.UseVisualStyleBackColor = true;
             this.BtnSaveSetting.Click += new System.EventHandler(this.BtnSaveSetting_Click);
             // 
@@ -342,12 +342,12 @@
             // BtnCerrarFormulario
             // 
             this.BtnCerrarFormulario.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.BtnCerrarFormulario.ForeColor = System.Drawing.Color.Red;
+            this.BtnCerrarFormulario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BtnCerrarFormulario.Location = new System.Drawing.Point(750, 483);
             this.BtnCerrarFormulario.Name = "BtnCerrarFormulario";
             this.BtnCerrarFormulario.Size = new System.Drawing.Size(146, 29);
             this.BtnCerrarFormulario.TabIndex = 5;
-            this.BtnCerrarFormulario.Text = "Cerrar Setting";
+            this.BtnCerrarFormulario.Text = "Cerrar";
             this.BtnCerrarFormulario.UseVisualStyleBackColor = true;
             this.BtnCerrarFormulario.Click += new System.EventHandler(this.BtnCerrarFormulario_Click);
             // 

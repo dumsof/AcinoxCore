@@ -90,7 +90,7 @@
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .Enrich.FromLogContext()                
+                .Enrich.FromLogContext()
                 .WriteTo.File($"{Utility.PathFolderLogs}\\LogCreateFilesAxesor.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
         }

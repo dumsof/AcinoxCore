@@ -1,5 +1,6 @@
 ﻿namespace SettingAxesor
 {
+    using Microsoft.Extensions.Logging;
     using SettingAxesor.AxesorBusiness.IBusiness;
     using SettingAxesor.AxesorCrossCutting.Entitie;
     using System;
@@ -9,13 +10,15 @@
 
     public partial class frmSettingFile : Form
     {
+        private readonly ILogger<frmSettingFile> logger;
         private readonly IConfigurationBusiness configurationBusiness;
 
         public dynamic ValoresJson { get; set; }
 
-        public frmSettingFile(IConfigurationBusiness configurationBusiness)
+        public frmSettingFile(ILogger<frmSettingFile> logger, IConfigurationBusiness configurationBusiness)
         {
             InitializeComponent();
+            this.logger = logger;
             this.configurationBusiness = configurationBusiness;
         }
 
@@ -23,18 +26,22 @@
         {
             try
             {
-                string message = this.ValidateFieldDataBase();
-                message += Environment.NewLine + this.ValidateFieldFtp();
-                message += Environment.NewLine + this.ValidateFieldHoursMinuted();
-                if (!string.IsNullOrEmpty(message.Trim()))
+                var result = this.MessageYesNo("¿Está seguro de guardar la configuración para la aplicación generar archivo axesor?", "Guardar Configuración");
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show(message, "Validación Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    string message = this.ValidateFieldDataBase();
+                    message += Environment.NewLine + this.ValidateFieldFtp();
+                    message += Environment.NewLine + this.ValidateFieldHoursMinuted();
+                    if (!string.IsNullOrEmpty(message.Trim()))
+                    {
+                        MessageBox.Show(message, "Validación Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    this.configurationBusiness.SaveConfigurationDataBase(this.LoadDataDataBase());
+                    this.configurationBusiness.SaveConfigurationFtp(this.LoadDataFtp());
+                    this.configurationBusiness.SaveConfigurationHours(this.LoadDataHoursMinuted());
+                    MessageBox.Show("Configuración guardada con éxito.", "Guardar Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                this.configurationBusiness.SaveConfigurationDataBase(this.LoadDataDataBase());
-                this.configurationBusiness.SaveConfigurationFtp(this.LoadDataFtp());
-                this.configurationBusiness.SaveConfigurationHours(this.LoadDataHoursMinuted());
-                MessageBox.Show("Configuración guardada con éxito.", "Guardar Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -50,7 +57,8 @@
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error cargar configuración: " + ex.Message);
+                this.logger.LogError(ex, "Error cargar datos configuración del sistema generar archivo axesor");
+                MessageBox.Show("Error cargar configuración del sistema generar archivo, por favor verifique el Logs", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -79,16 +87,9 @@
 
         private void BtnCerrarFormulario_Click(object sender, EventArgs e)
         {
-            const string message = "¿Está seguro de cerrar la aplicación de configuración.?";
-            const string caption = "Cerrar Formulario";
-            var result = MessageBox.Show(message, caption,
-                                         MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Question);
-
-            // If the no button was pressed ...
+            var result = this.MessageYesNo("¿Está seguro de cerrar la aplicación de configuración?", "Cerrar Formulario");
             if (result == DialogResult.Yes)
             {
-                // cancel the closure of the form.
                 this.Close();
             }
         }
@@ -101,14 +102,12 @@
                 MessageBox.Show(message, "Validación Conexión Base de Dato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            this.DisabledButton(false);
-            BtnProbarConexionBaseDato.Text = "Espere...";
+            this.DisabledButton(false, "Espere...", BtnProbarConexionBaseDato);
             Task<bool> oTask = new Task<bool>(() => this.configurationBusiness.VerifyConnection(this.LoadDataDataBase()));
             oTask.Start();
             await oTask;
             bool result = Convert.ToBoolean(oTask.Result);
-            this.DisabledButton(true);
-            BtnProbarConexionBaseDato.Text = "Probar Conexión Base de Datos";
+            this.DisabledButton(true, "Probar Conexión Base de Datos", BtnProbarConexionBaseDato);
             this.MessageTestConecction(result, "de base de datos", "Base de Datos", BtnProbarConexionBaseDato);
         }
 
@@ -120,14 +119,12 @@
                 MessageBox.Show(message, "Validación Conexión Ftp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            this.DisabledButton(false);
-            BtnProbarConexionFtp.Text = "Espere...";
+            this.DisabledButton(false, "Espere...", BtnProbarConexionFtp);
             Task<bool> oTask = new Task<bool>(() => this.configurationBusiness.VerifyConnectionFtp(this.LoadDataFtp()));
             oTask.Start();
             await oTask;
             bool result = Convert.ToBoolean(oTask.Result);
-            this.DisabledButton(true);
-            BtnProbarConexionFtp.Text = "Probar Conexión FTP";
+            this.DisabledButton(true, "Probar Conexión FTP", BtnProbarConexionFtp);
             this.MessageTestConecction(result, "FTP", "FTP", BtnProbarConexionFtp);
         }
 
@@ -163,8 +160,9 @@
             };
         }
 
-        private void DisabledButton(bool estado)
+        private void DisabledButton(bool estado, string buttonText, Button btn)
         {
+            btn.Text = buttonText;
             this.BtnCerrarFormulario.Enabled = estado;
             this.BtnProbarConexionBaseDato.Enabled = estado;
             this.BtnProbarConexionFtp.Enabled = estado;
@@ -239,6 +237,14 @@
                 btn.ForeColor = Color.Red;
                 MessageBox.Show($"No se ha podido conectar al servidor {message}, por favor verifique.", $"Conexión {caption} Fallo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private DialogResult MessageYesNo(string message, string caption)
+        {
+            var result = MessageBox.Show(message, caption,
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+            return result;
         }
     }
 }

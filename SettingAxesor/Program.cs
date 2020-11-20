@@ -2,16 +2,15 @@ namespace SettingAxesor
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Serilog;
+    using Serilog.Events;
     using SettingAxesor.AxesorBusiness.Business;
     using SettingAxesor.AxesorBusiness.IBusiness;
+    using SettingAxesor.AxesorCrossCutting.Utilities;
     using SettingAxesor.AxesorRepositorie.IRepositorie;
     using SettingAxesor.AxesorRepositorie.Repositorie;
     using System;
     using System.Windows.Forms;
-    using SettingAxesor.AxesorCrossCutting.Utilities;
-    using Serilog;
-    using Microsoft.Extensions.Logging;
-    using Serilog.Events;
 
     internal static class Program
     {
@@ -25,7 +24,7 @@ namespace SettingAxesor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Utility.CofigurationJson();          
+            Utility.CofigurationJson();
             ConfiguracionSeriLog();
 
             var builder = new HostBuilder()
@@ -33,7 +32,7 @@ namespace SettingAxesor
                 {
                     services.AddSingleton<frmSettingFile>();
                     services.AddScoped<IConfigurationBusiness, ConfigurationBusiness>();
-                    services.AddSingleton<IConfigurationRepositorie, ConfigurationRepositorie>();                  
+                    services.AddSingleton<IConfigurationRepositorie, ConfigurationRepositorie>();
                 }).UseSerilog();
             var host = builder.Build();
             using (var serviceScope = host.Services.CreateScope())

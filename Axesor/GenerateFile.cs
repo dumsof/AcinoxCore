@@ -6,12 +6,13 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using Serilog;
     using System.Threading;
     using System.Threading.Tasks;
 
     public class GenerateFile : BackgroundService
     {
-        private readonly ILogger<GenerateFile> _logger;
+        private readonly ILogger<GenerateFile> logger;
         private readonly IOptions<ConfiguracionHoraEjecucionProceso> configHoraProceso;
         private readonly ISocietieBusiness societieBusiness;
         private readonly IClassificationBusiness classificationBusiness;
@@ -34,7 +35,7 @@
             IPartidasCompensatedCanceledBusiness partidasCompensatedCanceled,
             ISaleSummaryBusiness saleSummaryBusiness, IManagementFile managementFile, IManagementFtp managementFtp)
         {
-            _logger = logger;
+            this.logger = logger;
             this.configHoraProceso = configHoraProceso;
             this.societieBusiness = societieBusiness;
             this.classificationBusiness = classificationBusiness;
@@ -54,7 +55,7 @@
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             //DUM: se inicia las variables
-            _logger.LogInformation("Servicio Iniciado..\n");
+            this.logger.LogInformation("Servicio Iniciado..\n");
             this.managementFile.CreatedPathFile();
             await base.StartAsync(cancellationToken);
         }
@@ -83,8 +84,8 @@
                         //this.managementFtp.UnloadAllFileFolderFtp(nameFolderSocietie);
                         //this.managementFile.MoveAllFileFolder(nameFolderSocietie);
                     }
-
-                    _logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");
+                    this.logger.LogInformation("[PROCESO CREAR ARCHIVO XML FINALIZO CON ÉXITO]\n");
+                    Log.CloseAndFlush();
                 }
 
                 await Task.Delay(60000 * this.configHoraProceso.Value.ProcesarCadaMinuto, stoppingToken);
@@ -93,7 +94,7 @@
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("El proceso esta detenido o parado.");
+            this.logger.LogInformation("El proceso esta detenido o parado.");
             await base.StopAsync(cancellationToken);
         }
     }

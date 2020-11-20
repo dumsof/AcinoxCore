@@ -50,7 +50,7 @@
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error conexión servidor Base de Datos");
+                logger.LogError(ex, "Error conexión servidor Base de Datos \n");
                 return false;
             }
         }
@@ -67,7 +67,7 @@
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error conexión servidor FTP");
+                logger.LogError(ex, "Error conexión servidor FTP \n");
                 return false;
             }
         }
