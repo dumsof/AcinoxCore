@@ -96,7 +96,7 @@
             // 
             this.nupMinutos.Location = new System.Drawing.Point(116, 84);
             this.nupMinutos.Maximum = new decimal(new int[] {
-            60,
+            59,
             0,
             0,
             0});
@@ -131,18 +131,18 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(21, 84);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 19);
+            this.label2.Size = new System.Drawing.Size(76, 19);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Minutos:";
+            this.label2.Text = "Minutos *:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(21, 50);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 19);
+            this.label1.Size = new System.Drawing.Size(77, 19);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Hora 24:";
+            this.label1.Text = "Hora 24 *:";
             // 
             // groupBox2
             // 
@@ -175,11 +175,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 69);
+            this.label7.Location = new System.Drawing.Point(21, 68);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(107, 19);
+            this.label7.Size = new System.Drawing.Size(117, 19);
             this.label7.TabIndex = 0;
-            this.label7.Text = "Base de Datos:";
+            this.label7.Text = "Base de Datos *:";
             // 
             // txtTimeOut
             // 
@@ -221,18 +221,18 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(21, 131);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 19);
+            this.label5.Size = new System.Drawing.Size(98, 19);
             this.label5.TabIndex = 0;
-            this.label5.Text = "Contraseña:";
+            this.label5.Text = "Contraseña *:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(21, 100);
+            this.label4.Location = new System.Drawing.Point(21, 103);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 19);
+            this.label4.Size = new System.Drawing.Size(70, 19);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Usuario:";
+            this.label4.Text = "Usuario*:";
             // 
             // txtNombreServidor
             // 
@@ -247,9 +247,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(21, 34);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(133, 19);
+            this.label3.Size = new System.Drawing.Size(142, 19);
             this.label3.TabIndex = 0;
-            this.label3.Text = "Nombre Servidor:";
+            this.label3.Text = "Nombre Servidor *:";
             // 
             // groupBox3
             // 
@@ -317,27 +317,27 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(20, 94);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(92, 19);
+            this.label10.Size = new System.Drawing.Size(98, 19);
             this.label10.TabIndex = 0;
-            this.label10.Text = "Contraseña :";
+            this.label10.Text = "Contraseña *:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(20, 63);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(68, 19);
+            this.label9.Size = new System.Drawing.Size(74, 19);
             this.label9.TabIndex = 0;
-            this.label9.Text = "Usuario :";
+            this.label9.Text = "Usuario *:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(20, 31);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(136, 19);
+            this.label8.Size = new System.Drawing.Size(142, 19);
             this.label8.TabIndex = 0;
-            this.label8.Text = "Nombre Servidor :";
+            this.label8.Text = "Nombre Servidor *:";
             // 
             // BtnCerrarFormulario
             // 
