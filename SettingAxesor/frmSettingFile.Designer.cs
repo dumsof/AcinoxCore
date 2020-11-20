@@ -58,11 +58,13 @@
             this.BtnCerrarFormulario = new System.Windows.Forms.Button();
             this.BtnProbarConexionBaseDato = new System.Windows.Forms.Button();
             this.BtnProbarConexionFtp = new System.Windows.Forms.Button();
+            this.pbLoandig = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupMinutos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHoraEjecucion)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoandig)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnSaveSetting
@@ -375,11 +377,22 @@
             this.BtnProbarConexionFtp.UseVisualStyleBackColor = true;
             this.BtnProbarConexionFtp.Click += new System.EventHandler(this.BtnProbarConexionFtp_Click);
             // 
+            // pbLoandig
+            // 
+            this.pbLoandig.Image = ((System.Drawing.Image)(resources.GetObject("pbLoandig.Image")));
+            this.pbLoandig.Location = new System.Drawing.Point(833, 370);
+            this.pbLoandig.Name = "pbLoandig";
+            this.pbLoandig.Size = new System.Drawing.Size(69, 62);
+            this.pbLoandig.TabIndex = 7;
+            this.pbLoandig.TabStop = false;
+            this.pbLoandig.Visible = false;
+            // 
             // frmSettingFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 535);
+            this.Controls.Add(this.pbLoandig);
             this.Controls.Add(this.BtnProbarConexionFtp);
             this.Controls.Add(this.BtnProbarConexionBaseDato);
             this.Controls.Add(this.BtnCerrarFormulario);
@@ -402,6 +415,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoandig)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -436,6 +450,7 @@
         private System.Windows.Forms.NumericUpDown nupMinutos;
         private System.Windows.Forms.Button BtnProbarConexionBaseDato;
         private System.Windows.Forms.Button BtnProbarConexionFtp;
+        private System.Windows.Forms.PictureBox pbLoandig;
     }
 }
 

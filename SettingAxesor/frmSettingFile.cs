@@ -163,6 +163,7 @@
         private void DisabledButton(bool estado, string buttonText, Button btn)
         {
             btn.Text = buttonText;
+            this.pbLoandig.Visible = !estado;
             this.BtnCerrarFormulario.Enabled = estado;
             this.BtnProbarConexionBaseDato.Enabled = estado;
             this.BtnProbarConexionFtp.Enabled = estado;
