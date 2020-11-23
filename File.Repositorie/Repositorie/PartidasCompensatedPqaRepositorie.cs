@@ -24,44 +24,87 @@
             List<PartidasCompensatedRepoEntitie> partidasCompensated;
 
             //command.CommandText = this.configurationQuerySql.Value.ConsultaSQLPartidasCompensadas;
-            var querySql = @"SELECT	LTRIM(STR(C.ID_Cliente)) AS codcli
-								,CONCAT(CC.SerieDocumento, '-', CC.NumeroDocumento) AS ndoc
-								,'' AS nvcto
-								,CONVERT(VARCHAR,CC.FechaDocumento,23) AS fchemi
-								,CONVERT(VARCHAR,CC.FechaVencimiento,23) AS fchvcto
-								,CONVERT(VARCHAR,CC.Saldada,23) AS fchcomp
-								,CASE M.CodigoMoneda
-								WHEN 'USD'
-								THEN ROUND(F.Ttotal,2) ELSE (SELECT ValorCambio FROM Corporativo.ValoresCambios WHERE FechaCambio = CONVERT(DATE,F.FechaCFD,23)) * F.Ttotal
-								END AS importe
-								,CONCAT(CONVERT(VARCHAR,GETDATE(),112), '@#', CC.SerieDocumento, '@#', CC.NumeroDocumento) AS marca
-								,F.Ttotal AS impmondoc
-								,M.CodigoMoneda AS codmondoc
-								,F.MetodoPago AS ind1
-								,'' AS ind2
-								,'' AS ind3
-								,'' AS ind4
-								,'' AS ind5
-								,'' AS ind6
-								,'' AS ind7
-								,'' AS ind8
-								,'' AS ind9
-								,F.EfectoCFD AS tdoc
-								,'' AS campoid
-								,'' AS codejercicio
-								,'' AS codejerciciocomp
-								,'' AS numdoccobro
-								,'' AS numdocorigen
-								--,ca.ID_CXCCargo
-								--,cc.ID_CXCCargo
-							FROM Facturacion.CXCAbonos CA
-							INNER JOIN Facturacion.CXCCargos CC ON CC.ID_CXCCargo = CA.ID_CXCCargo
-							INNER JOIN Corporativo.ClientesSucursales SC ON SC.ID_ClienteSucursal = CC.ID_ClienteSucursal
-							INNER JOIN Corporativo.Clientes C ON C.ID_Cliente = SC.ID_Cliente
-							INNER JOIN Corporativo.Monedas M ON M.ID_Moneda = CC.ID_Moneda
-							INNER JOIN Facturacion.CFD F ON F.ID_CFD = CC.ID_CFD
-							WHERE CC.Saldada IS NOT NULL AND C.ID_Empresa={0}
-							ORDER BY C.ID_Cliente ASC";
+            var querySql = @"SELECT	
+									C.RFC AS codcli
+									,CONCAT(F.SerieCFD, '-', F.NumeroCFD) AS ndoc
+									,'' AS nvcto -- Falta validar
+									,CONVERT(VARCHAR,F.FechaCFD,23) AS fchemi
+									,CONVERT(VARCHAR,CXCC.FechaVencimiento,23) AS fchvcto
+									,CONVERT(VARCHAR,CXCC.Saldada,23) AS fchcomp
+									,CASE M.CodigoMoneda
+										WHEN 'USD'
+										THEN CXCC.TTotal ELSE CAST((CXCC.TTotal/VC.ValorCambio) AS DECIMAL (12,2))
+									END AS importe 
+									,CONVERT(VARCHAR,GETDATE(),23) AS marca
+									,F.Ttotal AS impmondoc
+									,M.CodigoMoneda AS codmondoc
+									,'' AS ind1
+									,'' AS ind2
+									,'' AS ind3
+									,'' AS ind4
+									,'' AS ind5
+									,'' AS ind6
+									,'' AS ind7
+									,'' AS ind8
+									,'' AS ind9
+									,'FACTURA' AS tdoc --Validar
+									,CONCAT(CONVERT(VARCHAR,GETDATE(),23), '@#', CXCC.SerieDocumento, '@#', CXCC.NumeroDocumento) AS campoid
+									,'' AS codejercicio
+									,'' AS codejerciciocomp
+									,'' AS numdoccobro -- Pendiente realizae fichero partidas compensadas anuladas
+									,'' AS numdocorigen
+								FROM Facturacion.CFD F
+									INNER JOIN Facturacion.CXCCargos CXCC ON CXCC.ID_CFD = F.ID_CFD
+									INNER JOIN Corporativo.ClientesSucursales SC ON SC.ID_ClienteSucursal = CXCC.ID_ClienteSucursal
+									INNER JOIN Corporativo.Clientes C ON C.ID_Cliente = SC.ID_Cliente
+									INNER JOIN Corporativo.Monedas M ON M.ID_Moneda = CXCC.ID_Moneda
+									LEFT JOIN Corporativo.ValoresCambios VC ON VC.ID_Moneda = 1  AND VC.FechaCambio = CAST(CXCC.FechaDocumento AS DATE)
+									WHERE CXCC.Saldada IS NOT NULL 
+									AND CXCC.ID_CXCCargoCancelo IS NULL
+									AND F.SerieCFD = 'MZT'
+									AND C.ID_Empresa={0}
+								UNION ALL
+								SELECT	
+									C.RFC AS codcli
+									,CONCAT(CXCC.SerieDocumento, '-', CXCC.NumeroDocumento) AS ndoc
+									,'' AS nvcto -- Validar
+									,CONVERT(VARCHAR,CXCA.FechaAbono,23) AS fchemi
+									,CONVERT(VARCHAR,CXCC.FechaVencimiento,23) AS fchvcto
+									,CONVERT(VARCHAR,CXCC.Saldada,23) AS fchcomp
+									,CASE M.CodigoMoneda
+										WHEN 'USD'
+										THEN CXCC.TTotal ELSE CAST((CXCC.TTotal/VC.ValorCambio) AS DECIMAL (12,2))
+									END AS importe 
+									,CONVERT(VARCHAR,GETDATE(),23) AS marca
+									,CXCA.TTotal AS impmondoc
+									,M.CodigoMoneda AS codmondoc
+									,'' AS ind1
+									,'' AS ind2
+									,'' AS ind3
+									,'' AS ind4
+									,'' AS ind5
+									,'' AS ind6
+									,'' AS ind7
+									,'' AS ind8
+									,'' AS ind9
+									,'ABONO' AS tdoc --Validar
+									,CONCAT(CONVERT(VARCHAR,GETDATE(),23), '@#', CXCC.SerieDocumento, '@#', CXCC.NumeroDocumento) AS campoid
+									,'' AS codejercicio
+									,'' AS codejerciciocomp
+									,'' AS numdoccobro -- Pendiente realizae fichero partidas compensadas anuladas
+									,'' AS numdocorigen
+								FROM Facturacion.CXCAbonos CXCA
+									INNER JOIN Facturacion.CXCCargos CXCC ON CXCC.ID_CXCCargo = CXCA.ID_CXCCargo
+									INNER JOIN Facturacion.CFD F ON F.ID_CFD = CXCC.ID_CFD
+									INNER JOIN Corporativo.ClientesSucursales SC ON SC.ID_ClienteSucursal = CXCC.ID_ClienteSucursal
+									INNER JOIN Corporativo.Clientes C ON C.ID_Cliente = SC.ID_Cliente
+									INNER JOIN Corporativo.Monedas M ON M.ID_Moneda = CXCC.ID_Moneda
+									LEFT JOIN Corporativo.ValoresCambios VC ON VC.ID_Moneda = 1  AND VC.FechaCambio = CAST(CXCC.FechaDocumento AS DATE)
+									WHERE CXCC.Saldada IS NOT NULL 
+									AND CXCC.ID_CXCCargoCancelo IS NULL
+									AND F.SerieCFD = 'MZT'
+									AND C.ID_Empresa={0}
+									ORDER BY codcli, ndoc, fchemi";
 
             using (var resultPartidasCompensated = this.GetAllExecuteReader(string.Format(querySql, idEmpresa)))
             {
