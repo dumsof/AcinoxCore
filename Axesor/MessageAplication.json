@@ -2,19 +2,19 @@
   "Message": [
     {
       "CodeMessage": 1,
-      "DescriptionMessage": "Inicio el proceso de [{0}] sociedad código [{1}]."
+      "DescriptionMessage": "Inicio el proceso de [{0}] sociedad cÃ³digo [{1}]."
     },
     {
       "CodeMessage": 2,
-      "DescriptionMessage": "No existe información de las {0}"
+      "DescriptionMessage": "No existe informaciÃ³n de las {0}"
     },
     {
       "CodeMessage": 3,
-      "DescriptionMessage": "Archivo [{0}] con {1} registros generado con éxito."
+      "DescriptionMessage": "Archivo [{0}] con {1} registros generado con Ã©xito."
     },
     {
       "CodeMessage": 4,
-      "DescriptionMessage": "La validación del XSD se realizo con éxito"
+      "DescriptionMessage": "La validaciÃ³n del XSD se realizo con Ã©xito"
     },
     {
       "CodeMessage": 5,

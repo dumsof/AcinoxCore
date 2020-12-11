@@ -27,5 +27,5 @@ https://www.youtube.com/watch?v=acBHPRlxufc
 
 --separado por sociedades esta: sociedades, direccion,cliente, clasificacion, PartidasAbiertas.
 
-
+--para realizar el encoding en el archivo de mensaje se utiliza el bloc de notas se da guardar como y se selecciona UTF-8
 
