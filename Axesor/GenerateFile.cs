@@ -58,7 +58,7 @@
             //DUM: se inicia las variables
             this.logger.LogInformation("Servicio Iniciado..\n");
             this.managementFile.CreatedPathFile();
-            Utility.DateTimeProces = string.Format("{0:yyyyMMdd.HHmm}", DateTime.Now);
+            Log.CloseAndFlush();
             await base.StartAsync(cancellationToken);
         }
 
@@ -68,6 +68,8 @@
             {
                 if (Utility.IsHourProced || this.configHoraProceso.Value.ProcesarCadaMinutoSinValidacionHora)
                 {
+                    this.logger.LogInformation("[INICIO PROCESO CREAR ARCHIVOS]\n");
+                    Utility.DateTimeProces = string.Format("{0:yyyyMMdd.HHmm}", DateTime.Now);
                     var societies = societieBusiness.GetEmpresas();
                     foreach (var societie in societies)
                     {
